@@ -1,6 +1,8 @@
 
 [![npm version](https://badge.fury.io/js/hexo-helper-live2d.svg)](https://badge.fury.io/js/hexo-helper-live2d)
+
 ## hexo-helper-live2d
+
 为你的hexo添加色气满满的live2d吧！
 
 ```
