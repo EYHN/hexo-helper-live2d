@@ -26,7 +26,7 @@ npm install -save hexo-helper-live2d
 <%- live2d("live2dcanvas") %>
 <style>
 .live2d{
-    position: fixed;
+  position: fixed;
 	bottom: -30px;
 	right: 0px;
 	z-index: 999;
