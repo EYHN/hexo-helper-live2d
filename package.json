@@ -1,10 +1,14 @@
 {
   "name": "hexo-helper-live2d",
   "version": "1.0.4",
-  "description": "",
+  "description": "为你的hexo添加色气满满的live2d吧！",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EYHN/hexo-helper-live2d.git"
   },
   "author": "",
   "license": "GPL-2.0",
@@ -18,5 +22,9 @@
     "fs": "^0.0.1-security",
     "hexo-fs": "^0.1.6",
     "path": "^0.12.7"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/EYHN/hexo-helper-live2d/issues"
+  },
+  "homepage": "https://github.com/EYHN/hexo-helper-live2d#readme"
 }
