@@ -31,7 +31,8 @@ npm install -save hexo-helper-live2d
 	right: 0px;
 	z-index: 999;
 	width: 150px;
-	height: 300px
+	height: 300px;
+  pointer-events: none;
 }
 </style>
 ```
