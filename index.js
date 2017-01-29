@@ -13,7 +13,7 @@ hexo.extend.helper.register('live2d', function (canvasID) {
 
 var generators = new Array();
 
-registerDir('live2d/', path.resolve(__dirname, './z16'));
+registerDir('live2d/z16/', path.resolve(__dirname, './z16'));
 registerFile('live2d/script', path.resolve(__dirname, './dest/live2d.js'))
 
 function registerFile(pathname, file) {
