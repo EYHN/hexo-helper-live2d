@@ -1,0 +1,22 @@
+{
+  "name": "hexo-helper-live2d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-notify": "^3.0.0",
+    "gulp-uglify": "^2.0.1"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "hexo-fs": "^0.1.6",
+    "path": "^0.12.7"
+  }
+}
