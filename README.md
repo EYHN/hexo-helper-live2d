@@ -9,7 +9,7 @@
 npm install -save hexo-helper-live2d
 ```
 
-Example: [https://delusion.coding.me/](https://delusion.coding.me/)
+~~Example: [https://delusion.coding.me/](https://delusion.coding.me/)~~ (Example已失效)
 
 ![范例图片](https://delusion.coding.me/img/hexo%E7%9A%84live2d%E6%8F%92%E4%BB%B6/z16.png "z16")
 
