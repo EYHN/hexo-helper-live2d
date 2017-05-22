@@ -392,12 +392,7 @@ var LAppDefine = {
     PRIORITY_NORMAL: 2,
     PRIORITY_FORCE: 3,
 
-    MODEL_HARU: "assets/live2d/haru/haru.model.json",
-    MODEL_HARU_A: "assets/live2d/haru/haru_01.model.json",
-    MODEL_HARU_B: "assets/live2d/haru/haru_02.model.json",
-    MODEL_SHIZUKU: "assets/live2d/shizuku/shizuku.model.json",
-    MODEL_WANKO: "assets/live2d/wanko/wanko.model.json",
-    MODEL_EPSILON: "assets/live2d/Epsilon2.1/Epsilon2.1.model.json",
+    MODEL: "assets/live2d/nito/ni-j.model.json",
 
     MOTION_GROUP_IDLE: "idle",
     MOTION_GROUP_TAP_BODY: "tap_body",
@@ -422,11 +417,11 @@ module.exports = LAppDefine;
 
 var _Live2DFramework = __webpack_require__(3);
 
-var _PlatformManager = __webpack_require__(8);
+var _PlatformManager = __webpack_require__(9);
 
 var _PlatformManager2 = _interopRequireDefault(_PlatformManager);
 
-var _LAppModel = __webpack_require__(9);
+var _LAppModel = __webpack_require__(8);
 
 var _LAppModel2 = _interopRequireDefault(_LAppModel);
 
@@ -437,136 +432,102 @@ var _LAppDefine2 = _interopRequireDefault(_LAppDefine);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function LAppLive2DManager() {
-    // console.log("--> LAppLive2DManager()");
+  // console.log("--> LAppLive2DManager()");
 
 
-    this.models = [];
+  this.models = [];
 
-    this.count = -1;
-    this.reloadFlg = false;
+  this.count = -1;
+  this.reloadFlg = false;
 
-    Live2D.init();
-    _Live2DFramework.Live2DFramework.setPlatformManager(new _PlatformManager2.default());
+  Live2D.init();
+  _Live2DFramework.Live2DFramework.setPlatformManager(new _PlatformManager2.default());
 }
 
 LAppLive2DManager.prototype.createModel = function () {
 
-    var model = new _LAppModel2.default();
-    this.models.push(model);
+  var model = new _LAppModel2.default();
+  this.models.push(model);
 
-    return model;
+  return model;
 };
 
 LAppLive2DManager.prototype.changeModel = function (gl) {
-    // console.log("--> LAppLive2DManager.update(gl)");
+  // console.log("--> LAppLive2DManager.update(gl)");
 
-    if (this.reloadFlg) {
+  if (this.reloadFlg) {
 
-        this.reloadFlg = false;
-        var no = parseInt(this.count % 5);
+    this.reloadFlg = false;
 
-        var thisRef = this;
-        switch (no) {
-            case 0:
-                this.releaseModel(1, gl);
-                this.releaseModel(0, gl);
-
-                this.createModel();
-                this.models[0].load(gl, _LAppDefine2.default.MODEL_HARU);
-                break;
-            case 1:
-                this.releaseModel(0, gl);
-                this.createModel();
-                this.models[0].load(gl, _LAppDefine2.default.MODEL_SHIZUKU);
-                break;
-            case 2:
-                this.releaseModel(0, gl);
-                this.createModel();
-                this.models[0].load(gl, _LAppDefine2.default.MODEL_WANKO);
-                break;
-            case 3:
-                this.releaseModel(0, gl);
-                this.createModel();
-                this.models[0].load(gl, _LAppDefine2.default.MODEL_EPSILON);
-                break;
-            case 4:
-                this.releaseModel(0, gl);
-                // 一体目のモデル
-                this.createModel();
-                this.models[0].load(gl, _LAppDefine2.default.MODEL_HARU_A, function () {
-                    // 二体目のモデル
-                    thisRef.createModel();
-                    thisRef.models[1].load(gl, _LAppDefine2.default.MODEL_HARU_B);
-                });
-                break;
-            default:
-                break;
-        }
-    }
+    var thisRef = this;
+    this.releaseModel(0, gl);
+    this.createModel();
+    this.models[0].load(gl, _LAppDefine2.default.MODEL);
+  }
 };
 
 LAppLive2DManager.prototype.getModel = function (no) {
-    // console.log("--> LAppLive2DManager.getModel(" + no + ")");
+  // console.log("--> LAppLive2DManager.getModel(" + no + ")");
 
-    if (no >= this.models.length) return null;
+  if (no >= this.models.length) return null;
 
-    return this.models[no];
+  return this.models[no];
 };
 
 LAppLive2DManager.prototype.releaseModel = function (no, gl) {
-    // console.log("--> LAppLive2DManager.releaseModel(" + no + ")");
+  // console.log("--> LAppLive2DManager.releaseModel(" + no + ")");
 
-    if (this.models.length <= no) return;
+  if (this.models.length <= no) return;
 
-    this.models[no].release(gl);
+  this.models[no].release(gl);
 
-    delete this.models[no];
-    this.models.splice(no, 1);
+  delete this.models[no];
+  this.models.splice(no, 1);
 };
 
 LAppLive2DManager.prototype.numModels = function () {
-    return this.models.length;
+  return this.models.length;
 };
 
 LAppLive2DManager.prototype.setDrag = function (x, y) {
-    for (var i = 0; i < this.models.length; i++) {
-        this.models[i].setDrag(x, y);
-    }
+  for (var i = 0; i < this.models.length; i++) {
+    this.models[i].setDrag(x, y);
+  }
 };
 
 LAppLive2DManager.prototype.maxScaleEvent = function () {
-    if (_LAppDefine2.default.DEBUG_LOG) console.log("Max scale event.");
-    for (var i = 0; i < this.models.length; i++) {
-        this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_IN, _LAppDefine2.default.PRIORITY_NORMAL);
-    }
+  if (_LAppDefine2.default.DEBUG_LOG) console.log("Max scale event.");
+  for (var i = 0; i < this.models.length; i++) {
+    this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_IN, _LAppDefine2.default.PRIORITY_NORMAL);
+  }
 };
 
 LAppLive2DManager.prototype.minScaleEvent = function () {
-    if (_LAppDefine2.default.DEBUG_LOG) console.log("Min scale event.");
-    for (var i = 0; i < this.models.length; i++) {
-        this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_OUT, _LAppDefine2.default.PRIORITY_NORMAL);
-    }
+  if (_LAppDefine2.default.DEBUG_LOG) console.log("Min scale event.");
+  for (var i = 0; i < this.models.length; i++) {
+    this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_OUT, _LAppDefine2.default.PRIORITY_NORMAL);
+  }
 };
 
 LAppLive2DManager.prototype.tapEvent = function (x, y) {
-    if (_LAppDefine2.default.DEBUG_LOG) console.log("tapEvent view x:" + x + " y:" + y);
+  if (_LAppDefine2.default.DEBUG_LOG) console.log("tapEvent view x:" + x + " y:" + y);
 
-    for (var i = 0; i < this.models.length; i++) {
+  for (var i = 0; i < this.models.length; i++) {
 
-        if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_HEAD, x, y)) {
+    if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_HEAD, x, y)) {
 
-            if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap face.");
+      if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap face.");
 
-            this.models[i].setRandomExpression();
-        } else if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_BODY, x, y)) {
+      this.models[i].setRandomExpression();
+    } else if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_BODY, x, y)) {
 
-            if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap body." + " models[" + i + "]");
+      if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap body." + " models[" + i + "]");
 
-            this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_TAP_BODY, _LAppDefine2.default.PRIORITY_NORMAL);
-        }
+      this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_TAP_BODY, _LAppDefine2.default.PRIORITY_NORMAL);
     }
+  }
 
-    return true;
+  return true;
 };
 
 module.exports = LAppLive2DManager;
@@ -5231,155 +5192,6 @@ module.exports = __webpack_require__(0);
 "use strict";
 
 
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
-
-//============================================================
-//============================================================
-//  class PlatformManager     extend IPlatformManager
-//============================================================
-//============================================================
-function PlatformManager() {}
-
-//============================================================
-//    PlatformManager # loadBytes()
-//============================================================
-PlatformManager.prototype.loadBytes = function (path /*String*/, callback) {
-    var request = new XMLHttpRequest();
-    request.open("GET", path, true);
-    request.responseType = "arraybuffer";
-    request.onload = function () {
-        switch (request.status) {
-            case 200:
-                callback(request.response);
-                break;
-            default:
-                console.error("Failed to load (" + request.status + ") : " + path);
-                break;
-        }
-    };
-    request.send(null);
-    //return request;
-};
-
-//============================================================
-//    PlatformManager # loadString()
-//============================================================
-PlatformManager.prototype.loadString = function (path /*String*/) {
-
-    this.loadBytes(path, function (buf) {
-        return buf;
-    });
-};
-
-//============================================================
-//    PlatformManager # loadLive2DModel()
-//============================================================
-PlatformManager.prototype.loadLive2DModel = function (path /*String*/, callback) {
-    var model = null;
-
-    // load moc
-    this.loadBytes(path, function (buf) {
-        model = Live2DModelWebGL.loadModel(buf);
-        callback(model);
-    });
-};
-
-//============================================================
-//    PlatformManager # loadTexture()
-//============================================================
-PlatformManager.prototype.loadTexture = function (model /*ALive2DModel*/, no /*int*/, path /*String*/, callback) {
-    // load textures
-    var loadedImage = new Image();
-    loadedImage.src = path;
-
-    var thisRef = this;
-    loadedImage.onload = function () {
-        // create texture
-        var canvas = document.getElementById("glcanvas");
-        var gl = getWebGLContext(canvas, { premultipliedAlpha: true });
-        var texture = gl.createTexture();
-        if (!texture) {
-            console.error("Failed to generate gl texture name.");return -1;
-        }
-
-        if (model.isPremultipliedAlpha() == false) {
-            // 乗算済アルファテクスチャ以外の場合
-            gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
-        }
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, loadedImage);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-        gl.generateMipmap(gl.TEXTURE_2D);
-
-        model.setTexture(no, texture);
-
-        // テクスチャオブジェクトを解放
-        texture = null;
-
-        if (typeof callback == "function") callback();
-    };
-
-    loadedImage.onerror = function () {
-        console.error("Failed to load image : " + path);
-    };
-};
-
-//============================================================
-//    PlatformManager # parseFromBytes(buf)
-
-//============================================================
-PlatformManager.prototype.jsonParseFromBytes = function (buf) {
-
-    var jsonStr;
-
-    var bomCode = new Uint8Array(buf, 0, 3);
-    if (bomCode[0] == 239 && bomCode[1] == 187 && bomCode[2] == 191) {
-        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf, 3));
-    } else {
-        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf));
-    }
-
-    var jsonObj = JSON.parse(jsonStr);
-
-    return jsonObj;
-};
-
-//============================================================
-//    PlatformManager # log()
-//============================================================
-PlatformManager.prototype.log = function (txt /*String*/) {
-    //console.log(txt);
-};
-
-module.exports = PlatformManager;
-
-function getWebGLContext(canvas) {
-    var NAMES = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
-    for (var i = 0; i < NAMES.length; i++) {
-        try {
-            var ctx = canvas.getContext(NAMES[i], { premultipliedAlpha: true });
-            if (ctx) return ctx;
-        } catch (e) {}
-    }
-    return null;
-};
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _Live2DFramework = __webpack_require__(3);
 
 var _ModelSettingJson = __webpack_require__(10);
@@ -5713,6 +5525,155 @@ LAppModel.prototype.hitTest = function (id, testX, testY) {
 };
 
 module.exports = LAppModel;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ *
+ *  You can modify and use this source freely
+ *  only for the development of application related Live2D.
+ *
+ *  (c) Live2D Inc. All rights reserved.
+ */
+
+//============================================================
+//============================================================
+//  class PlatformManager     extend IPlatformManager
+//============================================================
+//============================================================
+function PlatformManager() {}
+
+//============================================================
+//    PlatformManager # loadBytes()
+//============================================================
+PlatformManager.prototype.loadBytes = function (path /*String*/, callback) {
+    var request = new XMLHttpRequest();
+    request.open("GET", path, true);
+    request.responseType = "arraybuffer";
+    request.onload = function () {
+        switch (request.status) {
+            case 200:
+                callback(request.response);
+                break;
+            default:
+                console.error("Failed to load (" + request.status + ") : " + path);
+                break;
+        }
+    };
+    request.send(null);
+    //return request;
+};
+
+//============================================================
+//    PlatformManager # loadString()
+//============================================================
+PlatformManager.prototype.loadString = function (path /*String*/) {
+
+    this.loadBytes(path, function (buf) {
+        return buf;
+    });
+};
+
+//============================================================
+//    PlatformManager # loadLive2DModel()
+//============================================================
+PlatformManager.prototype.loadLive2DModel = function (path /*String*/, callback) {
+    var model = null;
+
+    // load moc
+    this.loadBytes(path, function (buf) {
+        model = Live2DModelWebGL.loadModel(buf);
+        callback(model);
+    });
+};
+
+//============================================================
+//    PlatformManager # loadTexture()
+//============================================================
+PlatformManager.prototype.loadTexture = function (model /*ALive2DModel*/, no /*int*/, path /*String*/, callback) {
+    // load textures
+    var loadedImage = new Image();
+    loadedImage.src = path;
+
+    var thisRef = this;
+    loadedImage.onload = function () {
+        // create texture
+        var canvas = document.getElementById("glcanvas");
+        var gl = getWebGLContext(canvas, { premultipliedAlpha: true });
+        var texture = gl.createTexture();
+        if (!texture) {
+            console.error("Failed to generate gl texture name.");return -1;
+        }
+
+        if (model.isPremultipliedAlpha() == false) {
+            // 乗算済アルファテクスチャ以外の場合
+            gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
+        }
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, loadedImage);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        model.setTexture(no, texture);
+
+        // テクスチャオブジェクトを解放
+        texture = null;
+
+        if (typeof callback == "function") callback();
+    };
+
+    loadedImage.onerror = function () {
+        console.error("Failed to load image : " + path);
+    };
+};
+
+//============================================================
+//    PlatformManager # parseFromBytes(buf)
+
+//============================================================
+PlatformManager.prototype.jsonParseFromBytes = function (buf) {
+
+    var jsonStr;
+
+    var bomCode = new Uint8Array(buf, 0, 3);
+    if (bomCode[0] == 239 && bomCode[1] == 187 && bomCode[2] == 191) {
+        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf, 3));
+    } else {
+        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf));
+    }
+
+    var jsonObj = JSON.parse(jsonStr);
+
+    return jsonObj;
+};
+
+//============================================================
+//    PlatformManager # log()
+//============================================================
+PlatformManager.prototype.log = function (txt /*String*/) {
+    //console.log(txt);
+};
+
+module.exports = PlatformManager;
+
+function getWebGLContext(canvas) {
+    var NAMES = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
+    for (var i = 0; i < NAMES.length; i++) {
+        try {
+            var ctx = canvas.getContext(NAMES[i], { premultipliedAlpha: true });
+            if (ctx) return ctx;
+        } catch (e) {}
+    }
+    return null;
+};
 
 /***/ }),
 /* 10 */

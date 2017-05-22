@@ -1,0 +1,38 @@
+{
+	"version":"Sample 1.0.0",
+	"model":"miku.moc",
+	"textures":[
+		"miku.2048/texture_00.png"
+	],
+	"motions":{
+		"null":[
+			{
+				"file":"motions/miku_m_01.mtn"
+			},
+			{
+				"file":"motions/miku_m_02.mtn"
+			},
+			{
+				"file":"motions/miku_m_03.mtn"
+			},
+			{
+				"file":"motions/miku_m_04.mtn"
+			},
+			{
+				"file":"motions/miku_m_05.mtn"
+			},
+			{
+				"file":"motions/miku_m_06.mtn"
+			},
+			{
+				"file":"motions/miku_shake_01.mtn"
+			}
+		],
+		"idle":[
+			{
+				"file":"motions/miku_idle_01.mtn"
+			}
+		]
+	},
+	"physics":"miku.physics.json"
+}

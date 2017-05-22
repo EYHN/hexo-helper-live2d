@@ -1,0 +1,37 @@
+{
+	"version":"Sample 1.0.0",
+	"model":"ni-j/ni-j.moc",
+	"textures":[
+		"ni-j/ni-j.2048/texture_00.png",
+		"ni-j/ni-j.2048/texture_01.png"
+	],
+	"motions":{
+		"idle":[
+			{"file":"mtn/00_idle.mtn"}
+		],
+		"":[
+			{"file":"mtn/01_happy.mtn"},
+			{"file":"mtn/02_angry.mtn"},
+			{"file":"mtn/03_fear.mtn"},
+			{"file":"mtn/04_surprise.mtn"},
+			{"file":"mtn/05_fun.mtn"},
+			{"file":"mtn/06_love.mtn"},
+			{"file":"mtn/07_bye.mtn"},
+			{"file":"mtn/08_sad.mtn"},
+			{"file":"mtn/09_yawn.mtn"},
+			{"file":"mtn/10_yeah.mtn"},
+			{"file":"mtn/11_muscle.mtn"},
+			{"file":"mtn/12_stagger.mtn"},
+			{"file":"mtn/13_cry.mtn"},
+			{"file":"mtn/14_ sigh.mtn"},
+			{"file":"mtn/15_joy.mtn"},
+			{"file":"mtn/16_menace.mtn"},
+			{"file":"mtn/17_yes.mtn"},
+			{"file":"mtn/18_no.mtn"},
+			{"file":"mtn/19_walk.mtn"},
+			{"file":"mtn/20_sleep.mtn"}
+		]
+	},
+	"physics":"ni-j/ni-j.physics.json",
+	"pose":"pose.json"
+}
