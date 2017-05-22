@@ -26,7 +26,7 @@ var LAppDefine = {
     PRIORITY_NORMAL : 2,
     PRIORITY_FORCE : 3,
     
-    MODEL : "assets/live2d/nito/ni-j.model.json",
+    MODEL : "assets/live2d/z16/z16.model.json",
 
     MOTION_GROUP_IDLE : "idle", 
     MOTION_GROUP_TAP_BODY : "tap_body", 

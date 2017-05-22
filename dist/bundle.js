@@ -63,477 +63,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(5);
-
-var _Live2DFramework = __webpack_require__(3);
-
-var _LAppLive2DManager = __webpack_require__(2);
-
-var _LAppLive2DManager2 = _interopRequireDefault(_LAppLive2DManager);
-
-var _LAppDefine = __webpack_require__(1);
-
-var _LAppDefine2 = _interopRequireDefault(_LAppDefine);
-
-var _MatrixStack = __webpack_require__(4);
-
-var _MatrixStack2 = _interopRequireDefault(_MatrixStack);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// window.onerror = function (msg, url, line, col, error) {
-//   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
-//   console.error(errmsg);
-// }
-
-var platform = window.navigator.platform.toLowerCase();
-
-var live2DMgr = new _LAppLive2DManager2.default();
-
-var isDrawStart = false;
-
-var gl = null;
-
-var canvas = null;
-
-var dragMgr = null;
-
-var viewMatrix = null;
-
-var projMatrix = null;
-
-var deviceToScreen = null;
-
-var drag = false;
-
-var oldLen = 0;
-
-var lastMouseX = 0;
-
-var lastMouseY = 0;
-
-var isModelShown = 0;
-
-function initL2dCanvas(canvasId) {
-    canvas = document.getElementById(canvasId);
-    if (canvas.addEventListener) {
-        canvas.addEventListener("mousewheel", mouseEvent);
-        canvas.addEventListener("click", mouseEvent);
-        canvas.addEventListener("mousedown", mouseEvent);
-        canvas.addEventListener("mousemove", mouseEvent);
-        canvas.addEventListener("mouseup", mouseEvent);
-        canvas.addEventListener("mouseout", mouseEvent);
-        canvas.addEventListener("contextmenu", mouseEvent);
-        canvas.addEventListener("touchstart", touchEvent);
-        canvas.addEventListener("touchend", touchEvent);
-        canvas.addEventListener("touchmove", touchEvent);
-    }
-}
-
-function init() {
-    var width = canvas.width;
-    var height = canvas.height;
-
-    dragMgr = new _Live2DFramework.L2DTargetPoint();
-
-    var ratio = height / width;
-    var left = _LAppDefine2.default.VIEW_LOGICAL_LEFT;
-    var right = _LAppDefine2.default.VIEW_LOGICAL_RIGHT;
-    var bottom = -ratio;
-    var top = ratio;
-
-    viewMatrix = new _Live2DFramework.L2DViewMatrix();
-
-    viewMatrix.setScreenRect(left, right, bottom, top);
-
-    viewMatrix.setMaxScreenRect(_LAppDefine2.default.VIEW_LOGICAL_MAX_LEFT, _LAppDefine2.default.VIEW_LOGICAL_MAX_RIGHT, _LAppDefine2.default.VIEW_LOGICAL_MAX_BOTTOM, _LAppDefine2.default.VIEW_LOGICAL_MAX_TOP);
-
-    viewMatrix.setMaxScale(_LAppDefine2.default.VIEW_MAX_SCALE);
-    viewMatrix.setMinScale(_LAppDefine2.default.VIEW_MIN_SCALE);
-
-    projMatrix = new _Live2DFramework.L2DMatrix44();
-    projMatrix.multScale(1, width / height);
-
-    deviceToScreen = new _Live2DFramework.L2DMatrix44();
-    deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
-    deviceToScreen.multScale(2 / width, -2 / width);
-
-    gl = getWebGLContext();
-    if (!gl) {
-        console.error("Failed to create WebGL context.");
-        return;
-    }
-    window.Live2D.setGL(gl);
-    gl.clearColor(0.0, 0.0, 0.0, 0.0);
-    changeModel();
-    startDraw();
-}
-
-function startDraw() {
-    if (!isDrawStart) {
-        isDrawStart = true;
-        (function tick() {
-            draw();
-            var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
-            requestAnimationFrame(tick, canvas);
-        })();
-    }
-}
-
-function draw() {
-    _MatrixStack2.default.reset();
-    _MatrixStack2.default.loadIdentity();
-    dragMgr.update();
-    live2DMgr.setDrag(dragMgr.getX(), dragMgr.getY());
-
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    _MatrixStack2.default.multMatrix(projMatrix.getArray());
-    _MatrixStack2.default.multMatrix(viewMatrix.getArray());
-    _MatrixStack2.default.push();
-
-    for (var i = 0; i < live2DMgr.numModels(); i++) {
-        var model = live2DMgr.getModel(i);
-
-        if (model == null) return;
-
-        if (model.initialized && !model.updating) {
-            model.update();
-            model.draw(gl);
-        }
-    }
-    _MatrixStack2.default.pop();
-}
-
-function changeModel() {
-    live2DMgr.reloadFlg = true;
-    live2DMgr.count++;
-    live2DMgr.changeModel(gl);
-}
-
-function modelScaling(scale) {
-    var isMaxScale = viewMatrix.isMaxScale();
-    var isMinScale = viewMatrix.isMinScale();
-
-    viewMatrix.adjustScale(0, 0, scale);
-
-    if (!isMaxScale) {
-        if (viewMatrix.isMaxScale()) {
-            live2DMgr.maxScaleEvent();
-        }
-    }
-
-    if (!isMinScale) {
-        if (viewMatrix.isMinScale()) {
-            live2DMgr.minScaleEvent();
-        }
-    }
-}
-
-function modelTurnHead(event) {
-    drag = true;
-
-    var rect = event.target.getBoundingClientRect();
-
-    var sx = transformScreenX(event.clientX - rect.left);
-    var sy = transformScreenY(event.clientY - rect.top);
-    var vx = transformViewX(event.clientX - rect.left);
-    var vy = transformViewY(event.clientY - rect.top);
-
-    if (_LAppDefine2.default.DEBUG_MOUSE_LOG) console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
-
-    lastMouseX = sx;
-    lastMouseY = sy;
-
-    dragMgr.setPoint(vx, vy);
-
-    live2DMgr.tapEvent(vx, vy);
-}
-
-function followPointer(event) {
-    var rect = event.target.getBoundingClientRect();
-
-    var sx = transformScreenX(event.clientX - rect.left);
-    var sy = transformScreenY(event.clientY - rect.top);
-    var vx = transformViewX(event.clientX - rect.left);
-    var vy = transformViewY(event.clientY - rect.top);
-
-    if (_LAppDefine2.default.DEBUG_MOUSE_LOG) console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
-
-    if (drag) {
-        lastMouseX = sx;
-        lastMouseY = sy;
-        dragMgr.setPoint(vx, vy);
-    }
-}
-
-function lookFront() {
-    if (drag) {
-        drag = false;
-    }
-    dragMgr.setPoint(0, 0);
-}
-
-function mouseEvent(e) {
-    e.preventDefault();
-    if (e.type == "mousewheel") {
-        if (e.clientX < 0 || canvas.clientWidth < e.clientX || e.clientY < 0 || canvas.clientHeight < e.clientY) {
-            return;
-        }
-        if (e.wheelDelta > 0) modelScaling(1.1);else modelScaling(0.9);
-    } else if (e.type == "mousedown") {
-        if ("button" in e && e.button != 0) return;
-        modelTurnHead(e);
-    } else if (e.type == "mousemove") {
-        followPointer(e);
-    } else if (e.type == "mouseup") {
-        if ("button" in e && e.button != 0) return;
-        lookFront();
-    } else if (e.type == "mouseout") {
-        lookFront();
-    } else if (e.type == "contextmenu") {
-        changeModel();
-    }
-}
-
-function touchEvent(e) {
-    e.preventDefault();
-    var touch = e.touches[0];
-    if (e.type == "touchstart") {
-        if (e.touches.length == 1) modelTurnHead(touch);
-        // onClick(touch);
-    } else if (e.type == "touchmove") {
-        followPointer(touch);
-        if (e.touches.length == 2) {
-            var touch1 = e.touches[0];
-            var touch2 = e.touches[1];
-
-            var len = Math.pow(touch1.pageX - touch2.pageX, 2) + Math.pow(touch1.pageY - touch2.pageY, 2);
-            if (oldLen - len < 0) modelScaling(1.025);else modelScaling(0.975);
-
-            oldLen = len;
-        }
-    } else if (e.type == "touchend") {
-        lookFront();
-    }
-}
-
-function transformViewX(deviceX) {
-    var screenX = deviceToScreen.transformX(deviceX);
-    return viewMatrix.invertTransformX(screenX);
-}
-
-function transformViewY(deviceY) {
-    var screenY = deviceToScreen.transformY(deviceY);
-    return viewMatrix.invertTransformY(screenY);
-}
-
-function transformScreenX(deviceX) {
-    return deviceToScreen.transformX(deviceX);
-}
-
-function transformScreenY(deviceY) {
-    return deviceToScreen.transformY(deviceY);
-}
-
-function getWebGLContext() {
-    var NAMES = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
-    for (var i = 0; i < NAMES.length; i++) {
-        try {
-            var ctx = canvas.getContext(NAMES[i], { premultipliedAlpha: true });
-            if (ctx) return ctx;
-        } catch (e) {}
-    }
-    return null;
-};
-
-initL2dCanvas("glcanvas");
-init();
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var LAppDefine = {
-
-    DEBUG_LOG: true,
-    DEBUG_MOUSE_LOG: false,
-    // DEBUG_DRAW_HIT_AREA : false, 
-    // DEBUG_DRAW_ALPHA_MODEL : false, 
-
-
-    VIEW_MAX_SCALE: 2,
-    VIEW_MIN_SCALE: 0.8,
-
-    VIEW_LOGICAL_LEFT: -1,
-    VIEW_LOGICAL_RIGHT: 1,
-
-    VIEW_LOGICAL_MAX_LEFT: -2,
-    VIEW_LOGICAL_MAX_RIGHT: 2,
-    VIEW_LOGICAL_MAX_BOTTOM: -2,
-    VIEW_LOGICAL_MAX_TOP: 2,
-
-    PRIORITY_NONE: 0,
-    PRIORITY_IDLE: 1,
-    PRIORITY_NORMAL: 2,
-    PRIORITY_FORCE: 3,
-
-    MODEL: "assets/live2d/nito/ni-j.model.json",
-
-    MOTION_GROUP_IDLE: "idle",
-    MOTION_GROUP_TAP_BODY: "tap_body",
-    MOTION_GROUP_FLICK_HEAD: "flick_head",
-    MOTION_GROUP_PINCH_IN: "pinch_in",
-    MOTION_GROUP_PINCH_OUT: "pinch_out",
-    MOTION_GROUP_SHAKE: "shake",
-
-    HIT_AREA_HEAD: "head",
-    HIT_AREA_BODY: "body"
-
-};
-
-module.exports = LAppDefine;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Live2DFramework = __webpack_require__(3);
-
-var _PlatformManager = __webpack_require__(9);
-
-var _PlatformManager2 = _interopRequireDefault(_PlatformManager);
-
-var _LAppModel = __webpack_require__(8);
-
-var _LAppModel2 = _interopRequireDefault(_LAppModel);
-
-var _LAppDefine = __webpack_require__(1);
-
-var _LAppDefine2 = _interopRequireDefault(_LAppDefine);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function LAppLive2DManager() {
-  // console.log("--> LAppLive2DManager()");
-
-
-  this.models = [];
-
-  this.count = -1;
-  this.reloadFlg = false;
-
-  Live2D.init();
-  _Live2DFramework.Live2DFramework.setPlatformManager(new _PlatformManager2.default());
-}
-
-LAppLive2DManager.prototype.createModel = function () {
-
-  var model = new _LAppModel2.default();
-  this.models.push(model);
-
-  return model;
-};
-
-LAppLive2DManager.prototype.changeModel = function (gl) {
-  // console.log("--> LAppLive2DManager.update(gl)");
-
-  if (this.reloadFlg) {
-
-    this.reloadFlg = false;
-
-    var thisRef = this;
-    this.releaseModel(0, gl);
-    this.createModel();
-    this.models[0].load(gl, _LAppDefine2.default.MODEL);
-  }
-};
-
-LAppLive2DManager.prototype.getModel = function (no) {
-  // console.log("--> LAppLive2DManager.getModel(" + no + ")");
-
-  if (no >= this.models.length) return null;
-
-  return this.models[no];
-};
-
-LAppLive2DManager.prototype.releaseModel = function (no, gl) {
-  // console.log("--> LAppLive2DManager.releaseModel(" + no + ")");
-
-  if (this.models.length <= no) return;
-
-  this.models[no].release(gl);
-
-  delete this.models[no];
-  this.models.splice(no, 1);
-};
-
-LAppLive2DManager.prototype.numModels = function () {
-  return this.models.length;
-};
-
-LAppLive2DManager.prototype.setDrag = function (x, y) {
-  for (var i = 0; i < this.models.length; i++) {
-    this.models[i].setDrag(x, y);
-  }
-};
-
-LAppLive2DManager.prototype.maxScaleEvent = function () {
-  if (_LAppDefine2.default.DEBUG_LOG) console.log("Max scale event.");
-  for (var i = 0; i < this.models.length; i++) {
-    this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_IN, _LAppDefine2.default.PRIORITY_NORMAL);
-  }
-};
-
-LAppLive2DManager.prototype.minScaleEvent = function () {
-  if (_LAppDefine2.default.DEBUG_LOG) console.log("Min scale event.");
-  for (var i = 0; i < this.models.length; i++) {
-    this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_OUT, _LAppDefine2.default.PRIORITY_NORMAL);
-  }
-};
-
-LAppLive2DManager.prototype.tapEvent = function (x, y) {
-  if (_LAppDefine2.default.DEBUG_LOG) console.log("tapEvent view x:" + x + " y:" + y);
-
-  for (var i = 0; i < this.models.length; i++) {
-
-    if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_HEAD, x, y)) {
-
-      if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap face.");
-
-      this.models[i].setRandomExpression();
-    } else if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_BODY, x, y)) {
-
-      if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap body." + " models[" + i + "]");
-
-      this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_TAP_BODY, _LAppDefine2.default.PRIORITY_NORMAL);
-    }
-  }
-
-  return true;
-};
-
-module.exports = LAppLive2DManager;
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2003,7 +1537,54 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LAppDefine = {
+
+    DEBUG_LOG: true,
+    DEBUG_MOUSE_LOG: false,
+    // DEBUG_DRAW_HIT_AREA : false, 
+    // DEBUG_DRAW_ALPHA_MODEL : false, 
+
+
+    VIEW_MAX_SCALE: 2,
+    VIEW_MIN_SCALE: 0.8,
+
+    VIEW_LOGICAL_LEFT: -1,
+    VIEW_LOGICAL_RIGHT: 1,
+
+    VIEW_LOGICAL_MAX_LEFT: -2,
+    VIEW_LOGICAL_MAX_RIGHT: 2,
+    VIEW_LOGICAL_MAX_BOTTOM: -2,
+    VIEW_LOGICAL_MAX_TOP: 2,
+
+    PRIORITY_NONE: 0,
+    PRIORITY_IDLE: 1,
+    PRIORITY_NORMAL: 2,
+    PRIORITY_FORCE: 3,
+
+    MODEL: "assets/live2d/z16/z16.model.json",
+
+    MOTION_GROUP_IDLE: "idle",
+    MOTION_GROUP_TAP_BODY: "tap_body",
+    MOTION_GROUP_FLICK_HEAD: "flick_head",
+    MOTION_GROUP_PINCH_IN: "pinch_in",
+    MOTION_GROUP_PINCH_OUT: "pinch_out",
+    MOTION_GROUP_SHAKE: "shake",
+
+    HIT_AREA_HEAD: "head",
+    HIT_AREA_BODY: "body"
+
+};
+
+module.exports = LAppDefine;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2096,7 +1677,1083 @@ MatrixStack.multMatrix = function (matNew) {
 module.exports = MatrixStack;
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(8);
+
+var _Live2DFramework = __webpack_require__(0);
+
+var _LAppLive2DManager = __webpack_require__(4);
+
+var _LAppLive2DManager2 = _interopRequireDefault(_LAppLive2DManager);
+
+var _LAppDefine = __webpack_require__(1);
+
+var _LAppDefine2 = _interopRequireDefault(_LAppDefine);
+
+var _MatrixStack = __webpack_require__(2);
+
+var _MatrixStack2 = _interopRequireDefault(_MatrixStack);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// window.onerror = function (msg, url, line, col, error) {
+//   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
+//   console.error(errmsg);
+// }
+
+var platform = window.navigator.platform.toLowerCase();
+
+var live2DMgr = new _LAppLive2DManager2.default();
+
+var isDrawStart = false;
+
+var gl = null;
+
+var canvas = null;
+
+var dragMgr = null;
+
+var viewMatrix = null;
+
+var projMatrix = null;
+
+var deviceToScreen = null;
+
+var drag = false;
+
+var oldLen = 0;
+
+var lastMouseX = 0;
+
+var lastMouseY = 0;
+
+var isModelShown = 0;
+
+function initL2dCanvas(canvasId) {
+    canvas = document.getElementById(canvasId);
+    if (canvas.addEventListener) {
+        canvas.addEventListener("mousewheel", mouseEvent);
+        canvas.addEventListener("click", mouseEvent);
+        canvas.addEventListener("mousedown", mouseEvent);
+        canvas.addEventListener("mousemove", mouseEvent);
+        canvas.addEventListener("mouseup", mouseEvent);
+        canvas.addEventListener("mouseout", mouseEvent);
+        canvas.addEventListener("contextmenu", mouseEvent);
+        canvas.addEventListener("touchstart", touchEvent);
+        canvas.addEventListener("touchend", touchEvent);
+        canvas.addEventListener("touchmove", touchEvent);
+    }
+}
+
+function init() {
+    var width = canvas.width;
+    var height = canvas.height;
+
+    dragMgr = new _Live2DFramework.L2DTargetPoint();
+
+    var ratio = height / width;
+    var left = _LAppDefine2.default.VIEW_LOGICAL_LEFT;
+    var right = _LAppDefine2.default.VIEW_LOGICAL_RIGHT;
+    var bottom = -ratio;
+    var top = ratio;
+
+    viewMatrix = new _Live2DFramework.L2DViewMatrix();
+
+    viewMatrix.setScreenRect(left, right, bottom, top);
+
+    viewMatrix.setMaxScreenRect(_LAppDefine2.default.VIEW_LOGICAL_MAX_LEFT, _LAppDefine2.default.VIEW_LOGICAL_MAX_RIGHT, _LAppDefine2.default.VIEW_LOGICAL_MAX_BOTTOM, _LAppDefine2.default.VIEW_LOGICAL_MAX_TOP);
+
+    viewMatrix.setMaxScale(_LAppDefine2.default.VIEW_MAX_SCALE);
+    viewMatrix.setMinScale(_LAppDefine2.default.VIEW_MIN_SCALE);
+
+    projMatrix = new _Live2DFramework.L2DMatrix44();
+    projMatrix.multScale(1, width / height);
+
+    deviceToScreen = new _Live2DFramework.L2DMatrix44();
+    deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
+    deviceToScreen.multScale(2 / width, -2 / width);
+
+    gl = getWebGLContext();
+    if (!gl) {
+        console.error("Failed to create WebGL context.");
+        return;
+    }
+    window.Live2D.setGL(gl);
+    gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    changeModel();
+    startDraw();
+}
+
+function startDraw() {
+    if (!isDrawStart) {
+        isDrawStart = true;
+        (function tick() {
+            draw();
+            var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+            requestAnimationFrame(tick, canvas);
+        })();
+    }
+}
+
+function draw() {
+    _MatrixStack2.default.reset();
+    _MatrixStack2.default.loadIdentity();
+    dragMgr.update();
+    live2DMgr.setDrag(dragMgr.getX(), dragMgr.getY());
+
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    _MatrixStack2.default.multMatrix(projMatrix.getArray());
+    _MatrixStack2.default.multMatrix(viewMatrix.getArray());
+    _MatrixStack2.default.push();
+
+    for (var i = 0; i < live2DMgr.numModels(); i++) {
+        var model = live2DMgr.getModel(i);
+
+        if (model == null) return;
+
+        if (model.initialized && !model.updating) {
+            model.update();
+            model.draw(gl);
+        }
+    }
+    _MatrixStack2.default.pop();
+}
+
+function changeModel() {
+    live2DMgr.reloadFlg = true;
+    live2DMgr.count++;
+    live2DMgr.changeModel(gl);
+}
+
+function modelScaling(scale) {
+    var isMaxScale = viewMatrix.isMaxScale();
+    var isMinScale = viewMatrix.isMinScale();
+
+    viewMatrix.adjustScale(0, 0, scale);
+
+    if (!isMaxScale) {
+        if (viewMatrix.isMaxScale()) {
+            live2DMgr.maxScaleEvent();
+        }
+    }
+
+    if (!isMinScale) {
+        if (viewMatrix.isMinScale()) {
+            live2DMgr.minScaleEvent();
+        }
+    }
+}
+
+function modelTurnHead(event) {
+    drag = true;
+
+    var rect = event.target.getBoundingClientRect();
+
+    var sx = transformScreenX(event.clientX - rect.left);
+    var sy = transformScreenY(event.clientY - rect.top);
+    var vx = transformViewX(event.clientX - rect.left);
+    var vy = transformViewY(event.clientY - rect.top);
+
+    if (_LAppDefine2.default.DEBUG_MOUSE_LOG) console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
+
+    lastMouseX = sx;
+    lastMouseY = sy;
+
+    dragMgr.setPoint(vx, vy);
+
+    live2DMgr.tapEvent(vx, vy);
+}
+
+function followPointer(event) {
+    var rect = event.target.getBoundingClientRect();
+
+    var sx = transformScreenX(event.clientX - rect.left);
+    var sy = transformScreenY(event.clientY - rect.top);
+    var vx = transformViewX(event.clientX - rect.left);
+    var vy = transformViewY(event.clientY - rect.top);
+
+    if (_LAppDefine2.default.DEBUG_MOUSE_LOG) console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
+
+    if (drag) {
+        lastMouseX = sx;
+        lastMouseY = sy;
+        dragMgr.setPoint(vx, vy);
+    }
+}
+
+function lookFront() {
+    if (drag) {
+        drag = false;
+    }
+    dragMgr.setPoint(0, 0);
+}
+
+function mouseEvent(e) {
+    e.preventDefault();
+    if (e.type == "mousewheel") {
+        // if (e.clientX < 0 || canvas.clientWidth < e.clientX || 
+        // e.clientY < 0 || canvas.clientHeight < e.clientY)
+        // {
+        //     return;
+        // }
+        // if (e.wheelDelta > 0) modelScaling(1.1); 
+        // else modelScaling(0.9); 
+    } else if (e.type == "mousedown") {
+        if ("button" in e && e.button != 0) return;
+        modelTurnHead(e);
+    } else if (e.type == "mousemove") {
+        followPointer(e);
+    } else if (e.type == "mouseup") {
+        if ("button" in e && e.button != 0) return;
+        lookFront();
+    } else if (e.type == "mouseout") {
+        lookFront();
+    } else if (e.type == "contextmenu") {
+        changeModel();
+    }
+}
+
+function touchEvent(e) {
+    e.preventDefault();
+    var touch = e.touches[0];
+    if (e.type == "touchstart") {
+        if (e.touches.length == 1) modelTurnHead(touch);
+        // onClick(touch);
+    } else if (e.type == "touchmove") {
+        followPointer(touch);
+        if (e.touches.length == 2) {
+            var touch1 = e.touches[0];
+            var touch2 = e.touches[1];
+
+            var len = Math.pow(touch1.pageX - touch2.pageX, 2) + Math.pow(touch1.pageY - touch2.pageY, 2);
+            if (oldLen - len < 0) modelScaling(1.025);else modelScaling(0.975);
+
+            oldLen = len;
+        }
+    } else if (e.type == "touchend") {
+        lookFront();
+    }
+}
+
+function transformViewX(deviceX) {
+    var screenX = deviceToScreen.transformX(deviceX);
+    return viewMatrix.invertTransformX(screenX);
+}
+
+function transformViewY(deviceY) {
+    var screenY = deviceToScreen.transformY(deviceY);
+    return viewMatrix.invertTransformY(screenY);
+}
+
+function transformScreenX(deviceX) {
+    return deviceToScreen.transformX(deviceX);
+}
+
+function transformScreenY(deviceY) {
+    return deviceToScreen.transformY(deviceY);
+}
+
+function getWebGLContext() {
+    var NAMES = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
+    for (var i = 0; i < NAMES.length; i++) {
+        try {
+            var ctx = canvas.getContext(NAMES[i], { premultipliedAlpha: true });
+            if (ctx) return ctx;
+        } catch (e) {}
+    }
+    return null;
+};
+
+initL2dCanvas("glcanvas");
+init();
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Live2DFramework = __webpack_require__(0);
+
+var _PlatformManager = __webpack_require__(6);
+
+var _PlatformManager2 = _interopRequireDefault(_PlatformManager);
+
+var _LAppModel = __webpack_require__(5);
+
+var _LAppModel2 = _interopRequireDefault(_LAppModel);
+
+var _LAppDefine = __webpack_require__(1);
+
+var _LAppDefine2 = _interopRequireDefault(_LAppDefine);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function LAppLive2DManager() {
+  // console.log("--> LAppLive2DManager()");
+
+
+  this.models = [];
+
+  this.count = -1;
+  this.reloadFlg = false;
+
+  Live2D.init();
+  _Live2DFramework.Live2DFramework.setPlatformManager(new _PlatformManager2.default());
+}
+
+LAppLive2DManager.prototype.createModel = function () {
+
+  var model = new _LAppModel2.default();
+  this.models.push(model);
+
+  return model;
+};
+
+LAppLive2DManager.prototype.changeModel = function (gl) {
+  // console.log("--> LAppLive2DManager.update(gl)");
+
+  if (this.reloadFlg) {
+
+    this.reloadFlg = false;
+
+    var thisRef = this;
+    this.releaseModel(0, gl);
+    this.createModel();
+    this.models[0].load(gl, _LAppDefine2.default.MODEL);
+  }
+};
+
+LAppLive2DManager.prototype.getModel = function (no) {
+  // console.log("--> LAppLive2DManager.getModel(" + no + ")");
+
+  if (no >= this.models.length) return null;
+
+  return this.models[no];
+};
+
+LAppLive2DManager.prototype.releaseModel = function (no, gl) {
+  // console.log("--> LAppLive2DManager.releaseModel(" + no + ")");
+
+  if (this.models.length <= no) return;
+
+  this.models[no].release(gl);
+
+  delete this.models[no];
+  this.models.splice(no, 1);
+};
+
+LAppLive2DManager.prototype.numModels = function () {
+  return this.models.length;
+};
+
+LAppLive2DManager.prototype.setDrag = function (x, y) {
+  for (var i = 0; i < this.models.length; i++) {
+    this.models[i].setDrag(x, y);
+  }
+};
+
+LAppLive2DManager.prototype.maxScaleEvent = function () {
+  if (_LAppDefine2.default.DEBUG_LOG) console.log("Max scale event.");
+  for (var i = 0; i < this.models.length; i++) {
+    this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_IN, _LAppDefine2.default.PRIORITY_NORMAL);
+  }
+};
+
+LAppLive2DManager.prototype.minScaleEvent = function () {
+  if (_LAppDefine2.default.DEBUG_LOG) console.log("Min scale event.");
+  for (var i = 0; i < this.models.length; i++) {
+    this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_PINCH_OUT, _LAppDefine2.default.PRIORITY_NORMAL);
+  }
+};
+
+LAppLive2DManager.prototype.tapEvent = function (x, y) {
+  if (_LAppDefine2.default.DEBUG_LOG) console.log("tapEvent view x:" + x + " y:" + y);
+
+  for (var i = 0; i < this.models.length; i++) {
+
+    if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_HEAD, x, y)) {
+
+      if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap face.");
+
+      this.models[i].setRandomExpression();
+    } else if (this.models[i].hitTest(_LAppDefine2.default.HIT_AREA_BODY, x, y)) {
+
+      if (_LAppDefine2.default.DEBUG_LOG) console.log("Tap body." + " models[" + i + "]");
+
+      this.models[i].startRandomMotion(_LAppDefine2.default.MOTION_GROUP_TAP_BODY, _LAppDefine2.default.PRIORITY_NORMAL);
+    }
+  }
+
+  return true;
+};
+
+module.exports = LAppLive2DManager;
+
+/***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Live2DFramework = __webpack_require__(0);
+
+var _ModelSettingJson = __webpack_require__(7);
+
+var _ModelSettingJson2 = _interopRequireDefault(_ModelSettingJson);
+
+var _LAppDefine = __webpack_require__(1);
+
+var _LAppDefine2 = _interopRequireDefault(_LAppDefine);
+
+var _MatrixStack = __webpack_require__(2);
+
+var _MatrixStack2 = _interopRequireDefault(_MatrixStack);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//============================================================
+//============================================================
+//  class LAppModel     extends L2DBaseModel         
+//============================================================
+//============================================================
+function LAppModel() {
+    //L2DBaseModel.apply(this, arguments);
+    _Live2DFramework.L2DBaseModel.prototype.constructor.call(this);
+
+    this.modelHomeDir = "";
+    this.modelSetting = null;
+    this.tmpMatrix = [];
+}
+
+LAppModel.prototype = new _Live2DFramework.L2DBaseModel();
+
+LAppModel.prototype.load = function (gl, modelSettingPath, callback) {
+    this.setUpdating(true);
+    this.setInitialized(false);
+
+    this.modelHomeDir = modelSettingPath.substring(0, modelSettingPath.lastIndexOf("/") + 1);
+
+    this.modelSetting = new _ModelSettingJson2.default();
+
+    var thisRef = this;
+
+    this.modelSetting.loadModelSetting(modelSettingPath, function () {
+
+        var path = thisRef.modelHomeDir + thisRef.modelSetting.getModelFile();
+        thisRef.loadModelData(path, function (model) {
+
+            for (var i = 0; i < thisRef.modelSetting.getTextureNum(); i++) {
+
+                var texPaths = thisRef.modelHomeDir + thisRef.modelSetting.getTextureFile(i);
+
+                thisRef.loadTexture(i, texPaths, function () {
+
+                    if (thisRef.isTexLoaded) {
+
+                        if (thisRef.modelSetting.getExpressionNum() > 0) {
+
+                            thisRef.expressions = {};
+
+                            for (var j = 0; j < thisRef.modelSetting.getExpressionNum(); j++) {
+                                var expName = thisRef.modelSetting.getExpressionName(j);
+                                var expFilePath = thisRef.modelHomeDir + thisRef.modelSetting.getExpressionFile(j);
+
+                                thisRef.loadExpression(expName, expFilePath);
+                            }
+                        } else {
+                            thisRef.expressionManager = null;
+                            thisRef.expressions = {};
+                        }
+
+                        if (thisRef.eyeBlink == null) {
+                            thisRef.eyeBlink = new _Live2DFramework.L2DEyeBlink();
+                        }
+
+                        if (thisRef.modelSetting.getPhysicsFile() != null) {
+                            thisRef.loadPhysics(thisRef.modelHomeDir + thisRef.modelSetting.getPhysicsFile());
+                        } else {
+                            thisRef.physics = null;
+                        }
+
+                        if (thisRef.modelSetting.getPoseFile() != null) {
+                            thisRef.loadPose(thisRef.modelHomeDir + thisRef.modelSetting.getPoseFile(), function () {
+                                thisRef.pose.updateParam(thisRef.live2DModel);
+                            });
+                        } else {
+                            thisRef.pose = null;
+                        }
+
+                        if (thisRef.modelSetting.getLayout() != null) {
+                            var layout = thisRef.modelSetting.getLayout();
+                            if (layout["width"] != null) thisRef.modelMatrix.setWidth(layout["width"]);
+                            if (layout["height"] != null) thisRef.modelMatrix.setHeight(layout["height"]);
+
+                            if (layout["x"] != null) thisRef.modelMatrix.setX(layout["x"]);
+                            if (layout["y"] != null) thisRef.modelMatrix.setY(layout["y"]);
+                            if (layout["center_x"] != null) thisRef.modelMatrix.centerX(layout["center_x"]);
+                            if (layout["center_y"] != null) thisRef.modelMatrix.centerY(layout["center_y"]);
+                            if (layout["top"] != null) thisRef.modelMatrix.top(layout["top"]);
+                            if (layout["bottom"] != null) thisRef.modelMatrix.bottom(layout["bottom"]);
+                            if (layout["left"] != null) thisRef.modelMatrix.left(layout["left"]);
+                            if (layout["right"] != null) thisRef.modelMatrix.right(layout["right"]);
+                        }
+
+                        for (var j = 0; j < thisRef.modelSetting.getInitParamNum(); j++) {
+
+                            thisRef.live2DModel.setParamFloat(thisRef.modelSetting.getInitParamID(j), thisRef.modelSetting.getInitParamValue(j));
+                        }
+
+                        for (var j = 0; j < thisRef.modelSetting.getInitPartsVisibleNum(); j++) {
+
+                            thisRef.live2DModel.setPartsOpacity(thisRef.modelSetting.getInitPartsVisibleID(j), thisRef.modelSetting.getInitPartsVisibleValue(j));
+                        }
+
+                        thisRef.live2DModel.saveParam();
+                        // thisRef.live2DModel.setGL(gl);
+
+
+                        thisRef.preloadMotionGroup(_LAppDefine2.default.MOTION_GROUP_IDLE);
+                        thisRef.mainMotionManager.stopAllMotions();
+
+                        thisRef.setUpdating(false);
+                        thisRef.setInitialized(true);
+
+                        if (typeof callback == "function") callback();
+                    }
+                });
+            }
+        });
+    });
+};
+
+LAppModel.prototype.release = function (gl) {
+    // this.live2DModel.deleteTextures();
+    var pm = Live2DFramework.getPlatformManager();
+
+    gl.deleteTexture(pm.texture);
+};
+
+LAppModel.prototype.preloadMotionGroup = function (name) {
+    var thisRef = this;
+
+    for (var i = 0; i < this.modelSetting.getMotionNum(name); i++) {
+        var file = this.modelSetting.getMotionFile(name, i);
+        this.loadMotion(file, this.modelHomeDir + file, function (motion) {
+            motion.setFadeIn(thisRef.modelSetting.getMotionFadeIn(name, i));
+            motion.setFadeOut(thisRef.modelSetting.getMotionFadeOut(name, i));
+        });
+    }
+};
+
+LAppModel.prototype.update = function () {
+    // console.log("--> LAppModel.update()");
+
+    if (this.live2DModel == null) {
+        if (_LAppDefine2.default.DEBUG_LOG) console.error("Failed to update.");
+
+        return;
+    }
+
+    var timeMSec = UtSystem.getUserTimeMSec() - this.startTimeMSec;
+    var timeSec = timeMSec / 1000.0;
+    var t = timeSec * 2 * Math.PI;
+
+    if (this.mainMotionManager.isFinished()) {
+
+        this.startRandomMotion(_LAppDefine2.default.MOTION_GROUP_IDLE, _LAppDefine2.default.PRIORITY_IDLE);
+    }
+
+    //-----------------------------------------------------------------		
+
+
+    this.live2DModel.loadParam();
+
+    var update = this.mainMotionManager.updateParam(this.live2DModel);
+    if (!update) {
+
+        if (this.eyeBlink != null) {
+            this.eyeBlink.updateParam(this.live2DModel);
+        }
+    }
+
+    this.live2DModel.saveParam();
+
+    //-----------------------------------------------------------------		
+
+
+    if (this.expressionManager != null && this.expressions != null && !this.expressionManager.isFinished()) {
+        this.expressionManager.updateParam(this.live2DModel);
+    }
+
+    this.live2DModel.addToParamFloat("PARAM_ANGLE_X", this.dragX * 30, 1);
+    this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", this.dragY * 30, 1);
+    this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", this.dragX * this.dragY * -30, 1);
+
+    this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", this.dragX * 10, 1);
+
+    this.live2DModel.addToParamFloat("PARAM_EYE_BALL_X", this.dragX, 1);
+    this.live2DModel.addToParamFloat("PARAM_EYE_BALL_Y", this.dragY, 1);
+
+    this.live2DModel.addToParamFloat("PARAM_ANGLE_X", Number(15 * Math.sin(t / 6.5345)), 0.5);
+    this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", Number(8 * Math.sin(t / 3.5345)), 0.5);
+    this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", Number(10 * Math.sin(t / 5.5345)), 0.5);
+    this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", Number(4 * Math.sin(t / 15.5345)), 0.5);
+    this.live2DModel.setParamFloat("PARAM_BREATH", Number(0.5 + 0.5 * Math.sin(t / 3.2345)), 1);
+
+    if (this.physics != null) {
+        this.physics.updateParam(this.live2DModel);
+    }
+
+    if (this.lipSync == null) {
+        this.live2DModel.setParamFloat("PARAM_MOUTH_OPEN_Y", this.lipSyncValue);
+    }
+
+    if (this.pose != null) {
+        this.pose.updateParam(this.live2DModel);
+    }
+
+    this.live2DModel.update();
+};
+
+LAppModel.prototype.setRandomExpression = function () {
+    var tmp = [];
+    for (var name in this.expressions) {
+        tmp.push(name);
+    }
+
+    var no = parseInt(Math.random() * tmp.length);
+
+    this.setExpression(tmp[no]);
+};
+
+LAppModel.prototype.startRandomMotion = function (name, priority) {
+    var max = this.modelSetting.getMotionNum(name);
+    var no = parseInt(Math.random() * max);
+    this.startMotion(name, no, priority);
+};
+
+LAppModel.prototype.startMotion = function (name, no, priority) {
+    // console.log("startMotion : " + name + " " + no + " " + priority);
+
+    var motionName = this.modelSetting.getMotionFile(name, no);
+
+    if (motionName == null || motionName == "") {
+        if (_LAppDefine2.default.DEBUG_LOG) console.error("Failed to motion.");
+        return;
+    }
+
+    if (priority == _LAppDefine2.default.PRIORITY_FORCE) {
+        this.mainMotionManager.setReservePriority(priority);
+    } else if (!this.mainMotionManager.reserveMotion(priority)) {
+        if (_LAppDefine2.default.DEBUG_LOG) console.log("Motion is running.");
+        return;
+    }
+
+    var thisRef = this;
+    var motion;
+
+    if (this.motions[name] == null) {
+        this.loadMotion(null, this.modelHomeDir + motionName, function (mtn) {
+            motion = mtn;
+
+            thisRef.setFadeInFadeOut(name, no, priority, motion);
+        });
+    } else {
+        motion = this.motions[name];
+
+        thisRef.setFadeInFadeOut(name, no, priority, motion);
+    }
+};
+
+LAppModel.prototype.setFadeInFadeOut = function (name, no, priority, motion) {
+    var motionName = this.modelSetting.getMotionFile(name, no);
+
+    motion.setFadeIn(this.modelSetting.getMotionFadeIn(name, no));
+    motion.setFadeOut(this.modelSetting.getMotionFadeOut(name, no));
+
+    if (_LAppDefine2.default.DEBUG_LOG) console.log("Start motion : " + motionName);
+
+    if (this.modelSetting.getMotionSound(name, no) == null) {
+        this.mainMotionManager.startMotionPrio(motion, priority);
+    } else {
+        var soundName = this.modelSetting.getMotionSound(name, no);
+        // var player = new Sound(this.modelHomeDir + soundName);
+
+        var snd = document.createElement("audio");
+        snd.src = this.modelHomeDir + soundName;
+
+        if (_LAppDefine2.default.DEBUG_LOG) console.log("Start sound : " + soundName);
+
+        snd.play();
+        this.mainMotionManager.startMotionPrio(motion, priority);
+    }
+};
+
+LAppModel.prototype.setExpression = function (name) {
+    var motion = this.expressions[name];
+
+    if (_LAppDefine2.default.DEBUG_LOG) console.log("Expression : " + name);
+
+    this.expressionManager.startMotion(motion, false);
+};
+
+LAppModel.prototype.draw = function (gl) {
+    //console.log("--> LAppModel.draw()");
+
+    // if(this.live2DModel == null) return;
+
+
+    _MatrixStack2.default.push();
+
+    _MatrixStack2.default.multMatrix(this.modelMatrix.getArray());
+
+    this.tmpMatrix = _MatrixStack2.default.getMatrix();
+    this.live2DModel.setMatrix(this.tmpMatrix);
+    this.live2DModel.draw();
+
+    _MatrixStack2.default.pop();
+};
+
+LAppModel.prototype.hitTest = function (id, testX, testY) {
+    var len = this.modelSetting.getHitAreaNum();
+    for (var i = 0; i < len; i++) {
+        if (id == this.modelSetting.getHitAreaName(i)) {
+            var drawID = this.modelSetting.getHitAreaID(i);
+
+            return this.hitTestSimple(drawID, testX, testY);
+        }
+    }
+
+    return false;
+};
+
+module.exports = LAppModel;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ *
+ *  You can modify and use this source freely
+ *  only for the development of application related Live2D.
+ *
+ *  (c) Live2D Inc. All rights reserved.
+ */
+
+//============================================================
+//============================================================
+//  class PlatformManager     extend IPlatformManager
+//============================================================
+//============================================================
+function PlatformManager() {}
+
+//============================================================
+//    PlatformManager # loadBytes()
+//============================================================
+PlatformManager.prototype.loadBytes = function (path /*String*/, callback) {
+    var request = new XMLHttpRequest();
+    request.open("GET", path, true);
+    request.responseType = "arraybuffer";
+    request.onload = function () {
+        switch (request.status) {
+            case 200:
+                callback(request.response);
+                break;
+            default:
+                console.error("Failed to load (" + request.status + ") : " + path);
+                break;
+        }
+    };
+    request.send(null);
+    //return request;
+};
+
+//============================================================
+//    PlatformManager # loadString()
+//============================================================
+PlatformManager.prototype.loadString = function (path /*String*/) {
+
+    this.loadBytes(path, function (buf) {
+        return buf;
+    });
+};
+
+//============================================================
+//    PlatformManager # loadLive2DModel()
+//============================================================
+PlatformManager.prototype.loadLive2DModel = function (path /*String*/, callback) {
+    var model = null;
+
+    // load moc
+    this.loadBytes(path, function (buf) {
+        model = Live2DModelWebGL.loadModel(buf);
+        callback(model);
+    });
+};
+
+//============================================================
+//    PlatformManager # loadTexture()
+//============================================================
+PlatformManager.prototype.loadTexture = function (model /*ALive2DModel*/, no /*int*/, path /*String*/, callback) {
+    // load textures
+    var loadedImage = new Image();
+    loadedImage.src = path;
+
+    var thisRef = this;
+    loadedImage.onload = function () {
+        // create texture
+        var canvas = document.getElementById("glcanvas");
+        var gl = getWebGLContext(canvas, { premultipliedAlpha: true });
+        var texture = gl.createTexture();
+        if (!texture) {
+            console.error("Failed to generate gl texture name.");return -1;
+        }
+
+        if (model.isPremultipliedAlpha() == false) {
+            // 乗算済アルファテクスチャ以外の場合
+            gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
+        }
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, loadedImage);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        model.setTexture(no, texture);
+
+        // テクスチャオブジェクトを解放
+        texture = null;
+
+        if (typeof callback == "function") callback();
+    };
+
+    loadedImage.onerror = function () {
+        console.error("Failed to load image : " + path);
+    };
+};
+
+//============================================================
+//    PlatformManager # parseFromBytes(buf)
+
+//============================================================
+PlatformManager.prototype.jsonParseFromBytes = function (buf) {
+
+    var jsonStr;
+
+    var bomCode = new Uint8Array(buf, 0, 3);
+    if (bomCode[0] == 239 && bomCode[1] == 187 && bomCode[2] == 191) {
+        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf, 3));
+    } else {
+        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf));
+    }
+
+    var jsonObj = JSON.parse(jsonStr);
+
+    return jsonObj;
+};
+
+//============================================================
+//    PlatformManager # log()
+//============================================================
+PlatformManager.prototype.log = function (txt /*String*/) {
+    //console.log(txt);
+};
+
+module.exports = PlatformManager;
+
+function getWebGLContext(canvas) {
+    var NAMES = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
+    for (var i = 0; i < NAMES.length; i++) {
+        try {
+            var ctx = canvas.getContext(NAMES[i], { premultipliedAlpha: true });
+            if (ctx) return ctx;
+        } catch (e) {}
+    }
+    return null;
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Live2DFramework = __webpack_require__(0);
+
+function ModelSettingJson() {
+    this.NAME = "name";
+    this.ID = "id";
+    this.MODEL = "model";
+    this.TEXTURES = "textures";
+    this.HIT_AREAS = "hit_areas";
+    this.PHYSICS = "physics";
+    this.POSE = "pose";
+    this.EXPRESSIONS = "expressions";
+    this.MOTION_GROUPS = "motions";
+    this.SOUND = "sound";
+    this.FADE_IN = "fade_in";
+    this.FADE_OUT = "fade_out";
+    this.LAYOUT = "layout";
+    this.INIT_PARAM = "init_param";
+    this.INIT_PARTS_VISIBLE = "init_parts_visible";
+    this.VALUE = "val";
+    this.FILE = "file";
+
+    this.json = {};
+}
+
+ModelSettingJson.prototype.loadModelSetting = function (path, callback) {
+    var thisRef = this;
+    var pm = _Live2DFramework.Live2DFramework.getPlatformManager();
+    pm.loadBytes(path, function (buf) {
+        var str = String.fromCharCode.apply(null, new Uint8Array(buf));
+        thisRef.json = JSON.parse(str);
+        callback();
+    });
+};
+
+ModelSettingJson.prototype.getTextureFile = function (n) {
+    if (this.json[this.TEXTURES] == null || this.json[this.TEXTURES][n] == null) return null;
+
+    return this.json[this.TEXTURES][n];
+};
+
+ModelSettingJson.prototype.getModelFile = function () {
+    return this.json[this.MODEL];
+};
+
+ModelSettingJson.prototype.getTextureNum = function () {
+    if (this.json[this.TEXTURES] == null) return 0;
+
+    return this.json[this.TEXTURES].length;
+};
+
+ModelSettingJson.prototype.getHitAreaNum = function () {
+    if (this.json[this.HIT_AREAS] == null) return 0;
+
+    return this.json[this.HIT_AREAS].length;
+};
+
+ModelSettingJson.prototype.getHitAreaID = function (n) {
+    if (this.json[this.HIT_AREAS] == null || this.json[this.HIT_AREAS][n] == null) return null;
+
+    return this.json[this.HIT_AREAS][n][this.ID];
+};
+
+ModelSettingJson.prototype.getHitAreaName = function (n) {
+    if (this.json[this.HIT_AREAS] == null || this.json[this.HIT_AREAS][n] == null) return null;
+
+    return this.json[this.HIT_AREAS][n][this.NAME];
+};
+
+ModelSettingJson.prototype.getPhysicsFile = function () {
+    return this.json[this.PHYSICS];
+};
+
+ModelSettingJson.prototype.getPoseFile = function () {
+    return this.json[this.POSE];
+};
+
+ModelSettingJson.prototype.getExpressionNum = function () {
+    return this.json[this.EXPRESSIONS] == null ? 0 : this.json[this.EXPRESSIONS].length;
+};
+
+ModelSettingJson.prototype.getExpressionFile = function (n) {
+    if (this.json[this.EXPRESSIONS] == null) return null;
+    return this.json[this.EXPRESSIONS][n][this.FILE];
+};
+
+ModelSettingJson.prototype.getExpressionName = function (n) {
+    if (this.json[this.EXPRESSIONS] == null) return null;
+    return this.json[this.EXPRESSIONS][n][this.NAME];
+};
+
+ModelSettingJson.prototype.getLayout = function () {
+    return this.json[this.LAYOUT];
+};
+
+ModelSettingJson.prototype.getInitParamNum = function () {
+    return this.json[this.INIT_PARAM] == null ? 0 : this.json[this.INIT_PARAM].length;
+};
+
+ModelSettingJson.prototype.getMotionNum = function (name) {
+    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null) return 0;
+
+    return this.json[this.MOTION_GROUPS][name].length;
+};
+
+ModelSettingJson.prototype.getMotionFile = function (name, n) {
+    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null) return null;
+
+    return this.json[this.MOTION_GROUPS][name][n][this.FILE];
+};
+
+ModelSettingJson.prototype.getMotionSound = function (name, n) {
+    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null || this.json[this.MOTION_GROUPS][name][n][this.SOUND] == null) return null;
+
+    return this.json[this.MOTION_GROUPS][name][n][this.SOUND];
+};
+
+ModelSettingJson.prototype.getMotionFadeIn = function (name, n) {
+    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null || this.json[this.MOTION_GROUPS][name][n][this.FADE_IN] == null) return 1000;
+
+    return this.json[this.MOTION_GROUPS][name][n][this.FADE_IN];
+};
+
+ModelSettingJson.prototype.getMotionFadeOut = function (name, n) {
+    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null || this.json[this.MOTION_GROUPS][name][n][this.FADE_OUT] == null) return 1000;
+
+    return this.json[this.MOTION_GROUPS][name][n][this.FADE_OUT];
+};
+
+ModelSettingJson.prototype.getInitParamID = function (n) {
+    if (this.json[this.INIT_PARAM] == null || this.json[this.INIT_PARAM][n] == null) return null;
+
+    return this.json[this.INIT_PARAM][n][this.ID];
+};
+
+ModelSettingJson.prototype.getInitParamValue = function (n) {
+    if (this.json[this.INIT_PARAM] == null || this.json[this.INIT_PARAM][n] == null) return NaN;
+
+    return this.json[this.INIT_PARAM][n][this.VALUE];
+};
+
+ModelSettingJson.prototype.getInitPartsVisibleNum = function () {
+    return this.json[this.INIT_PARTS_VISIBLE] == null ? 0 : this.json[this.INIT_PARTS_VISIBLE].length;
+};
+
+ModelSettingJson.prototype.getInitPartsVisibleID = function (n) {
+    if (this.json[this.INIT_PARTS_VISIBLE] == null || this.json[this.INIT_PARTS_VISIBLE][n] == null) return null;
+    return this.json[this.INIT_PARTS_VISIBLE][n][this.ID];
+};
+
+ModelSettingJson.prototype.getInitPartsVisibleValue = function (n) {
+    if (this.json[this.INIT_PARTS_VISIBLE] == null || this.json[this.INIT_PARTS_VISIBLE][n] == null) return NaN;
+
+    return this.json[this.INIT_PARTS_VISIBLE][n][this.VALUE];
+};
+
+module.exports = ModelSettingJson;
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5163,10 +5820,10 @@ module.exports = MatrixStack;
     }
   };window.UtSystem = P;window.UtDebug = q;window.LDTransform = am;window.LDGL = au;window.Live2D = Q;window.Live2DModelWebGL = l;window.Live2DModelJS = v;window.Live2DMotion = ao;window.MotionQueueManager = V;window.PhysicsHair = u;window.AMotion = ah;window.PartsDataID = i;window.DrawDataID = Z;window.BaseDataID = n;window.ParamID = z;Q.init();var j = false;
 })();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports) {
 
 // Provide a "System" global.
@@ -5179,665 +5836,11 @@ module.exports = {
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(0);
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Live2DFramework = __webpack_require__(3);
-
-var _ModelSettingJson = __webpack_require__(10);
-
-var _ModelSettingJson2 = _interopRequireDefault(_ModelSettingJson);
-
-var _LAppDefine = __webpack_require__(1);
-
-var _LAppDefine2 = _interopRequireDefault(_LAppDefine);
-
-var _MatrixStack = __webpack_require__(4);
-
-var _MatrixStack2 = _interopRequireDefault(_MatrixStack);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//============================================================
-//============================================================
-//  class LAppModel     extends L2DBaseModel         
-//============================================================
-//============================================================
-function LAppModel() {
-    //L2DBaseModel.apply(this, arguments);
-    _Live2DFramework.L2DBaseModel.prototype.constructor.call(this);
-
-    this.modelHomeDir = "";
-    this.modelSetting = null;
-    this.tmpMatrix = [];
-}
-
-LAppModel.prototype = new _Live2DFramework.L2DBaseModel();
-
-LAppModel.prototype.load = function (gl, modelSettingPath, callback) {
-    this.setUpdating(true);
-    this.setInitialized(false);
-
-    this.modelHomeDir = modelSettingPath.substring(0, modelSettingPath.lastIndexOf("/") + 1);
-
-    this.modelSetting = new _ModelSettingJson2.default();
-
-    var thisRef = this;
-
-    this.modelSetting.loadModelSetting(modelSettingPath, function () {
-
-        var path = thisRef.modelHomeDir + thisRef.modelSetting.getModelFile();
-        thisRef.loadModelData(path, function (model) {
-
-            for (var i = 0; i < thisRef.modelSetting.getTextureNum(); i++) {
-
-                var texPaths = thisRef.modelHomeDir + thisRef.modelSetting.getTextureFile(i);
-
-                thisRef.loadTexture(i, texPaths, function () {
-
-                    if (thisRef.isTexLoaded) {
-
-                        if (thisRef.modelSetting.getExpressionNum() > 0) {
-
-                            thisRef.expressions = {};
-
-                            for (var j = 0; j < thisRef.modelSetting.getExpressionNum(); j++) {
-                                var expName = thisRef.modelSetting.getExpressionName(j);
-                                var expFilePath = thisRef.modelHomeDir + thisRef.modelSetting.getExpressionFile(j);
-
-                                thisRef.loadExpression(expName, expFilePath);
-                            }
-                        } else {
-                            thisRef.expressionManager = null;
-                            thisRef.expressions = {};
-                        }
-
-                        if (thisRef.eyeBlink == null) {
-                            thisRef.eyeBlink = new _Live2DFramework.L2DEyeBlink();
-                        }
-
-                        if (thisRef.modelSetting.getPhysicsFile() != null) {
-                            thisRef.loadPhysics(thisRef.modelHomeDir + thisRef.modelSetting.getPhysicsFile());
-                        } else {
-                            thisRef.physics = null;
-                        }
-
-                        if (thisRef.modelSetting.getPoseFile() != null) {
-                            thisRef.loadPose(thisRef.modelHomeDir + thisRef.modelSetting.getPoseFile(), function () {
-                                thisRef.pose.updateParam(thisRef.live2DModel);
-                            });
-                        } else {
-                            thisRef.pose = null;
-                        }
-
-                        if (thisRef.modelSetting.getLayout() != null) {
-                            var layout = thisRef.modelSetting.getLayout();
-                            if (layout["width"] != null) thisRef.modelMatrix.setWidth(layout["width"]);
-                            if (layout["height"] != null) thisRef.modelMatrix.setHeight(layout["height"]);
-
-                            if (layout["x"] != null) thisRef.modelMatrix.setX(layout["x"]);
-                            if (layout["y"] != null) thisRef.modelMatrix.setY(layout["y"]);
-                            if (layout["center_x"] != null) thisRef.modelMatrix.centerX(layout["center_x"]);
-                            if (layout["center_y"] != null) thisRef.modelMatrix.centerY(layout["center_y"]);
-                            if (layout["top"] != null) thisRef.modelMatrix.top(layout["top"]);
-                            if (layout["bottom"] != null) thisRef.modelMatrix.bottom(layout["bottom"]);
-                            if (layout["left"] != null) thisRef.modelMatrix.left(layout["left"]);
-                            if (layout["right"] != null) thisRef.modelMatrix.right(layout["right"]);
-                        }
-
-                        for (var j = 0; j < thisRef.modelSetting.getInitParamNum(); j++) {
-
-                            thisRef.live2DModel.setParamFloat(thisRef.modelSetting.getInitParamID(j), thisRef.modelSetting.getInitParamValue(j));
-                        }
-
-                        for (var j = 0; j < thisRef.modelSetting.getInitPartsVisibleNum(); j++) {
-
-                            thisRef.live2DModel.setPartsOpacity(thisRef.modelSetting.getInitPartsVisibleID(j), thisRef.modelSetting.getInitPartsVisibleValue(j));
-                        }
-
-                        thisRef.live2DModel.saveParam();
-                        // thisRef.live2DModel.setGL(gl);
-
-
-                        thisRef.preloadMotionGroup(_LAppDefine2.default.MOTION_GROUP_IDLE);
-                        thisRef.mainMotionManager.stopAllMotions();
-
-                        thisRef.setUpdating(false);
-                        thisRef.setInitialized(true);
-
-                        if (typeof callback == "function") callback();
-                    }
-                });
-            }
-        });
-    });
-};
-
-LAppModel.prototype.release = function (gl) {
-    // this.live2DModel.deleteTextures();
-    var pm = Live2DFramework.getPlatformManager();
-
-    gl.deleteTexture(pm.texture);
-};
-
-LAppModel.prototype.preloadMotionGroup = function (name) {
-    var thisRef = this;
-
-    for (var i = 0; i < this.modelSetting.getMotionNum(name); i++) {
-        var file = this.modelSetting.getMotionFile(name, i);
-        this.loadMotion(file, this.modelHomeDir + file, function (motion) {
-            motion.setFadeIn(thisRef.modelSetting.getMotionFadeIn(name, i));
-            motion.setFadeOut(thisRef.modelSetting.getMotionFadeOut(name, i));
-        });
-    }
-};
-
-LAppModel.prototype.update = function () {
-    // console.log("--> LAppModel.update()");
-
-    if (this.live2DModel == null) {
-        if (_LAppDefine2.default.DEBUG_LOG) console.error("Failed to update.");
-
-        return;
-    }
-
-    var timeMSec = UtSystem.getUserTimeMSec() - this.startTimeMSec;
-    var timeSec = timeMSec / 1000.0;
-    var t = timeSec * 2 * Math.PI;
-
-    if (this.mainMotionManager.isFinished()) {
-
-        this.startRandomMotion(_LAppDefine2.default.MOTION_GROUP_IDLE, _LAppDefine2.default.PRIORITY_IDLE);
-    }
-
-    //-----------------------------------------------------------------		
-
-
-    this.live2DModel.loadParam();
-
-    var update = this.mainMotionManager.updateParam(this.live2DModel);
-    if (!update) {
-
-        if (this.eyeBlink != null) {
-            this.eyeBlink.updateParam(this.live2DModel);
-        }
-    }
-
-    this.live2DModel.saveParam();
-
-    //-----------------------------------------------------------------		
-
-
-    if (this.expressionManager != null && this.expressions != null && !this.expressionManager.isFinished()) {
-        this.expressionManager.updateParam(this.live2DModel);
-    }
-
-    this.live2DModel.addToParamFloat("PARAM_ANGLE_X", this.dragX * 30, 1);
-    this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", this.dragY * 30, 1);
-    this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", this.dragX * this.dragY * -30, 1);
-
-    this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", this.dragX * 10, 1);
-
-    this.live2DModel.addToParamFloat("PARAM_EYE_BALL_X", this.dragX, 1);
-    this.live2DModel.addToParamFloat("PARAM_EYE_BALL_Y", this.dragY, 1);
-
-    this.live2DModel.addToParamFloat("PARAM_ANGLE_X", Number(15 * Math.sin(t / 6.5345)), 0.5);
-    this.live2DModel.addToParamFloat("PARAM_ANGLE_Y", Number(8 * Math.sin(t / 3.5345)), 0.5);
-    this.live2DModel.addToParamFloat("PARAM_ANGLE_Z", Number(10 * Math.sin(t / 5.5345)), 0.5);
-    this.live2DModel.addToParamFloat("PARAM_BODY_ANGLE_X", Number(4 * Math.sin(t / 15.5345)), 0.5);
-    this.live2DModel.setParamFloat("PARAM_BREATH", Number(0.5 + 0.5 * Math.sin(t / 3.2345)), 1);
-
-    if (this.physics != null) {
-        this.physics.updateParam(this.live2DModel);
-    }
-
-    if (this.lipSync == null) {
-        this.live2DModel.setParamFloat("PARAM_MOUTH_OPEN_Y", this.lipSyncValue);
-    }
-
-    if (this.pose != null) {
-        this.pose.updateParam(this.live2DModel);
-    }
-
-    this.live2DModel.update();
-};
-
-LAppModel.prototype.setRandomExpression = function () {
-    var tmp = [];
-    for (var name in this.expressions) {
-        tmp.push(name);
-    }
-
-    var no = parseInt(Math.random() * tmp.length);
-
-    this.setExpression(tmp[no]);
-};
-
-LAppModel.prototype.startRandomMotion = function (name, priority) {
-    var max = this.modelSetting.getMotionNum(name);
-    var no = parseInt(Math.random() * max);
-    this.startMotion(name, no, priority);
-};
-
-LAppModel.prototype.startMotion = function (name, no, priority) {
-    // console.log("startMotion : " + name + " " + no + " " + priority);
-
-    var motionName = this.modelSetting.getMotionFile(name, no);
-
-    if (motionName == null || motionName == "") {
-        if (_LAppDefine2.default.DEBUG_LOG) console.error("Failed to motion.");
-        return;
-    }
-
-    if (priority == _LAppDefine2.default.PRIORITY_FORCE) {
-        this.mainMotionManager.setReservePriority(priority);
-    } else if (!this.mainMotionManager.reserveMotion(priority)) {
-        if (_LAppDefine2.default.DEBUG_LOG) console.log("Motion is running.");
-        return;
-    }
-
-    var thisRef = this;
-    var motion;
-
-    if (this.motions[name] == null) {
-        this.loadMotion(null, this.modelHomeDir + motionName, function (mtn) {
-            motion = mtn;
-
-            thisRef.setFadeInFadeOut(name, no, priority, motion);
-        });
-    } else {
-        motion = this.motions[name];
-
-        thisRef.setFadeInFadeOut(name, no, priority, motion);
-    }
-};
-
-LAppModel.prototype.setFadeInFadeOut = function (name, no, priority, motion) {
-    var motionName = this.modelSetting.getMotionFile(name, no);
-
-    motion.setFadeIn(this.modelSetting.getMotionFadeIn(name, no));
-    motion.setFadeOut(this.modelSetting.getMotionFadeOut(name, no));
-
-    if (_LAppDefine2.default.DEBUG_LOG) console.log("Start motion : " + motionName);
-
-    if (this.modelSetting.getMotionSound(name, no) == null) {
-        this.mainMotionManager.startMotionPrio(motion, priority);
-    } else {
-        var soundName = this.modelSetting.getMotionSound(name, no);
-        // var player = new Sound(this.modelHomeDir + soundName);
-
-        var snd = document.createElement("audio");
-        snd.src = this.modelHomeDir + soundName;
-
-        if (_LAppDefine2.default.DEBUG_LOG) console.log("Start sound : " + soundName);
-
-        snd.play();
-        this.mainMotionManager.startMotionPrio(motion, priority);
-    }
-};
-
-LAppModel.prototype.setExpression = function (name) {
-    var motion = this.expressions[name];
-
-    if (_LAppDefine2.default.DEBUG_LOG) console.log("Expression : " + name);
-
-    this.expressionManager.startMotion(motion, false);
-};
-
-LAppModel.prototype.draw = function (gl) {
-    //console.log("--> LAppModel.draw()");
-
-    // if(this.live2DModel == null) return;
-
-
-    _MatrixStack2.default.push();
-
-    _MatrixStack2.default.multMatrix(this.modelMatrix.getArray());
-
-    this.tmpMatrix = _MatrixStack2.default.getMatrix();
-    this.live2DModel.setMatrix(this.tmpMatrix);
-    this.live2DModel.draw();
-
-    _MatrixStack2.default.pop();
-};
-
-LAppModel.prototype.hitTest = function (id, testX, testY) {
-    var len = this.modelSetting.getHitAreaNum();
-    for (var i = 0; i < len; i++) {
-        if (id == this.modelSetting.getHitAreaName(i)) {
-            var drawID = this.modelSetting.getHitAreaID(i);
-
-            return this.hitTestSimple(drawID, testX, testY);
-        }
-    }
-
-    return false;
-};
-
-module.exports = LAppModel;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
-
-//============================================================
-//============================================================
-//  class PlatformManager     extend IPlatformManager
-//============================================================
-//============================================================
-function PlatformManager() {}
-
-//============================================================
-//    PlatformManager # loadBytes()
-//============================================================
-PlatformManager.prototype.loadBytes = function (path /*String*/, callback) {
-    var request = new XMLHttpRequest();
-    request.open("GET", path, true);
-    request.responseType = "arraybuffer";
-    request.onload = function () {
-        switch (request.status) {
-            case 200:
-                callback(request.response);
-                break;
-            default:
-                console.error("Failed to load (" + request.status + ") : " + path);
-                break;
-        }
-    };
-    request.send(null);
-    //return request;
-};
-
-//============================================================
-//    PlatformManager # loadString()
-//============================================================
-PlatformManager.prototype.loadString = function (path /*String*/) {
-
-    this.loadBytes(path, function (buf) {
-        return buf;
-    });
-};
-
-//============================================================
-//    PlatformManager # loadLive2DModel()
-//============================================================
-PlatformManager.prototype.loadLive2DModel = function (path /*String*/, callback) {
-    var model = null;
-
-    // load moc
-    this.loadBytes(path, function (buf) {
-        model = Live2DModelWebGL.loadModel(buf);
-        callback(model);
-    });
-};
-
-//============================================================
-//    PlatformManager # loadTexture()
-//============================================================
-PlatformManager.prototype.loadTexture = function (model /*ALive2DModel*/, no /*int*/, path /*String*/, callback) {
-    // load textures
-    var loadedImage = new Image();
-    loadedImage.src = path;
-
-    var thisRef = this;
-    loadedImage.onload = function () {
-        // create texture
-        var canvas = document.getElementById("glcanvas");
-        var gl = getWebGLContext(canvas, { premultipliedAlpha: true });
-        var texture = gl.createTexture();
-        if (!texture) {
-            console.error("Failed to generate gl texture name.");return -1;
-        }
-
-        if (model.isPremultipliedAlpha() == false) {
-            // 乗算済アルファテクスチャ以外の場合
-            gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
-        }
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, loadedImage);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-        gl.generateMipmap(gl.TEXTURE_2D);
-
-        model.setTexture(no, texture);
-
-        // テクスチャオブジェクトを解放
-        texture = null;
-
-        if (typeof callback == "function") callback();
-    };
-
-    loadedImage.onerror = function () {
-        console.error("Failed to load image : " + path);
-    };
-};
-
-//============================================================
-//    PlatformManager # parseFromBytes(buf)
-
-//============================================================
-PlatformManager.prototype.jsonParseFromBytes = function (buf) {
-
-    var jsonStr;
-
-    var bomCode = new Uint8Array(buf, 0, 3);
-    if (bomCode[0] == 239 && bomCode[1] == 187 && bomCode[2] == 191) {
-        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf, 3));
-    } else {
-        jsonStr = String.fromCharCode.apply(null, new Uint8Array(buf));
-    }
-
-    var jsonObj = JSON.parse(jsonStr);
-
-    return jsonObj;
-};
-
-//============================================================
-//    PlatformManager # log()
-//============================================================
-PlatformManager.prototype.log = function (txt /*String*/) {
-    //console.log(txt);
-};
-
-module.exports = PlatformManager;
-
-function getWebGLContext(canvas) {
-    var NAMES = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
-    for (var i = 0; i < NAMES.length; i++) {
-        try {
-            var ctx = canvas.getContext(NAMES[i], { premultipliedAlpha: true });
-            if (ctx) return ctx;
-        } catch (e) {}
-    }
-    return null;
-};
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+module.exports = __webpack_require__(3);
 
-
-var _Live2DFramework = __webpack_require__(3);
-
-function ModelSettingJson() {
-    this.NAME = "name";
-    this.ID = "id";
-    this.MODEL = "model";
-    this.TEXTURES = "textures";
-    this.HIT_AREAS = "hit_areas";
-    this.PHYSICS = "physics";
-    this.POSE = "pose";
-    this.EXPRESSIONS = "expressions";
-    this.MOTION_GROUPS = "motions";
-    this.SOUND = "sound";
-    this.FADE_IN = "fade_in";
-    this.FADE_OUT = "fade_out";
-    this.LAYOUT = "layout";
-    this.INIT_PARAM = "init_param";
-    this.INIT_PARTS_VISIBLE = "init_parts_visible";
-    this.VALUE = "val";
-    this.FILE = "file";
-
-    this.json = {};
-}
-
-ModelSettingJson.prototype.loadModelSetting = function (path, callback) {
-    var thisRef = this;
-    var pm = _Live2DFramework.Live2DFramework.getPlatformManager();
-    pm.loadBytes(path, function (buf) {
-        var str = String.fromCharCode.apply(null, new Uint8Array(buf));
-        thisRef.json = JSON.parse(str);
-        callback();
-    });
-};
-
-ModelSettingJson.prototype.getTextureFile = function (n) {
-    if (this.json[this.TEXTURES] == null || this.json[this.TEXTURES][n] == null) return null;
-
-    return this.json[this.TEXTURES][n];
-};
-
-ModelSettingJson.prototype.getModelFile = function () {
-    return this.json[this.MODEL];
-};
-
-ModelSettingJson.prototype.getTextureNum = function () {
-    if (this.json[this.TEXTURES] == null) return 0;
-
-    return this.json[this.TEXTURES].length;
-};
-
-ModelSettingJson.prototype.getHitAreaNum = function () {
-    if (this.json[this.HIT_AREAS] == null) return 0;
-
-    return this.json[this.HIT_AREAS].length;
-};
-
-ModelSettingJson.prototype.getHitAreaID = function (n) {
-    if (this.json[this.HIT_AREAS] == null || this.json[this.HIT_AREAS][n] == null) return null;
-
-    return this.json[this.HIT_AREAS][n][this.ID];
-};
-
-ModelSettingJson.prototype.getHitAreaName = function (n) {
-    if (this.json[this.HIT_AREAS] == null || this.json[this.HIT_AREAS][n] == null) return null;
-
-    return this.json[this.HIT_AREAS][n][this.NAME];
-};
-
-ModelSettingJson.prototype.getPhysicsFile = function () {
-    return this.json[this.PHYSICS];
-};
-
-ModelSettingJson.prototype.getPoseFile = function () {
-    return this.json[this.POSE];
-};
-
-ModelSettingJson.prototype.getExpressionNum = function () {
-    return this.json[this.EXPRESSIONS] == null ? 0 : this.json[this.EXPRESSIONS].length;
-};
-
-ModelSettingJson.prototype.getExpressionFile = function (n) {
-    if (this.json[this.EXPRESSIONS] == null) return null;
-    return this.json[this.EXPRESSIONS][n][this.FILE];
-};
-
-ModelSettingJson.prototype.getExpressionName = function (n) {
-    if (this.json[this.EXPRESSIONS] == null) return null;
-    return this.json[this.EXPRESSIONS][n][this.NAME];
-};
-
-ModelSettingJson.prototype.getLayout = function () {
-    return this.json[this.LAYOUT];
-};
-
-ModelSettingJson.prototype.getInitParamNum = function () {
-    return this.json[this.INIT_PARAM] == null ? 0 : this.json[this.INIT_PARAM].length;
-};
-
-ModelSettingJson.prototype.getMotionNum = function (name) {
-    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null) return 0;
-
-    return this.json[this.MOTION_GROUPS][name].length;
-};
-
-ModelSettingJson.prototype.getMotionFile = function (name, n) {
-    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null) return null;
-
-    return this.json[this.MOTION_GROUPS][name][n][this.FILE];
-};
-
-ModelSettingJson.prototype.getMotionSound = function (name, n) {
-    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null || this.json[this.MOTION_GROUPS][name][n][this.SOUND] == null) return null;
-
-    return this.json[this.MOTION_GROUPS][name][n][this.SOUND];
-};
-
-ModelSettingJson.prototype.getMotionFadeIn = function (name, n) {
-    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null || this.json[this.MOTION_GROUPS][name][n][this.FADE_IN] == null) return 1000;
-
-    return this.json[this.MOTION_GROUPS][name][n][this.FADE_IN];
-};
-
-ModelSettingJson.prototype.getMotionFadeOut = function (name, n) {
-    if (this.json[this.MOTION_GROUPS] == null || this.json[this.MOTION_GROUPS][name] == null || this.json[this.MOTION_GROUPS][name][n] == null || this.json[this.MOTION_GROUPS][name][n][this.FADE_OUT] == null) return 1000;
-
-    return this.json[this.MOTION_GROUPS][name][n][this.FADE_OUT];
-};
-
-ModelSettingJson.prototype.getInitParamID = function (n) {
-    if (this.json[this.INIT_PARAM] == null || this.json[this.INIT_PARAM][n] == null) return null;
-
-    return this.json[this.INIT_PARAM][n][this.ID];
-};
-
-ModelSettingJson.prototype.getInitParamValue = function (n) {
-    if (this.json[this.INIT_PARAM] == null || this.json[this.INIT_PARAM][n] == null) return NaN;
-
-    return this.json[this.INIT_PARAM][n][this.VALUE];
-};
-
-ModelSettingJson.prototype.getInitPartsVisibleNum = function () {
-    return this.json[this.INIT_PARTS_VISIBLE] == null ? 0 : this.json[this.INIT_PARTS_VISIBLE].length;
-};
-
-ModelSettingJson.prototype.getInitPartsVisibleID = function (n) {
-    if (this.json[this.INIT_PARTS_VISIBLE] == null || this.json[this.INIT_PARTS_VISIBLE][n] == null) return null;
-    return this.json[this.INIT_PARTS_VISIBLE][n][this.ID];
-};
-
-ModelSettingJson.prototype.getInitPartsVisibleValue = function (n) {
-    if (this.json[this.INIT_PARTS_VISIBLE] == null || this.json[this.INIT_PARTS_VISIBLE][n] == null) return NaN;
-
-    return this.json[this.INIT_PARTS_VISIBLE][n][this.VALUE];
-};
-
-module.exports = ModelSettingJson;
 
 /***/ })
 /******/ ]);

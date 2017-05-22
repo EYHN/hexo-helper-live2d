@@ -230,13 +230,13 @@ function mouseEvent(e)
 {
     e.preventDefault();
     if (e.type == "mousewheel") {
-        if (e.clientX < 0 || canvas.clientWidth < e.clientX || 
-        e.clientY < 0 || canvas.clientHeight < e.clientY)
-        {
-            return;
-        }
-        if (e.wheelDelta > 0) modelScaling(1.1); 
-        else modelScaling(0.9); 
+        // if (e.clientX < 0 || canvas.clientWidth < e.clientX || 
+        // e.clientY < 0 || canvas.clientHeight < e.clientY)
+        // {
+        //     return;
+        // }
+        // if (e.wheelDelta > 0) modelScaling(1.1); 
+        // else modelScaling(0.9); 
     } else if (e.type == "mousedown") {
         if("button" in e && e.button != 0) return;
         modelTurnHead(e);
