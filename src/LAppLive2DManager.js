@@ -3,7 +3,7 @@ import PlatformManager from "./PlatformManager"
 import LAppModel from "./LAppModel"
 import LAppDefine from "./LAppDefine"
 
-function LAppLive2DManager() {
+export default function LAppLive2DManager() {
   // console.log("--> LAppLive2DManager()");
 
 
@@ -28,7 +28,7 @@ LAppLive2DManager.prototype.createModel = function () {
 }
 
 
-LAppLive2DManager.prototype.changeModel = function (gl) {
+LAppLive2DManager.prototype.changeModel = function (gl, modelurl) {
   // console.log("--> LAppLive2DManager.update(gl)");
 
   if (this.reloadFlg) {
@@ -38,7 +38,7 @@ LAppLive2DManager.prototype.changeModel = function (gl) {
     var thisRef = this;
     this.releaseModel(0, gl);
     this.createModel();
-    this.models[0].load(gl, LAppDefine.MODEL);
+    this.models[0].load(gl, modelurl);
   }
 };
 
@@ -127,5 +127,3 @@ LAppLive2DManager.prototype.tapEvent = function (x, y) {
 
   return true;
 };
-
-module.exports = LAppLive2DManager;

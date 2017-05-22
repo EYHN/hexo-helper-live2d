@@ -5,13 +5,14 @@
  *
  *  (c) Live2D Inc. All rights reserved.
  */
+import {getContext} from "./webglcontext"
 
 //============================================================
 //============================================================
 //  class PlatformManager     extend IPlatformManager
 //============================================================
 //============================================================
-function PlatformManager()
+export default function PlatformManager()
 {
 
 }
@@ -77,8 +78,7 @@ PlatformManager.prototype.loadTexture     = function(model/*ALive2DModel*/, no/*
     var thisRef = this;
     loadedImage.onload = function() {
         // create texture
-        var canvas = document.getElementById("glcanvas");
-        var gl = getWebGLContext(canvas, {premultipliedAlpha : true});
+        var gl = getContext();
         var texture = gl.createTexture();	 
         if (!texture){ console.error("Failed to generate gl texture name."); return -1; }
 
@@ -141,8 +141,6 @@ PlatformManager.prototype.log             = function(txt/*String*/)
 {
     //console.log(txt);
 }
-
-module.exports = PlatformManager;
 
 function getWebGLContext(canvas)
 {

@@ -1,0 +1,26 @@
+{
+  "version": "Live2DViewerEX Config 1.0",
+  "model": "z16.moc",
+  "textures": [
+    "z16.1024/texture_00.png"
+  ],
+  "layout": {
+    "center_x": 0.0,
+    "center_y": 0.0,
+    "width": 2.0
+  },
+  "motions": {
+    "idle": [
+      {
+        "file": "motions/idle/idle.mtn"
+      }
+    ]
+  },
+  "expressions": [
+    {
+      "name": "F00.exp.json",
+      "file": "expressions/F00.exp.json"
+    }
+  ],
+  "physics": "z16.physics.json"
+}

@@ -3,6 +3,8 @@
 
 # hexo-helper-live2d
 
+> 现已更新 2.0
+
 [English README](./Readme_en.md) by [KiritoXF](https://github.com/KiritoXF)
 
 <br>
@@ -13,6 +15,47 @@
 npm install -save hexo-helper-live2d
 ```
 
+## 截图:
+
+#### Epsilon2.1
+![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
+
+#### Gantzert_Felixander
+![](https://huaji8.top/img/live2d/Gantzert_Felixander.gif)
+
+#### haru
+![](https://huaji8.top/img/live2d/haru.gif)
+
+#### miku
+![](https://huaji8.top/img/live2d/miku.gif)
+
+#### ni-j
+![](https://huaji8.top/img/live2d/ni-j.gif)
+
+#### nico
+![](https://huaji8.top/img/live2d/nico.gif)
+
+#### nietzche
+![](https://huaji8.top/img/live2d/nietzche.gif)
+
+#### nipsilon
+![](https://huaji8.top/img/live2d/nipsilon.gif)
+
+#### nito
+![](https://huaji8.top/img/live2d/nito.gif)
+
+#### shizuku
+![](https://huaji8.top/img/live2d/shizuku.gif)
+
+#### tsumiki
+![](https://huaji8.top/img/live2d/tsumiki.gif)
+
+#### wanko
+![](https://huaji8.top/img/live2d/wanko.gif)
+
+#### z16
+![](https://huaji8.top/img/live2d/z16.gif)
+
 ## 食用方法：
 
 ```
@@ -22,25 +65,59 @@ npm install -save hexo-helper-live2d
 将下面的代码加入主题。
 
 ```
-<canvas id="live2dcanvas" width="300" height="600" class="live2d"></canvas>
-<%- live2d("live2dcanvas") %>
-<style>
-.live2d{
-  position: fixed;
-	bottom: -30px;
-	right: 0px;
-	z-index: 999;
-	width: 150px;
-	height: 300px;
-  pointer-events: none;
-}
-</style>
+<%- live2d() %>
 ```
 
+## 配置
+
+有2种方法
+
+#### 第一种
+
+在 ejs 中添加参数
+
+``` js
+<%- live2d({
+	model: "nipsilon"
+}) %>
+```
+
+#### 第二种
+
+在 hexo 的 _config.yml 中添加参数
+
+``` yml
+live2d:
+  model: nipsilon
+  bottom: -60
+```
+
+> 第二种配置会覆盖第一种
+
+## 配置项
+
+- model 模型名称 默认值: z16
+	- Gantzert_Felixander
+	- Epsilon2.1
+	- haru
+	- miku
+	- ni-j
+	- nico
+	- nito
+	- nipsilon
+	- nietzsche
+	- shizuku
+	- tsumiki
+	- wanko
+	- z16
+- width 宽度 默认值: 150
+- height 高度 默认值： 300
+- className `<canvas>` 元素的类名 默认值： live2d
+- id `<canvas>` 元素的id 默认值： live2dcanvas
+- bottom `<canvas>` 元素的底部偏移 默认值： -20
+	如果嫌模型位置不正确 可以调整这个参数
+
 Enjoy!
-
-暂时还不能添加其他模型，不过很快就会更新，所以请点个watch实时追踪更新吧！
-
 
 > 我第一个hexo插件,点个star,点个watch吧。
 
@@ -49,6 +126,10 @@ Github: [https://github.com/EYHN/hexo-helper-live2d](https://github.com/EYHN/hex
 issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/EYHN/hexo-helper-live2d/issues)
 
 求英文好的小伙伴提交一个英文版的README，直接提交PR就可以啦!
+
+## Todo
+
+- 实现互动对话框
 
 ## About me
 

@@ -8,7 +8,7 @@ import MatrixStack from "./lib/MatrixStack"
 //  class LAppModel     extends L2DBaseModel         
 //============================================================
 //============================================================
-function LAppModel()
+export default function LAppModel()
 {
     //L2DBaseModel.apply(this, arguments);
     L2DBaseModel.prototype.constructor.call(this);
@@ -450,5 +450,3 @@ LAppModel.prototype.hitTest = function(id, testX, testY)
     
     return false; 
 }
-
-module.exports = LAppModel;

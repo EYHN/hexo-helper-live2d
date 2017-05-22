@@ -8,6 +8,8 @@ import LAppDefine from "./LAppDefine"
 
 import MatrixStack from "./lib/MatrixStack"
 
+import {setContext} from "./webglcontext"
+
 // window.onerror = function (msg, url, line, col, error) {
 //   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
 //   console.error(errmsg);
@@ -41,23 +43,25 @@ let lastMouseY = 0;
 
 let isModelShown = 0;
 
+let modelurl = "";
+
 function initL2dCanvas(canvasId) {
   canvas = document.getElementById(canvasId);
   if (canvas.addEventListener) {
-    canvas.addEventListener("mousewheel", mouseEvent);
-    canvas.addEventListener("click", mouseEvent);
-    canvas.addEventListener("mousedown", mouseEvent);
-    canvas.addEventListener("mousemove", mouseEvent);
-    canvas.addEventListener("mouseup", mouseEvent);
-    canvas.addEventListener("mouseout", mouseEvent);
-    canvas.addEventListener("contextmenu", mouseEvent);
-    canvas.addEventListener("touchstart", touchEvent);
-    canvas.addEventListener("touchend", touchEvent);
-    canvas.addEventListener("touchmove", touchEvent);
+    //canvas.addEventListener("mousewheel", mouseEvent);
+    window.addEventListener("click", mouseEvent);
+    window.addEventListener("mousedown", mouseEvent);
+    window.addEventListener("mousemove", mouseEvent);
+    window.addEventListener("mouseup", mouseEvent);
+    window.addEventListener("mouseleave", mouseEvent);
+    //canvas.addEventListener("contextmenu", mouseEvent);
+    window.addEventListener("touchstart", touchEvent);
+    window.addEventListener("touchend", touchEvent);
+    window.addEventListener("touchmove", touchEvent);
   }
 }
 
-function init() {
+function init(modelurl) {
   let width = canvas.width;
   let height = canvas.height;
 
@@ -90,13 +94,14 @@ function init() {
   deviceToScreen.multScale(2 / width, -2 / width);
 
   gl = getWebGLContext();
+  setContext(gl);
   if (!gl) {
     console.error("Failed to create WebGL context.");
     return;
   }
   window.Live2D.setGL(gl);
   gl.clearColor(0.0, 0.0, 0.0, 0.0);
-  changeModel();
+  changeModel(modelurl);
   startDraw();
 }
 
@@ -144,11 +149,11 @@ function draw()
     MatrixStack.pop();
 }
 
-function changeModel()
+function changeModel(modelurl)
 {
     live2DMgr.reloadFlg = true;
     live2DMgr.count++;
-    live2DMgr.changeModel(gl);
+    live2DMgr.changeModel(gl,modelurl);
 }
 
 function modelScaling(scale)
@@ -179,7 +184,7 @@ function modelTurnHead(event)
 {
     drag = true;
     
-    let rect = event.target.getBoundingClientRect();
+    let rect = canvas.getBoundingClientRect();
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
@@ -199,7 +204,7 @@ function modelTurnHead(event)
 
 function followPointer(event)
 {    
-    let rect = event.target.getBoundingClientRect();
+    let rect = canvas.getBoundingClientRect();
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
@@ -228,7 +233,7 @@ function lookFront()
 
 function mouseEvent(e)
 {
-    e.preventDefault();
+    //e.preventDefault();
     if (e.type == "mousewheel") {
         // if (e.clientX < 0 || canvas.clientWidth < e.clientX || 
         // e.clientY < 0 || canvas.clientHeight < e.clientY)
@@ -239,16 +244,14 @@ function mouseEvent(e)
         // else modelScaling(0.9); 
     } else if (e.type == "mousedown") {
         if("button" in e && e.button != 0) return;
-        modelTurnHead(e);
+        // modelTurnHead(e);
     } else if (e.type == "mousemove") {
-        followPointer(e);
+        modelTurnHead(e);
     } else if (e.type == "mouseup") {
         if("button" in e && e.button != 0) return;
+        // lookFront();
+    } else if (e.type == "mouseleave") {
         lookFront();
-    } else if (e.type == "mouseout") {
-        lookFront();
-    } else if (e.type == "contextmenu") {
-        changeModel();
     }
 }
 
@@ -314,5 +317,9 @@ function getWebGLContext()
     return null;
 };
 
-initL2dCanvas("glcanvas");
-init();
+function loadlive2d(id,modelurl) {
+    initL2dCanvas(id);
+    init(modelurl);
+}
+
+window.loadlive2d = loadlive2d;
