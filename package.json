@@ -1,0 +1,20 @@
+{
+  "name": "live2d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.5.0",
+    "html-webpack-plugin": "^2.28.0",
+    "source-map-loader": "^0.2.1",
+    "webpack": "^2.5.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "EYHN",
+  "license": "GPL-2.0"
+}
