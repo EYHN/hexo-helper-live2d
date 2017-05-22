@@ -15,6 +15,8 @@
 npm install -save hexo-helper-live2d
 ```
 
+示例： [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+
 ## 截图:
 
 #### Epsilon2.1
