@@ -1,8 +1,8 @@
 {
-  "name": "live2d",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./src/index.js",
+  "name": "hexo-helper-live2d",
+  "version": "2.0.0",
+  "description": "为你的hexo添加色气满满的live2d吧！",
+  "main": "./index.js",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
@@ -12,9 +12,17 @@
     "source-map-loader": "^0.2.1",
     "webpack": "^2.5.1"
   },
+  "dependencies": {
+    "hexo-fs": "^0.1.6",
+    "path": "^0.12.7"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "EYHN",
-  "license": "GPL-2.0"
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/EYHN/hexo-helper-live2d/issues"
+  },
+  "homepage": "https://github.com/EYHN/hexo-helper-live2d#readme"
 }

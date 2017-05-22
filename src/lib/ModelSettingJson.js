@@ -1,6 +1,6 @@
 import {Live2DFramework} from "./Live2DFramework"
 
-function ModelSettingJson()
+export default function ModelSettingJson()
 {    
     this.NAME = "name";
     this.ID = "id";
@@ -231,5 +231,3 @@ ModelSettingJson.prototype.getInitPartsVisibleValue = function(n)
     
     return this.json[this.INIT_PARTS_VISIBLE][n][this.VALUE];
 }
-
-module.exports = ModelSettingJson;

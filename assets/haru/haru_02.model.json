@@ -1,0 +1,47 @@
+{
+	"type":"Live2D Model Setting",
+	"model":"haru_02.moc",
+	"textures":
+	[
+		"haru_02.1024/texture_00.png",
+		"haru_02.1024/texture_01.png",
+		"haru_02.1024/texture_02.png"
+	],
+	"physics":"haru.physics.json",
+	"pose":"haru.pose.json",
+	"expressions":
+	[
+	 {"name":"f01","file":"expressions/f01.exp.json"},
+	 {"name":"f05","file":"expressions/f05.exp.json"},
+	 {"name":"f06","file":"expressions/f06.exp.json"},
+	 {"name":"f07","file":"expressions/f07.exp.json"},
+	 {"name":"f08","file":"expressions/f08.exp.json"}
+	],
+	"layout":
+	{
+		"center_x":-0.5,
+		"y":1,
+		"width":2
+	},
+	"hit_areas":
+	[
+		{"name":"head", "id":"D_REF.HEAD"},
+		{"name":"body", "id":"D_REF.BODY"}
+	],
+	"motions":
+	{
+		"idle":
+		[
+			{"file":"motions/idle_01.mtn" ,"fade_in":2000, "fade_out":2000},
+			{"file":"motions/idle_02.mtn" ,"fade_in":2000, "fade_out":2000}
+		],
+		"tap_body":
+		[
+			{ "file":"motions/tapBody_05.mtn" },
+			{ "file":"motions/tapBody_06.mtn" },
+			{ "file":"motions/tapBody_07.mtn" },
+			{ "file":"motions/tapBody_08.mtn" },
+			{ "file":"motions/tapBody_09.mtn" }
+		]
+	}
+}

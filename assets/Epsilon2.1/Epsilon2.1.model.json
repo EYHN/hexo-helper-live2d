@@ -1,0 +1,45 @@
+{
+	"version":"Sample 1.0.0",
+	"model":"Epsilon2.1.moc",
+	"textures":[
+		"Epsilon2.1.2048/texture_00.png"
+	],
+	"layout":
+	{
+		"center_x":0.0,
+		"y":1,
+		"width":2
+	},
+	"expressions":[
+		{"name":"f04.exp.json","file":"expressions/f04.exp.json"},
+		{"name":"f05.exp.json","file":"expressions/f05.exp.json"},
+		{"name":"f06.exp.json","file":"expressions/f06.exp.json"},
+		{"name":"f07.exp.json","file":"expressions/f07.exp.json"},
+		{"name":"f08.exp.json","file":"expressions/f08.exp.json"},
+		{"name":"f01.exp.json","file":"expressions/f01.exp.json"},
+		{"name":"f02.exp.json","file":"expressions/f02.exp.json"},
+		{"name":"f03.exp.json","file":"expressions/f03.exp.json"}
+	],
+	"motions":{
+		"":[
+			{"file":"motions/Epsilon2.1_m_01.mtn"},
+			{"file":"motions/Epsilon2.1_m_02.mtn"},
+			{"file":"motions/Epsilon2.1_m_03.mtn"},
+			{"file":"motions/Epsilon2.1_m_04.mtn"},
+			{"file":"motions/Epsilon2.1_m_05.mtn"},
+			{"file":"motions/Epsilon2.1_m_06.mtn"},
+			{"file":"motions/Epsilon2.1_m_07.mtn"},
+			{"file":"motions/Epsilon2.1_m_08.mtn"},
+			{"file":"motions/Epsilon2.1_m_sp_01.mtn"},
+			{"file":"motions/Epsilon2.1_m_sp_02.mtn"},
+			{"file":"motions/Epsilon2.1_m_sp_03.mtn"},
+			{"file":"motions/Epsilon2.1_m_sp_04.mtn"},
+			{"file":"motions/Epsilon2.1_m_sp_05.mtn"},
+			{"file":"motions/Epsilon2.1_shake_01.mtn"}
+		],
+		"idle":[
+			{"file":"motions/Epsilon2.1_idle_01.mtn"}
+		]
+	},
+	"physics":"Epsilon2.1.physics.json"
+}
