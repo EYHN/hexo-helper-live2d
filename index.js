@@ -68,6 +68,6 @@ hexo.extend.helper.register('live2d', function (config) {
         bottom: ${config.bottom}px;
       }
     </style>
-    <script>loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("live2d/assets/",models[config.model]))})</script>
+    <script>loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))})</script>
   `
 });

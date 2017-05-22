@@ -1,5 +1,7 @@
 var webpack = require('webpack');
+var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 var HtmlWebpackConfig = {
     title: 'live2d',
@@ -18,34 +20,28 @@ module.exports = {
         path: __dirname + "/dist"
     },
 
-    // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
 
     plugins: [
-        new HtmlWebpackPlugin(HtmlWebpackConfig)
+        new HtmlWebpackPlugin(HtmlWebpackConfig),
+        new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
     ],
 
     resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
     },
 
     module: {
         rules: [
             {
-                test: /\.(js)$/,
-                exclude: /(node_modules|bower_components)/,
+                test: /\.js$/,
+                exclude: path.resolve(__dirname, "node_modules"),
                 use: [{
                     loader: 'babel-loader',
                     query: {
                         presets: ["env"]
                     }
                 }],
-            },
-            {
-                test: /\.js$/,
-                enforce: "pre",
-                use: [{ loader: 'source-map-loader' }]
             }
         ]
     }
