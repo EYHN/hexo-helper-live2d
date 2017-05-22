@@ -257,7 +257,6 @@ function mouseEvent(e)
 
 function touchEvent(e)
 {
-    e.preventDefault();
     var touch = e.touches[0];
     if (e.type == "touchstart") {
         if (e.touches.length == 1) modelTurnHead(touch);
