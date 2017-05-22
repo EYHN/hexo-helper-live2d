@@ -41,7 +41,7 @@ hexo.extend.generator.register('live2d', function (locals) {
 });
 
 registerDir('live2d/assets/', path.resolve(__dirname, './assets'));
-registerFile('live2d/script', path.resolve(__dirname, './dist/bundle.js'))
+registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'))
 
 hexo.extend.helper.register('live2d', function (config) {
   var config = Object.assign(
@@ -57,7 +57,7 @@ hexo.extend.helper.register('live2d', function (config) {
     hexo.config.live2d
   );
   return `
-    <script type="text/javascript" src="/live2d/script"></script>
+    <script type="text/javascript" src="/live2d/script.js"></script>
     <canvas id="${config.id}" width="${config.width}" height="${config.height}" class="${config.className}"></canvas>
     <style>
       #${config.id} {
