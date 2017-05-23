@@ -1,0 +1,9 @@
+{
+	"version":"Sample 1.0.0",
+	"model":"hijiki.moc",
+	"textures":[
+		"hijiki.2048/texture_00.png"
+	],
+	"project_settings":"hijiki.settings.json",
+	"name":"hijiki"
+}

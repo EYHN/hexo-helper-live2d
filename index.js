@@ -18,6 +18,12 @@ var models = {
   "tsumiki": "tsumiki/tsumiki.model.json",
   "wanko": "wanko/wanko.model.json",
   "z16": "z16/z16.model.json",
+  "hibiki": "hibiki/hibiki.model.json",
+  "koharu": "koharu/koharu.model.json",
+  "haruto": "haruto/haruto.model.json",
+  "Unitychan": "Unitychan/unitychan.model.json",
+  "tororo": "tororo/tororo.model.json",
+  "hijiki": "hijiki/hijiki.model.json",
 }
 
 function registerFile(pathname, file) {

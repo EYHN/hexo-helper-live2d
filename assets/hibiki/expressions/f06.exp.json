@@ -1,0 +1,12 @@
+{
+	"type":"Live2D Expression",
+	"fade_in":500,
+	"fade_out":500,
+	"params":[
+		{"id":"PARAM_BROW_L_ANGLE","val":0.1},
+		{"id":"PARAM_BROW_R_ANGLE","val":0.16},
+		{"id":"PARAM_BROW_L_FORM","val":-0.51},
+		{"id":"PARAM_BROW_R_FORM","val":-0.51},
+		{"id":"PARAM_MOUTH_FORM","val":0.5,"def":1}
+	]
+}

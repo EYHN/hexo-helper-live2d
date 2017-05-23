@@ -1,0 +1,9 @@
+{
+	"version":"Sample 1.0.0",
+	"model":"tororo.moc",
+	"textures":[
+		"tororo.2048/texture_00.png"
+	],
+	"project_settings":"tororo.settings.json",
+	"name":"tororo"
+}
