@@ -53,7 +53,7 @@ function initL2dCanvas(canvasId) {
     window.addEventListener("mousedown", mouseEvent);
     window.addEventListener("mousemove", mouseEvent);
     window.addEventListener("mouseup", mouseEvent);
-    window.addEventListener("mouseleave", mouseEvent);
+    document.addEventListener("mouseleave", mouseEvent);
     //canvas.addEventListener("contextmenu", mouseEvent);
     window.addEventListener("touchstart", touchEvent);
     window.addEventListener("touchend", touchEvent);
