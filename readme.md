@@ -58,6 +58,24 @@ npm install -save hexo-helper-live2d
 #### z16
 ![](https://huaji8.top/img/live2d/z16.gif)
 
+#### hibiki
+![](https://huaji8.top/img/live2d/hibiki.gif)
+
+#### koharu
+![](https://huaji8.top/img/live2d/koharu.gif)
+
+#### haruto
+![](https://huaji8.top/img/live2d/haruto.gif)
+
+#### Unitychan
+![](https://huaji8.top/img/live2d/Unitychan.gif)
+
+#### tororo
+![](https://huaji8.top/img/live2d/tororo.gif)
+
+#### hijiki
+![](https://huaji8.top/img/live2d/hijiki.gif)
+
 ## 食用方法：
 
 ```
@@ -112,6 +130,12 @@ live2d:
 	- tsumiki
 	- wanko
 	- z16
+	- hibiki
+	- koharu
+	- haruto
+	- Unitychan
+	- tororo
+	- hijiki
 - width 宽度 默认值: 150
 - height 高度 默认值： 300
 - className `<canvas>` 元素的类名 默认值： live2d
