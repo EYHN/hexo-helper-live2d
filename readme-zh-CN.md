@@ -84,6 +84,8 @@ npm install -save hexo-helper-live2d
 
 将下面的代码加入主题。
 
+通常添加在 `layout/layout.ejs` 或 `layout/_layout.swig` 中的 `</body>` 之前
+
 ejs:
 ``` ejs
 <%- live2d() %>

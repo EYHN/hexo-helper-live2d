@@ -82,7 +82,9 @@ Demo： [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/liv
 npm install -save hexo-helper-live2d
 ```
 
-Add the next line to your hexo theme:
+Add the next line to your hexo theme.
+
+Usually added before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
 
 ejs:
 ``` ejs
