@@ -3,19 +3,21 @@
 
 # hexo-helper-live2d
 
-> Updated to Version 2.0
+> 现已更新 2.0
+
+[English README](./readme.md) by [@gwzz](https://github.com/gwzz)
 
 <br>
 
-Add the Sseexxyyy live2d to your hexo!
+为你的hexo添加色气满满的live2d吧！
 
 ```
 npm install -save hexo-helper-live2d
 ```
 
-Demo： [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+示例： [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
-## Screenshots:
+## 截图:
 
 #### Epsilon2.1
 ![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
@@ -74,35 +76,41 @@ Demo： [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/liv
 #### hijiki
 ![](https://huaji8.top/img/live2d/hijiki.gif)
 
-## Installation:
+## 食用方法：
 
 ```
 npm install -save hexo-helper-live2d
 ```
 
-Add the next line to your hexo theme:
+将下面的代码加入主题。
 
-```
+ejs:
+``` ejs
 <%- live2d() %>
 ```
 
-## Usage:
+swig:
+``` swig
+{{ live2d() }}
+```
 
-Two options:
+## 配置
 
-#### Option 1
+有2种方法
 
-Add configuration in `ejs`
+#### 第一种
 
-``` js
+在主题中添加参数
+
+``` ejs
 <%- live2d({
 	model: "nipsilon"
 }) %>
 ```
 
-#### Option 2
+#### 第二种
 
-Add configuration in hexo's _config.yml file
+在 hexo 的 _config.yml 中添加参数
 
 ``` yml
 live2d:
@@ -110,11 +118,11 @@ live2d:
   bottom: -60
 ```
 
-> Notes: Option 2 has higher priority, it will overwrite Option 1.
+> 第二种配置会覆盖第一种
 
-## Configuration
+## 配置项
 
-- model (default: z16)
+- model 模型名称 默认值: z16
 	- Gantzert_Felixander
 	- Epsilon2.1
 	- haru
@@ -134,25 +142,26 @@ live2d:
 	- Unitychan
 	- tororo
 	- hijiki
-- width  default: 150
-- height  default: 300
-- className `<canvas>`  default: live2d
-- id `<canvas>`  default: live2dcanvas
-- bottom `<canvas>`  default: -20
-	Change this variable to adjust the position of model 
+- width 宽度 默认值: 150
+- height 高度 默认值： 300
+- className `<canvas>` 元素的类名 默认值： live2d
+- id `<canvas>` 元素的id 默认值： live2dcanvas
+- bottom `<canvas>` 元素的底部偏移 默认值： -20
+	如果嫌模型位置不正确 可以调整这个参数
 
-Enjoy!:beer:
+Enjoy!
 
-> This is my first hexo plugin, star :star: and watch :eyeglasses:.
+> 我第一个hexo插件,点个star,点个watch吧。
 
 Github: [https://github.com/EYHN/hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d)
 
 issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/EYHN/hexo-helper-live2d/issues)
 
+求英文好的小伙伴提交一个英文版的README，直接提交PR就可以啦!
 
 ## Todo
 
-- Implement interactive dialogs.
+- 实现互动对话框
 
 ## About me
 
@@ -160,9 +169,10 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 [![QQ](https://img.shields.io/badge/QQ-1106996185-blue.svg?style=flat-square)](http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes)
 [![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
 
-## License
+## License 许可证
 
 [![license](https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg?style=flat-square)](https://raw.githubusercontent.com/EYHN/hexo-helper-live2d/master/LICENSE)
 
 Open sourced under the GPL v2.0 license.
 
+根据 GPL V2.0 许可证开源。
