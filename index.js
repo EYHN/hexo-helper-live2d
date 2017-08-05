@@ -64,7 +64,9 @@ hexo.extend.helper.register('live2d', function (config) {
   );
   return `
     <script type="text/javascript" src="/live2d/script.js"></script>
-    <canvas id="${config.id}" width="${config.width}" height="${config.height}" class="${config.className}"></canvas>
+    <div id="hexo-helper-live2d@3.0.0">
+      <canvas id="${config.id}" width="${config.width}" height="${config.height}" class="${config.className}"></canvas>
+    </div>
     <style>
       #${config.id} {
         position: fixed;
@@ -73,7 +75,19 @@ hexo.extend.helper.register('live2d', function (config) {
         pointer-events: none;
         bottom: ${config.bottom}px;
       }
+      live2d-message-dialog {
+        position: fixed;
+        right: ${config.width - 30}px;
+        bottom: ${config.height - 70}px;
+        z-index: 99999;
+        font-size: 20px;
+      }
     </style>
-    <script>loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))})</script>
+    <script>
+      setTimeout(function() {
+        loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))});
+        loadMessageDialog("hexo-helper-live2d@3.0.0");
+      },0)
+    </script>
   `
 });

@@ -10,6 +10,8 @@ import MatrixStack from "./lib/MatrixStack"
 
 import {setContext} from "./webglcontext"
 
+import "./message"
+
 // window.onerror = function (msg, url, line, col, error) {
 //   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
 //   console.error(errmsg);
