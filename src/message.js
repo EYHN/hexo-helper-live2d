@@ -3,7 +3,8 @@ require('./style/message.scss')
 const htmltext = require('./template/message.html');
 
 const defaultOption = {
-    tagName: "live2d-message-dialog"
+    tagName: "live2d-message-dialog",
+    left: false
 };
 
 let RootElement;
@@ -20,6 +21,9 @@ function autoFitMessage() {
 function loadMessageDialog(targetID, option) {
     option = Object.assign({}, defaultOption, option)
     RootElement = document.createElement(option.tagName);
+    if (option.left) {
+        RootElement.classList.add("l2m-left");
+    }
     RootElement.innerHTML = htmltext;
     ElementLinks = {
         message: RootElement.getElementsByClassName("l2m-message")[0],

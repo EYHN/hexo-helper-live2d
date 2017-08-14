@@ -9,6 +9,11 @@
     100% { transform: scale(1) translateY(0em) translateX(0); }
 }
 
+@keyframes l2m-main-left {
+    0% { transform: scale(0) translateY(1.25em) translateX(-100%); }
+    100% { transform: scale(1) translateY(0em) translateX(0); }
+}
+
 live2d-message-dialog {
     *,
 	*::before,
@@ -21,7 +26,7 @@ live2d-message-dialog {
         min-width: 1.5em;
         height: 1.25em;
         width: 1.7em;
-        background: rgba(206,206,206,0.8);
+        background: rgba(242, 242, 242, 0.8);
         border-radius: 1em;
         line-height: 1.25em;
         border-bottom-right-radius: 0;
@@ -31,6 +36,11 @@ live2d-message-dialog {
         transition: width 0.5s cubic-bezier(.16,1.43,.47,1.14), height 0.5s cubic-bezier(.16,1.43,.47,1.14);
         overflow: hidden;
         box-sizing: content-box;
+    }
+    &.l2m-left .l2m-main {
+        animation-name:  l2m-main-left;
+        border-radius: 1em;
+        border-bottom-left-radius: 0;
     }
     .l2m-loading {
         position: relative;
