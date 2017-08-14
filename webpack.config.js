@@ -42,7 +42,57 @@ module.exports = {
                         presets: ["env"]
                     }
                 }],
-            }
+            },
+            {
+                test: /\.(scss)$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: { sourceMap: true }
+                    },
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            sourceMap: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(html)$/,
+                use: {
+                    loader: 'html-loader',
+                    options: {
+                        minimize: true
+                    }
+                }
+            },
         ]
+    },
+    devServer: {
+        port: process.env.PORT || 8888,
+        host: 'localhost',
+        publicPath: '/',
+        contentBase: './src',
+        historyApiFallback: true,
+        open: true,
+        watchContentBase: true,
+        compress: true,
+        proxy: {
+            // OPTIONAL: proxy configuration:
+            // '/optional-prefix/**': { // path pattern to rewrite
+            //   target: 'http://target-host.com',
+            //   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
+            // }
+        }
     }
 }

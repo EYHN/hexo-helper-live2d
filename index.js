@@ -57,23 +57,58 @@ hexo.extend.helper.register('live2d', function (config) {
       height: 300,
       className: "live2d",
       id: "live2dcanvas",
-      bottom: -20
+      bottom: -20,
+      left: false,
+      messageOffsetTop: 0,
+      messageOffsetLeft: 0,
+      messageDirLeft: false,
+      hiddenOnMobile: false
     },
     config, 
-    hexo.config.live2d
+    hexo.config.live2d,
+    hexo.theme.config.live2d
   );
   return `
     <script type="text/javascript" src="/live2d/script.js"></script>
-    <canvas id="${config.id}" width="${config.width}" height="${config.height}" class="${config.className}"></canvas>
+    <div id="hexo-helper-live2d">
+      <canvas id="${config.id}" width="${config.width}" height="${config.height}" class="${config.className}"></canvas>
+    </div>
     <style>
       #${config.id} {
         position: fixed;
-        right: 0px;
+        ${
+          config.left ? "left: 0px;" : "right: 0px;"
+        }
         z-index: 999;
         pointer-events: none;
         bottom: ${config.bottom}px;
       }
+      live2d-message-dialog {
+        position: fixed;
+        ${
+          config.left ? 
+          `left: ${config.width - 30 + config.messageOffsetLeft}px;` : 
+          `right: ${config.width - 30 - config.messageOffsetLeft}px;`
+        }
+        bottom: ${config.height - 70 - config.messageOffsetTop}px;
+        z-index: 99999;
+        font-size: 20px;
+      }
+      ${
+        config.hiddenOnMobile ? `
+          @media (max-width: 768px) {
+            #hexo-helper-live2d {
+              visibility: hidden;
+            }
+          }
+        ` : ''
+      }
     </style>
-    <script>loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))})</script>
+    <script>
+      setTimeout(function() {
+        loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))});
+        loadMessageDialog("hexo-helper-live2d", {left: ${JSON.stringify(config.messageDirLeft)}});
+      },0)
+    </script>
   `
 });

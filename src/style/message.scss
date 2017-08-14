@@ -1,0 +1,110 @@
+@keyframes l2m-loading-b {
+    0% { opacity:0.5;transform: scale(1) }
+    30% { opacity:0.5;transform: scale(1) }
+    100% { opacity:1;transform: scale(1.25) }
+}
+
+@keyframes l2m-main {
+    0% { transform: scale(0) translateY(1.25em) translateX(100%); }
+    100% { transform: scale(1) translateY(0em) translateX(0); }
+}
+
+@keyframes l2m-main-left {
+    0% { transform: scale(0) translateY(1.25em) translateX(-100%); }
+    100% { transform: scale(1) translateY(0em) translateX(0); }
+}
+
+live2d-message-dialog {
+    *,
+	*::before,
+	*::after {
+        box-sizing: border-box;
+        backface-visibility: hidden;
+    }
+    .l2m-main {
+        min-height: 1.25em;
+        min-width: 1.5em;
+        height: 1.25em;
+        width: 1.7em;
+        background: rgba(242, 242, 242, 0.8);
+        border-radius: 1em;
+        line-height: 1.25em;
+        border-bottom-right-radius: 0;
+        padding: 0.25em 0.5em;
+        backface-visibility: hidden;
+        animation: l2m-main 1s 1s cubic-bezier(.16,1.43,.47,1.14) both;
+        transition: width 0.5s cubic-bezier(.16,1.43,.47,1.14), height 0.5s cubic-bezier(.16,1.43,.47,1.14);
+        overflow: hidden;
+        box-sizing: content-box;
+    }
+    &.l2m-left .l2m-main {
+        animation-name:  l2m-main-left;
+        border-radius: 1em;
+        border-bottom-left-radius: 0;
+    }
+    .l2m-loading {
+        position: relative;
+        z-index: 1;
+        transition: opacity 0.5s;
+        cursor: pointer;
+        user-select:none;
+        display: flex;
+        justify-content: space-between;
+        b {
+            width: 0.4em;
+            color: rgba(0, 0, 0, .5);
+            display: inline-block;
+            @for $i from 1 through 3 {
+                &.l2m-offset-#{$i} { 
+                    animation: l2m-loading-b 0.75s $i * 200ms + 1s infinite alternate both;
+                }
+            }
+        }
+    }
+    .l2m-message-box {
+        position: absolute;
+        top: 0.25em;
+        left: 0.5em;
+        width: 10em;
+        z-index: -1;
+        transition: opacity 0.5s;
+    }
+    .l2m-hidden {
+        opacity: 0;
+        pointer-events: none;
+        animation: none;
+    }
+    .l2m-message {
+        padding: 5px 0px;
+        display: inline-block;
+        font-size: .75em;
+        user-select:none;
+        max-width: 100%;
+    }
+    .l2m-send-message {
+        display: flex;
+        align-items: center;
+    }
+    .l2m-message-input {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        display: block;
+        flex-grow: 1;
+        height: 1.7em;
+        margin: 5px 5px;
+        padding: 2px 5px;
+        min-width: 10em;
+        width: 0px;
+    }
+    .l2m-message-date {
+        margin-top: 0px;
+    }
+    .l2m-send-button {
+        height: 1.5em;
+        width: 1.5em;
+        margin-left: 5px;
+        margin-right: 2px;
+        cursor: pointer;
+    }
+}
