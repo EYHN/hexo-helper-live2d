@@ -188,9 +188,9 @@ function modelTurnHead(event)
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
-    let vx = transformViewX(event.clientX - rect.left);
-    let vy = transformViewY(event.clientY - rect.top);
-    
+    let vx = transformViewX(Math.min(rect.width,Math.max(0.0,event.clientX - rect.left)));
+    let vy = transformViewY(Math.min(rect.height,Math.max(0.0,event.clientY - rect.top)));
+
     if (LAppDefine.DEBUG_MOUSE_LOG)
         console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
@@ -208,9 +208,9 @@ function followPointer(event)
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
-    let vx = transformViewX(event.clientX - rect.left);
-    let vy = transformViewY(event.clientY - rect.top);
-    
+    let vx = transformViewX(Math.min(rect.width,Math.max(0.0,event.clientX - rect.left)));
+    let vy = transformViewY(Math.min(rect.height,Math.max(0.0,event.clientY - rect.top)));
+
     if (LAppDefine.DEBUG_MOUSE_LOG)
         console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 

@@ -18,7 +18,7 @@
     "path": "^0.12.7"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "author": "EYHN",
   "license": "GPL-2.0",
