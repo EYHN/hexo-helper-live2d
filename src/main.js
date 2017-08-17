@@ -180,6 +180,24 @@ function modelScaling(scale)
     }
 }
 
+function transformRange(center, transform, range)
+{
+    let a = {
+        x: transform.x - center.x,
+        y: transform.y - center.y
+    }
+    let r = Math.sqrt(Math.pow(a.x,2) + Math.pow(a.y,2));
+    if (r > range) {
+        a = {
+            x: a.x / r * range + center.x,
+            y: a.y / r * range + center.y
+        };
+        return a;
+    } else {
+        return transform;
+    }
+}
+
 function modelTurnHead(event)
 {
     drag = true;
@@ -188,8 +206,15 @@ function modelTurnHead(event)
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
-    let vx = transformViewX(Math.min(rect.width,Math.max(0.0,event.clientX - rect.left)));
-    let vy = transformViewY(Math.min(rect.height,Math.max(0.0,event.clientY - rect.top)));
+    let v2 = transformRange({
+        x: rect.width / 2,
+        y: rect.height / 2
+    },{
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    }, Math.sqrt(Math.pow(rect.width / 2,2) + Math.pow(rect.height / 2,2)))
+    let vx = transformViewX(v2.x);
+    let vy = transformViewY(v2.y);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
         console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
@@ -208,8 +233,15 @@ function followPointer(event)
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
-    let vx = transformViewX(Math.min(rect.width,Math.max(0.0,event.clientX - rect.left)));
-    let vy = transformViewY(Math.min(rect.height,Math.max(0.0,event.clientY - rect.top)));
+    let v2 = transformRange({
+        x: rect.width / 2,
+        y: rect.height / 2
+    },{
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    }, Math.sqrt(Math.pow(rect.width / 2,2) + Math.pow(rect.height / 2,2)))
+    let vx = transformViewX(v2.x);
+    let vy = transformViewY(v2.y);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
         console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
