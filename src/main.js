@@ -263,16 +263,6 @@ function touchEvent(e)
         // onClick(touch);
     } else if (e.type == "touchmove") {
         followPointer(touch);
-        if (e.touches.length == 2) {
-            var touch1 = e.touches[0];
-            var touch2 = e.touches[1];
-            
-            var len = Math.pow(touch1.pageX - touch2.pageX, 2) + Math.pow(touch1.pageY - touch2.pageY, 2);
-            if (oldLen - len < 0) modelScaling(1.025); 
-            else modelScaling(0.975); 
-            
-            oldLen = len;
-        }
     } else if (e.type == "touchend") {
         lookFront();
     }
