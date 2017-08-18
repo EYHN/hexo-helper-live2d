@@ -18,7 +18,8 @@
     "path": "^0.12.7"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "dev": "webpack -w"
   },
   "author": "EYHN",
   "license": "GPL-2.0",

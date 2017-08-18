@@ -13,7 +13,7 @@ var models = {
   "nico": "nito/nico.model.json",
   "nito": "nito/nito.model.json",
   "nipsilon": "nito/nipsilon.model.json",
-  "nietzsche": "nito/nietzsche.model.json",
+  "nietzsche": "nito/nietzche.model.json",
   "shizuku": "shizuku/shizuku.model.json",
   "tsumiki": "tsumiki/tsumiki.model.json",
   "wanko": "wanko/wanko.model.json",
@@ -74,6 +74,6 @@ hexo.extend.helper.register('live2d', function (config) {
         bottom: ${config.bottom}px;
       }
     </style>
-    <script>loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))})</script>
+    <script>loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))},0.5)</script>
   `
 });

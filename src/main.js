@@ -45,6 +45,8 @@ let isModelShown = 0;
 
 let modelurl = "";
 
+let head_pos = 0.5;
+
 function initL2dCanvas(canvasId) {
   canvas = document.getElementById(canvasId);
   if (canvas.addEventListener) {
@@ -198,6 +200,84 @@ function transformRange(center, transform, range)
     }
 }
 
+function dot(A,B)
+{
+    return A.x * B.x + A.y * B.y;
+}
+
+function normalize(x,y)
+{
+    let length = Math.sqrt(x * x + y * y)
+    return {
+        x: x / length,
+        y: y / length
+    }
+}
+
+function transformRect(center, transform, rect)
+{
+    if (transform.x < rect.left + rect.width && transform.y < rect.top + rect.height &&
+        transform.x > rect.left && transform.y > rect.top) return transform;
+    let Len_X = center.x - transform.x;
+    let Len_Y = center.y - transform.y;
+
+    function angle(Len_X, Len_Y)
+    {
+        return Math.acos(dot({
+            x: 0,
+            y: 1
+        }, normalize(Len_X, Len_Y))) * 180 / Math.PI
+    }
+
+    let angleTarget = angle(Len_X, Len_Y);
+    if (transform.x < center.x) angleTarget = 360 - angleTarget;
+    let angleLeftTop = 360 - angle(rect.left - center.x, (rect.top - center.y) * -1);
+    let angleLeftBottom = 360 - angle(rect.left - center.x, (rect.top + rect.height - center.y) * -1);
+    let angleRightTop = angle(rect.left + rect.width - center.x, (rect.top - center.y) * -1);
+    let angleRightBottom = angle(rect.left + rect.width - center.x, (rect.top + rect.height - center.y) * -1);
+    let scale = Len_Y / Len_X;
+    let res = {};
+
+    if (angleTarget < angleRightTop) {
+        let y3 = rect.top - center.y;
+        let x3 = y3 / scale;
+        res = {
+            y: center.y + y3,
+            x: center.x + x3
+        }
+    } else if(angleTarget < angleRightBottom) {
+        let x3 = rect.left + rect.width - center.x;
+        let y3 = x3 * scale;
+        res = {
+            y: center.y + y3,
+            x: center.x + x3
+        }
+    } else if (angleTarget < angleLeftBottom) {
+        let y3 = rect.top + rect.height - center.y;
+        let x3 = y3 / scale;
+        res = {
+            y: center.y + y3,
+            x: center.x + x3
+        }
+    } else if (angleTarget < angleLeftTop) {
+        let x3 = center.x - rect.left;
+        let y3 = x3 * scale;
+        res = {
+            y: center.y - y3,
+            x: center.x - x3
+        }
+    } else {
+        let y3 = rect.top - center.y;
+        let x3 = y3 / scale;
+        res = {
+            y: center.y + y3,
+            x: center.x + x3
+        }
+    }
+
+    return res;
+}
+
 function modelTurnHead(event)
 {
     drag = true;
@@ -206,15 +286,15 @@ function modelTurnHead(event)
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
-    let v2 = transformRange({
-        x: rect.width / 2,
-        y: rect.height / 2
-    },{
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-    }, Math.sqrt(Math.pow(rect.width / 2,2) + Math.pow(rect.height / 2,2)))
-    let vx = transformViewX(v2.x);
-    let vy = transformViewY(v2.y);
+    let target = transformRect({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height * head_pos
+    }, {
+        x: event.clientX,
+        y: event.clientY
+    }, rect)
+    let vx = transformViewX(target.x - rect.left);
+    let vy = transformViewY(target.y - rect.top);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
         console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
@@ -233,15 +313,15 @@ function followPointer(event)
     
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
-    let v2 = transformRange({
-        x: rect.width / 2,
-        y: rect.height / 2
-    },{
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-    }, Math.sqrt(Math.pow(rect.width / 2,2) + Math.pow(rect.height / 2,2)))
-    let vx = transformViewX(v2.x);
-    let vy = transformViewY(v2.y);
+    let target = transformRect({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height * head_pos
+    }, {
+        x: event.clientX,
+        y: event.clientY
+    }, rect)
+    let vx = transformViewX(target.x - rect.left);
+    let vy = transformViewY(target.y - rect.top);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
         console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
@@ -338,7 +418,8 @@ function getWebGLContext()
     return null;
 };
 
-function loadlive2d(id,modelurl) {
+function loadlive2d(id,modelurl,headPos) {
+    head_pos = typeof headPos === 'undefined' ? 0.5 : headPos;
     initL2dCanvas(id);
     init(modelurl);
 }
