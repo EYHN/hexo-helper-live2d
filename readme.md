@@ -107,7 +107,7 @@ live2d:
 	- tororo
 	- hijiki
 
-Attention! **The path of the model's json must be `name/name.model.json`**
+Attention! **The path of the model's json must be `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
 
 - `width`: The width of your model. default: 150
 - `height`: The height of your model. default: 300
@@ -201,16 +201,7 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 > May have some delay, because I mostly edit Chinese document's Todo first.
 
-- Update English README.
-
 - Add module "Everyday Tips"(#16)
-
-- Only generate selected model(#14)
-
-- [Working]Change model selection into json, so that the list won't reset everytime you update.
-
-This verison now isn't fully tested yet, so be carefully.
-
 
 ## About me
 

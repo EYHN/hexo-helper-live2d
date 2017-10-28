@@ -108,7 +108,7 @@ live2d:
   - tororo
   - hijiki
 
-注意！ **模型json路径必须为 `name/name.model.json`**
+注意！ **模型json路径必须为 `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
 
 - `width`: 宽度 默认值: 150
 - `height`: 高度 默认值: 300
@@ -200,19 +200,7 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 ## Todo
 
-- 更新英文README Settings
-
 - 接入每日一句(json) 接入互动对话框(#16)
-
-- [working]仅生成选择的模型(#14)
-
-- 模型列表更改为json(#14)
-  这样以后插件更新后模型列表不会重置
-
-可用性与稳定性请大大仔细验证 xiazeyu未经仔细的生产环境测试
-
-觉得可以请等待最终完成然后发布npm新版本
-
 
 ## About me 关于我
 
