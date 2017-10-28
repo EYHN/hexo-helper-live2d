@@ -45,35 +45,55 @@ function registerDir(pathname, dir) {
 hexo.extend.generator.register('live2d', function (locals) {
   return generators;
 });
-
-registerDir('live2d/assets/', path.resolve(__dirname, './assets'));
-registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'))
-
 hexo.extend.helper.register('live2d', function (config) {
   var config = Object.assign(
     {
-      model:"z16",
+      model: "z16",
       width: 150,
       height: 300,
+      mobileShow: "true",
+      mobileWidth: 75,
+      mobileHeight: 150,
+      position: "right",
+      horizontalOffset: 0,
+      bottomOffset: -20,
       className: "live2d",
       id: "live2dcanvas",
-      bottom: -20
     },
     config, 
     hexo.config.live2d
   );
   return `
-    <script type="text/javascript" src="/live2d/script.js"></script>
     <canvas id="${config.id}" width="${config.width}" height="${config.height}" class="${config.className}"></canvas>
     <style>
       #${config.id} {
         position: fixed;
-        right: 0px;
+        ${config.position}: ${config.horizontalOffset}px;
         z-index: 999;
         pointer-events: none;
-        bottom: ${config.bottom}px;
+        bottom: ${config.bottomOffset}px;
       }
     </style>
-    <script>loadlive2d(${JSON.stringify(config.id)} ,${JSON.stringify(url.resolve("/live2d/assets/",models[config.model]))},0.5)</script>
+    <script src="live2d/device.min.js"></script>
+    <script type="text/javascript">
+    (function(){
+      if(device.mobile()){
+        if(${config.mobileShow}){
+          document.getElementById("${config.id}").width = ${config.mobileWidth};
+          document.getElementById("${config.id}").height = ${config.mobileHeight};
+          document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
+          document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", models[config.model]))}, 0.5)<\\/script>');
+        }
+      }else{
+        document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
+        document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", models[config.model]))}, 0.5)<\\/script>');
+      }
+    })();  
+    </script>
   `
 });
+
+registerDir('live2d/assets/', path.resolve(__dirname, './assets'));
+registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'));
+registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
+
