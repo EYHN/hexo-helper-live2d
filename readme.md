@@ -60,7 +60,6 @@ Add configuration in hexo's `_config.yml` file.
 ``` yml
 live2d:
   model: nipsilon
-  bottom: -60
 ```
 
 > Notes: Option 2 has higher priority, it will overwrite Option 1.
@@ -73,15 +72,16 @@ live2d:
 ## https://github.com/EYHN/hexo-helper-live2d
 live2d:
   model: z16 # The model that you are willing to show. default: z16
-  height: 300 # The height of your model. default: 300
   width: 150 # The width of your model. default: 150
+  height: 300 # The height of your model. default: 300
   mobileShow: true # Whether to show on mobile devices. default: true
-  mobileHeight: 150 # The height of your model on mobile devices. default: 75
   mobileWidth: 75 # The width of your model on mobile devices. default: 150
-  isLeft: false # Whether the model is shown at the left side. default: false
+  mobileHeight: 150 # The height of your model on mobile devices. default: 75
+  position: right # Which side the model is shown at. default: right
+  horizontalOffset: 0 # The horizontal offset. default: 0
+  bottomOffset: -20 # The offset of the bottom. default: -20
   className: live2d # The class name of the element. default: live2d
   id: live2dcanvas # The ID of the live2d element. default: live2dcanvas
-  bottom: -20 # The offset of the bottom. default: -20
 ```
 
 > To use settings in Chinese, please have a look at Chinese document.
@@ -106,15 +106,19 @@ live2d:
 	- Unitychan
 	- tororo
 	- hijiki
-- `height`: The height of your model. default: 300
+
+Attention! **The path of the model's json must be `name/name.model.json`**
+
 - `width`: The width of your model. default: 150
+- `height`: The height of your model. default: 300
 - `mobileShow`: Whether to show on mobile devices. default: true
 - `mobileWidth`: The width of your model on mobile devices. default: 150
 - `mobileHeight`: The height of your model on mobile devices. default: 75
-- `isLeft`: Whether the model is shown at the left side. default: false
+- `horizontalOffset`: The horizontal offset. default: 0
+- `bottomOffset`: The offset of the bottom. default: -20
+- `position`:  `left` or `right` side the model is shown at. default: right
 - `className`: The class name of the `<canvas>` element. default: live2d
 - `id`: The ID of the `<canvas>` element. default: live2dcanvas
-- `bottom`: The offset of the bottom. default: -20
 	Change this variable to adjust the position of model.
 
 
@@ -203,7 +207,7 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 - Only generate selected model(#14)
 
-- Change model selection into json, so that the list won't reset everytime you update.
+- [Working]Change model selection into json, so that the list won't reset everytime you update.
 
 This verison now isn't fully tested yet, so be carefully.
 

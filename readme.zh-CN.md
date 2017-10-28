@@ -62,7 +62,6 @@ swig (next主题):
 ``` yml
 live2d:
   model: nipsilon
-  bottom: -60
 ```
 
 > 第二种配置会覆盖第一种
@@ -75,15 +74,16 @@ live2d:
 ## https://github.com/EYHN/hexo-helper-live2d
 live2d:
   model: z16 # 模型名称 默认值: z16
-  height: 300 # 高度 默认值: 300
   width: 150 # 宽度 默认值: 150
+  height: 300 # 高度 默认值: 300
   mobileShow: true # 是否在移动设备上显示 默认值: true
-  mobileHeight: 150 # 移动设备上的高度 默认值: 150
   mobileWidth: 75 # 移动设备上的宽度 默认值: 75
-  isLeft: false # 模型是否放置在左侧 默认值: false
+  mobileHeight: 150 # 移动设备上的高度 默认值: 150
+  position: right # 模型左右侧放置位置 默认值: right
+  horizontalOffset: 0 # 元素的水平偏移 默认值: 0
+  bottomOffset: -20 # 元素的底部偏移 默认值: -20
   className: live2d # 元素的类名 默认值: live2d
   id: live2dcanvas # 元素的id 默认值: live2dcanvas
-  bottom: -20 # 元素的底部偏移 默认值: -20
 ```
 
 
@@ -108,24 +108,18 @@ live2d:
   - tororo
   - hijiki
 
-- `height`: 高度 默认值: 300
+注意！ **模型json路径必须为 `name/name.model.json`**
 
 - `width`: 宽度 默认值: 150
-
+- `height`: 高度 默认值: 300
 - `mobileShow`: 是否在移动设备上显示 默认值: true
-
-- `mobileHeight`: 移动设备上的高度 默认值: 150
-
 - `mobileWidth`: 移动设备上的宽度 默认值: 75
-
-- `isLeft`: 模型是否放置在左侧 默认值: false
-
+- `mobileHeight`: 移动设备上的高度 默认值: 150
+- `position`: 模型左右侧放置位置 `left` 或 `right` 默认值: false
+- `horizontalOffset`: `<canvas>` 元素的水平偏移 默认值: 0
+- `bottomOffset`: `<canvas>` 元素的底部偏移 默认值: -20
 - `className`: `<canvas>` 元素的类名 默认值: live2d
-
 - `id`: `<canvas>` 元素的id 默认值: live2dcanvas
-
-- `bottom`: `<canvas>` 元素的底部偏移 默认值: -20
-
   如果嫌模型位置不正确 可以调整这个参数
 
 
@@ -206,21 +200,16 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 ## Todo
 
-- [working]增加模型左右设置(#10)(#19)(#21)(#23)
-  最简单的修改是在 \node_modules\hexo-helper-live2d\index.js 中的 71 行 right 改为 left
-
-- [working]增加移动端模型更多功能(#12)
-
-- 更新英文README
+- 更新英文README Settings
 
 - 接入每日一句(json) 接入互动对话框(#16)
 
-- 仅生成选择的模型(#14)
+- [working]仅生成选择的模型(#14)
 
 - 模型列表更改为json(#14)
   这样以后插件更新后模型列表不会重置
 
-可用性与稳定性请大大仔细验证 xiazeyu未经生产环境测试
+可用性与稳定性请大大仔细验证 xiazeyu未经仔细的生产环境测试
 
 觉得可以请等待最终完成然后发布npm新版本
 
