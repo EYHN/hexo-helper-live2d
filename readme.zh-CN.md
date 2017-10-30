@@ -47,17 +47,16 @@ swig (next主题):
 
 #### Method 1 第一种
 
-直接在主题中添加参数: 
+在 hexo 的 `_config.yml` 中添加参数: 
 
-``` ejs
-<%- live2d({
-	model: "nipsilon"
-}) %>
+``` yml
+live2d:
+  model: nipsilon
 ```
 
 #### Method 2 第二种
 
-在 hexo 的 `_config.yml` 中添加参数: 
+在 hexo主题 的 `_config.yml` 中添加参数: 
 
 ``` yml
 live2d:

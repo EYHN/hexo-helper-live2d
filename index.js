@@ -34,9 +34,8 @@ var config = Object.assign( {
     className: "live2d",
     id: "live2dcanvas",
   },
-  config,
-  hexo.theme.config.live2d,
-  hexo.config.live2d
+  hexo.config.live2d,
+  hexo.theme.config.live2d
 );
 		  
 hexo.extend.helper.register('live2d', function() {

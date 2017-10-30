@@ -45,17 +45,16 @@ Two Methods
 
 #### Method 1
 
-Add configuration in your theme.
+Add configuration in hexo's `_config.yml` file.
 
-``` ejs
-<%- live2d({
-	model: "nipsilon"
-}) %>
+``` yml
+live2d:
+  model: nipsilon
 ```
 
 #### Method 2
 
-Add configuration in hexo's `_config.yml` file.
+Add configuration in hexo theme's `_config.yml` file.
 
 ``` yml
 live2d:
