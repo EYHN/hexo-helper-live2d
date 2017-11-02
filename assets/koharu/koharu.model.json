@@ -1,8 +1,8 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"koharu.moc",
+	"model":"moc/koharu.moc",
 	"textures":[
-		"koharu.2048/texture_00.png"
+		"moc/koharu.2048/texture_00.png"
 	],
 	"motions":{
 		"idle":[

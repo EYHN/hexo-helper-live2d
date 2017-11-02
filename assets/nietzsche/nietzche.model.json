@@ -1,10 +1,10 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"nietzsche/nietzsche.moc",
+	"model":"moc/nietzsche.moc",
 	"textures":[
-		"nietzsche/nietzsche.2048/texture_00.png",
-		"nietzsche/nietzsche.2048/texture_01.png",
-		"nietzsche/nietzsche.2048/texture_02.png"
+		"moc/nietzsche.2048/texture_00.png",
+		"moc/nietzsche.2048/texture_01.png",
+		"moc/nietzsche.2048/texture_02.png"
 	],
 	"motions":{
 		"idle":[
@@ -33,6 +33,6 @@
 			{"file":"mtn/20_sleep.mtn"}
 		]
 	},
-	"physics":"nietzsche/nietzsche.physics.json",
-	"pose":"pose.json"
+	"physics":"nietzsche.physics.json",
+	"pose":"nietzsche.pose.json"
 }

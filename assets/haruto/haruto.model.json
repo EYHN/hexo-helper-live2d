@@ -1,8 +1,8 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"haruto.moc",
+	"model":"moc/haruto.moc",
 	"textures":[
-		"haruto.2048/texture_00.png"
+		"moc/haruto.2048/texture_00.png"
 	],
 	"motions":{
 		"idle":[

@@ -1,29 +1,29 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"unitychan.moc",
+	"model":"moc/unitychan.moc",
 	"textures":[
-		"unitychan.2048/texture_00.png"
+		"moc/unitychan.2048/texture_00.png"
 	],
 	"motions":{
 		"":[
-			{"file":"motions/m_01.mtn"},
-			{"file":"motions/m_02.mtn"},
-			{"file":"motions/m_03.mtn"},
-			{"file":"motions/m_04.mtn"},
-			{"file":"motions/m_05.mtn"},
-			{"file":"motions/m_06.mtn"},
-			{"file":"motions/m_07.mtn"},
-			{"file":"motions/m_08.mtn"},
-			{"file":"motions/m_09.mtn"},
-			{"file":"motions/m_10.mtn"},
-			{"file":"motions/m_11.mtn"},
-			{"file":"motions/m_12.mtn"},
-			{"file":"motions/m_13.mtn"},
-			{"file":"motions/m_14.mtn"}
+			{"file":"mtn/m_01.mtn"},
+			{"file":"mtn/m_02.mtn"},
+			{"file":"mtn/m_03.mtn"},
+			{"file":"mtn/m_04.mtn"},
+			{"file":"mtn/m_05.mtn"},
+			{"file":"mtn/m_06.mtn"},
+			{"file":"mtn/m_07.mtn"},
+			{"file":"mtn/m_08.mtn"},
+			{"file":"mtn/m_09.mtn"},
+			{"file":"mtn/m_10.mtn"},
+			{"file":"mtn/m_11.mtn"},
+			{"file":"mtn/m_12.mtn"},
+			{"file":"mtn/m_13.mtn"},
+			{"file":"mtn/m_14.mtn"}
 		],
 		"idle":[
-			{"file":"motions/idle_01.mtn"},
-			{"file":"motions/idle_02.mtn"}
+			{"file":"mtn/idle_01.mtn"},
+			{"file":"mtn/idle_02.mtn"}
 		]
 	},
 	"physics":"unitychan.physics.json"

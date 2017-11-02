@@ -1,24 +1,24 @@
 {
 	"type":"Live2D Model Setting",
 	"name":"shizuku",
-	"model":"shizuku.moc",
+	"model":"moc/shizuku.moc",
 	"textures":
 	[
-		"shizuku.1024/texture_00.png",
-		"shizuku.1024/texture_01.png",
-		"shizuku.1024/texture_02.png",
-		"shizuku.1024/texture_03.png",
-		"shizuku.1024/texture_04.png",
-		"shizuku.1024/texture_05.png"
+		"moc/shizuku.1024/texture_00.png",
+		"moc/shizuku.1024/texture_01.png",
+		"moc/shizuku.1024/texture_02.png",
+		"moc/shizuku.1024/texture_03.png",
+		"moc/shizuku.1024/texture_04.png",
+		"moc/shizuku.1024/texture_05.png"
 	],
 	"physics":"shizuku.physics.json",
 	"pose":"shizuku.pose.json",
 	"expressions":
 	[
-	 {"name":"f01","file":"expressions/f01.exp.json"},
-	 {"name":"f02","file":"expressions/f02.exp.json"},
-	 {"name":"f03","file":"expressions/f03.exp.json"},
-	 {"name":"f04","file":"expressions/f04.exp.json"}
+	 {"name":"f01","file":"exp/f01.exp.json"},
+	 {"name":"f02","file":"exp/f02.exp.json"},
+	 {"name":"f03","file":"exp/f03.exp.json"},
+	 {"name":"f04","file":"exp/f04.exp.json"}
 	],
 	"layout":
 	{
@@ -35,39 +35,39 @@
 	{
 		"idle":
 		[
-			{"file":"motions/idle_00.mtn" ,"fade_in":2000, "fade_out":2000},
-			{"file":"motions/idle_01.mtn" ,"fade_in":2000, "fade_out":2000},
-			{"file":"motions/idle_02.mtn" ,"fade_in":2000, "fade_out":2000}
+			{"file":"mtn/idle_00.mtn" ,"fade_in":2000, "fade_out":2000},
+			{"file":"mtn/idle_01.mtn" ,"fade_in":2000, "fade_out":2000},
+			{"file":"mtn/idle_02.mtn" ,"fade_in":2000, "fade_out":2000}
 		],
 		"tap_body":
 		[
-			{ "file":"motions/tapBody_00.mtn", "sound":"sounds/tapBody_00.mp3" },
-			{ "file":"motions/tapBody_01.mtn", "sound":"sounds/tapBody_01.mp3" },
-			{ "file":"motions/tapBody_02.mtn", "sound":"sounds/tapBody_02.mp3" }
+			{ "file":"mtn/tapBody_00.mtn", "sound":"snd/tapBody_00.mp3" },
+			{ "file":"mtn/tapBody_01.mtn", "sound":"snd/tapBody_01.mp3" },
+			{ "file":"mtn/tapBody_02.mtn", "sound":"snd/tapBody_02.mp3" }
 		],
 		"pinch_in":
 		[
-			{ "file":"motions/pinchIn_00.mtn", "sound":"sounds/pinchIn_00.mp3" },
-			{ "file":"motions/pinchIn_01.mtn", "sound":"sounds/pinchIn_01.mp3" },
-			{ "file":"motions/pinchIn_02.mtn", "sound":"sounds/pinchIn_02.mp3" }
+			{ "file":"mtn/pinchIn_00.mtn", "sound":"snd/pinchIn_00.mp3" },
+			{ "file":"mtn/pinchIn_01.mtn", "sound":"snd/pinchIn_01.mp3" },
+			{ "file":"mtn/pinchIn_02.mtn", "sound":"snd/pinchIn_02.mp3" }
 		],
 		"pinch_out":
 		[
-			{ "file":"motions/pinchOut_00.mtn", "sound":"sounds/pinchOut_00.mp3" },
-			{ "file":"motions/pinchOut_01.mtn", "sound":"sounds/pinchOut_01.mp3" },
-			{ "file":"motions/pinchOut_02.mtn", "sound":"sounds/pinchOut_02.mp3" }
+			{ "file":"mtn/pinchOut_00.mtn", "sound":"snd/pinchOut_00.mp3" },
+			{ "file":"mtn/pinchOut_01.mtn", "sound":"snd/pinchOut_01.mp3" },
+			{ "file":"mtn/pinchOut_02.mtn", "sound":"snd/pinchOut_02.mp3" }
 		],
 		"shake":
 		[
-			{ "file":"motions/shake_00.mtn", "sound":"sounds/shake_00.mp3","fade_in":500 },
-			{ "file":"motions/shake_01.mtn", "sound":"sounds/shake_01.mp3","fade_in":500 },
-			{ "file":"motions/shake_02.mtn", "sound":"sounds/shake_02.mp3","fade_in":500 }
+			{ "file":"mtn/shake_00.mtn", "sound":"snd/shake_00.mp3","fade_in":500 },
+			{ "file":"mtn/shake_01.mtn", "sound":"snd/shake_01.mp3","fade_in":500 },
+			{ "file":"mtn/shake_02.mtn", "sound":"snd/shake_02.mp3","fade_in":500 }
 		],
 		"flick_head":
 		[
-			{ "file":"motions/flickHead_00.mtn", "sound":"sounds/flickHead_00.mp3" },
-			{ "file":"motions/flickHead_01.mtn", "sound":"sounds/flickHead_01.mp3" },
-			{ "file":"motions/flickHead_02.mtn", "sound":"sounds/flickHead_02.mp3" }
+			{ "file":"mtn/flickHead_00.mtn", "sound":"snd/flickHead_00.mp3" },
+			{ "file":"mtn/flickHead_01.mtn", "sound":"snd/flickHead_01.mp3" },
+			{ "file":"mtn/flickHead_02.mtn", "sound":"snd/flickHead_02.mp3" }
 		]
 	}
 }

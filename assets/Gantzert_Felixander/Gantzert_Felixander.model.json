@@ -1,14 +1,14 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"moc/model.moc",
+	"model":"moc/Gantzert_Felixander.moc",
 	"textures":[
-		"moc/model.2048/texture_00.png",
-		"moc/model.2048/texture_01.png",
-		"moc/model.2048/texture_02.png",
-		"moc/model.2048/texture_03.png",
-		"moc/model.2048/texture_04.png",
-		"moc/model.2048/texture_05.png",
-		"moc/model.2048/texture_06.png"
+		"moc/Gantzert_Felixander.2048/texture_00.png",
+		"moc/Gantzert_Felixander.2048/texture_01.png",
+		"moc/Gantzert_Felixander.2048/texture_02.png",
+		"moc/Gantzert_Felixander.2048/texture_03.png",
+		"moc/Gantzert_Felixander.2048/texture_04.png",
+		"moc/Gantzert_Felixander.2048/texture_05.png",
+		"moc/Gantzert_Felixander.2048/texture_06.png"
 	],
 	"motions":{
 		"idle":[

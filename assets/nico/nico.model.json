@@ -1,10 +1,10 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"nico/nico.moc",
+	"model":"moc/nico.moc",
 	"textures":[
-		"nico/nico.2048/texture_00.png",
-		"nico/nico.2048/texture_01.png",
-		"nico/nico.2048/texture_02.png"
+		"moc/nico.2048/texture_00.png",
+		"moc/nico.2048/texture_01.png",
+		"moc/nico.2048/texture_02.png"
 	],
 	"motions":{
 		"idle":[
@@ -33,6 +33,6 @@
 			{"file":"mtn/20_sleep.mtn"}
 		]
 	},
-	"physics":"nico/nico.physics.json",
-	"pose":"pose.json"
+	"physics":"nico.physics.json",
+	"pose":"nico.pose.json"
 }

@@ -1,9 +1,9 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"nito/nito.moc",
+	"model":"moc/nito.moc",
 	"textures":[
-		"nito/nito.2048/texture_00.png",
-		"nito/nito.2048/texture_01.png"
+		"moc/nito.2048/texture_00.png",
+		"moc/nito.2048/texture_01.png"
 	],
 	"motions":{
 		"idle":[
@@ -32,6 +32,6 @@
 			{"file":"mtn/05_fun.mtn"}
 		]
 	},
-	"physics":"nito/nito.physics.json",
-	"pose":"pose.json"
+	"physics":"nito.physics.json",
+	"pose":"nito.pose.json"
 }

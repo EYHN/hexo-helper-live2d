@@ -1,0 +1,46 @@
+{
+	"type":"Live2D Pose",
+
+    "parts_visible":
+    [
+        {
+        	"group":
+        	[
+        		{
+        			"id":"PARTS_01_ARM_L_A_001",
+        			"link":
+	        		[
+		        		"PARTS_01_ARM_L_A_002"
+	        		]
+        		},
+        		{
+        			"id":"PARTS_01_ARM_L_B_001",
+        			"link":
+	        		[
+		        		"PARTS_01_ARM_L_B_002"
+	        		]
+        		}
+        	]
+        },
+        {
+        	"group":
+        	[
+        		{
+        			"id":"PARTS_01_ARM_R_A_001",
+        			"link":
+	        		[
+		        		"PARTS_01_ARM_R_A_002"
+	        		]
+        		},
+        		{
+        			"id":"PARTS_01_ARM_R_B_001",
+        			"link":
+	        		[
+		        		"PARTS_01_ARM_R_B_002"
+	        		]
+        		}
+        	]
+        }
+    ]
+
+}

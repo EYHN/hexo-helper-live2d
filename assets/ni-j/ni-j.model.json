@@ -1,9 +1,9 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"ni-j/ni-j.moc",
+	"model":"moc/ni-j.moc",
 	"textures":[
-		"ni-j/ni-j.2048/texture_00.png",
-		"ni-j/ni-j.2048/texture_01.png"
+		"moc/ni-j.2048/texture_00.png",
+		"moc/ni-j.2048/texture_01.png"
 	],
 	"motions":{
 		"idle":[
@@ -32,6 +32,6 @@
 			{"file":"mtn/20_sleep.mtn"}
 		]
 	},
-	"physics":"ni-j/ni-j.physics.json",
-	"pose":"pose.json"
+	"physics":"ni-j.physics.json",
+	"pose":"ni-j.pose.json"
 }

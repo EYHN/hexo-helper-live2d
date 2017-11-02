@@ -1,10 +1,10 @@
 {
 	"version":"Sample 1.0.0",
-	"model":"nipsilon/nipsilon.moc",
+	"model":"moc/nipsilon.moc",
 	"textures":[
-		"nipsilon/nipsilon.2048/texture_00.png",
-		"nipsilon/nipsilon.2048/texture_01.png",
-		"nipsilon/nipsilon.2048/texture_02.png"
+		"moc/nipsilon.2048/texture_00.png",
+		"moc/nipsilon.2048/texture_01.png",
+		"moc/nipsilon.2048/texture_02.png"
 	],
 	"motions":{
 		"idle":[
@@ -33,6 +33,6 @@
 			{"file":"mtn/20_sleep.mtn"}
 		]
 	},
-	"physics":"nipsilon/nipsilon.physics.json",
-	"pose":"pose.json"
+	"physics":"nipsilon.physics.json",
+	"pose":"nipsilon.pose.json"
 }
