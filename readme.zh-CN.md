@@ -122,9 +122,27 @@ live2d:
 
 ## Custom model 增加自己喜欢的模型
 
-请参见[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22)
+1. 在博客的根目录下新建 `live2d_models` 文件夹
 
- **注意！模型json路径必须为 `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
+2. 在此文件夹中以自定义模型的名称新建一个模型
+
+3. 将你的模型复制到该文件夹下
+
+**注意！模型json路径必须为  `/live2d_models/{name}/{name}.model.json`**
+
+示例：
+
+你的模型为 `mymiku`
+
+那么在 `/` 目录下(即博客的安装目录，该目录下应存在 `_config.yml` 、`sources` 、 `themes` 等内容) 新建名为 `mymiku` 的文件夹
+
+将你的模型复制到 `/live2d_models/mymiku/` 下
+
+此时在 `/live2d_models/mymiku/` 下应存在 `mymiku.model.json` 文件
+
+
+~~请参见[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22)~~
+
 
 <br>
 
@@ -202,8 +220,6 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 ## Todo
 
 - 接入每日一句(json) 接入互动对话框(#16)
-
-- 建立位于根目录的 单独放置自定义模型的文件夹 live2d_models
 
 ## About me 关于我
 

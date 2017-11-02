@@ -1,4 +1,5 @@
 var fs = require('hexo-fs');
+var nfs = require('fs');
 var path = require('path');
 var url = require("url");
 
@@ -75,7 +76,14 @@ hexo.extend.helper.register('live2d', function() {
 `
 });
 
-registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
+nfs.exists(path.resolve(process.cwd(), path.join('./live2d_models/', config.model)), function(exists){
+  if(exists){
+  	registerDir("live2d/assets/", path.resolve(process.cwd(), path.join('./live2d_models/', config.model)));
+  	console.log('Found custom model at: ' & path.resolve(process.cwd(), path.join('./live2d_models/', config.model)));
+  }else{
+	registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
+  }
+});
 registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'));
 registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
 

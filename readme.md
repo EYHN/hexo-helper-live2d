@@ -121,9 +121,26 @@ live2d:
 
 ## Custom model
 
-Have a look at[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22).
+1. Create a `live2d_models` folder at your blog's root directory.
 
-**Attention! The path of the model's json must be `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
+2. Create a folder by the name of your model.
+
+3. Copy your model to this folder.
+
+**Attention! The path of the model's json must be  `/live2d_models/{name}/{name}.model.json`**
+
+For example:
+
+Your model is named `mymiku`.
+
+Then, create a folder at  `/` (Which should exists `_config.yml` 、`sources` 、 `themes` ) named `mymiku`.
+
+Copy your model to `/live2d_models/mymiku/`.
+
+Up to now, there should be `mymiku.model.json` in the directory of `/live2d_models/mymiku/`.
+
+
+Have a look at[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22).
 
 <br>
 
