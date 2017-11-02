@@ -86,27 +86,25 @@ live2d:
 > To use settings in Chinese, please have a look at Chinese document.
 
 - `model`: The model that you are willing to show. default: z16
-	- Gantzert_Felixander
-	- Epsilon2.1
-	- haru
-	- miku
-	- ni-j
-	- nico
-	- nito
-	- nipsilon
-	- nietzsche
-	- shizuku
-	- tsumiki
-	- wanko
-	- z16
-	- hibiki
-	- koharu
-	- haruto
-	- Unitychan
-	- tororo
-	- hijiki
-
-Attention! **The path of the model's json must be `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
+  - Epsilon2.1
+  - Gantzert_Felixander
+  - haru01
+  - haru02
+  - haruto
+  - hibiki
+  - hijiki
+  - koharu
+  - miku
+  - nico
+  - ni-j
+  - nipsilon
+  - nito
+  - shizuku
+  - tororo
+  - tsumiki
+  - Unitychan
+  - wanko
+  - z16
 
 - `width`: The width of your model. default: 150
 - `height`: The height of your model. default: 300
@@ -125,6 +123,8 @@ Attention! **The path of the model's json must be `node_modules/hexo-helper-live
 
 Have a look at[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22).
 
+**Attention! The path of the model's json must be `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
+
 <br>
 
 Enjoy!:beer:
@@ -137,6 +137,8 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 
 ## Screenshots
+
+**Attention! The name above the shown screenshoot may not be the true name of the model. Please go to the "Settings" to find the true value of "model"**
 
 #### Epsilon2.1
 ![](https://huaji8.top/img/live2d/Epsilon2.1.gif)

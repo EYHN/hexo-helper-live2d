@@ -56,7 +56,7 @@ live2d:
 
 #### Method 2 第二种
 
-在 hexo主题 的 `_config.yml` 中添加参数: 
+在 hexo 主题 的 `_config.yml` 中添加参数: 
 
 ``` yml
 live2d:
@@ -87,27 +87,25 @@ live2d:
 
 
 - `model`: 模型名称 默认值: z16
-  - Gantzert_Felixander
   - Epsilon2.1
-  - haru
+  - Gantzert_Felixander
+  - haru01
+  - haru02
+  - haruto
+  - hibiki
+  - hijiki
+  - koharu
   - miku
-  - ni-j
   - nico
-  - nito
+  - ni-j
   - nipsilon
-  - nietzsche
+  - nito
   - shizuku
+  - tororo
   - tsumiki
+  - Unitychan
   - wanko
   - z16
-  - hibiki
-  - koharu
-  - haruto
-  - Unitychan
-  - tororo
-  - hijiki
-
-注意！ **模型json路径必须为 `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
 
 - `width`: 宽度 默认值: 150
 - `height`: 高度 默认值: 300
@@ -126,6 +124,8 @@ live2d:
 
 请参见[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22)
 
+ **注意！模型json路径必须为 `node_modules/hexo-helper-live2d/assets/{name}/{name}.model.json`**
+
 <br>
 
 Enjoy!:beer:
@@ -138,6 +138,8 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 
 ## Screenshots 截图:
+
+**注意！截图上方的名称可能非实际模型名，请进入“设置项”查看"model"的真实值**
 
 #### Epsilon2.1
 ![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
@@ -200,6 +202,8 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 ## Todo
 
 - 接入每日一句(json) 接入互动对话框(#16)
+
+- 建立位于根目录的 单独放置自定义模型的文件夹 live2d_models
 
 ## About me 关于我
 
