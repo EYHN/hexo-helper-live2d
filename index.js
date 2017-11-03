@@ -52,33 +52,28 @@ hexo.extend.helper.register('live2d', function() {
         bottom: ${config.verticalOffset}px;
       }
     </style>
-    <script src="live2d/device.min.js"></script>
+    <script src="/live2d/device.min.js"></script>
     <script type="text/javascript">
     (function(){
-      ${config.mobileShow ? `
     if(device.mobile()){
+      ${config.mobileShow ? `
       document.getElementById("${config.id}").width = ${config.mobileWidth};
       document.getElementById("${config.id}").height = ${config.mobileHeight};
       document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
       document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
+      ` : ``}
     }else{
       document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
       document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
-    }` : `
-    if(!device.mobile()){
-      document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
-      document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
-    }`
     }
     })();
     </script>
 `
 });
 
-fs.exists(path.resolve(process.cwd(), path.join('./live2d_models/', config.model)), function(exists){
+fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)), function(exists){
   if(exists){
-  	registerDir("live2d/assets/", path.resolve(process.cwd(), path.join('./live2d_models/', config.model)));
-  	console.log('Found custom model at: ' & path.resolve(process.cwd(), path.join('./live2d_models/', config.model)));
+  	registerDir("live2d/assets/", path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)));
   }else{
 	registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
   }
