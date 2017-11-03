@@ -114,7 +114,7 @@ live2d:
 - `mobileHeight`: 移动设备上的高度 默认值: 150
 - `position`: 模型左右侧放置位置 `left` 或 `right` 默认值: false
 - `horizontalOffset`: `<canvas>` 元素的水平偏移 默认值: 0
-- `bottomOffset`: `<canvas>` 元素的底部偏移 默认值: -20
+- `verticalOffset`: `<canvas>` 元素的底部偏移 默认值: -20
 - `className`: `<canvas>` 元素的类名 默认值: live2d
 - `id`: `<canvas>` 元素的id 默认值: live2dcanvas
   如果嫌模型位置不正确 可以调整这个参数

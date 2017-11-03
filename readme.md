@@ -112,7 +112,7 @@ live2d:
 - `mobileWidth`: The width of your model on mobile devices. default: 150
 - `mobileHeight`: The height of your model on mobile devices. default: 75
 - `horizontalOffset`: The horizontal offset. default: 0
-- `bottomOffset`: The offset of the bottom. default: -20
+- `verticalOffset`: The offset of the bottom. default: -20
 - `position`:  `left` or `right` side the model is shown at. default: right
 - `className`: The class name of the `<canvas>` element. default: live2d
 - `id`: The ID of the `<canvas>` element. default: live2dcanvas

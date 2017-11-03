@@ -49,7 +49,7 @@ hexo.extend.helper.register('live2d', function() {
         ${config.position}: ${config.horizontalOffset}px;
         z-index: 999;
         pointer-events: none;
-        bottom: ${config.bottomOffset}px;
+        bottom: ${config.verticalOffset}px;
       }
     </style>
     <script src="live2d/device.min.js"></script>
