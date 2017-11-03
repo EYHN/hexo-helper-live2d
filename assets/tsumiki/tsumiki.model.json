@@ -6,20 +6,20 @@
 		"moc/tsumiki.2048/texture_01.png"
 	],
 	"expressions":[
-		{"name":"F01.exp.json","file":"exp/F01.exp.json"},
-		{"name":"F02.exp.json","file":"exp/F02.exp.json"},
-		{"name":"F03.exp.json","file":"exp/F03.exp.json"},
-		{"name":"F04.exp.json","file":"exp/F04.exp.json"},
-		{"name":"F05.exp.json","file":"exp/F05.exp.json"},
-		{"name":"F06.exp.json","file":"exp/F06.exp.json"},
-		{"name":"F07.exp.json","file":"exp/F07.exp.json"},
-		{"name":"F08.exp.json","file":"exp/F08.exp.json"},
-		{"name":"F09.exp.json","file":"exp/F09.exp.json"},
-		{"name":"F10.exp.json","file":"exp/F10.exp.json"}
+		{"name":"f01.exp.json","file":"exp/f01.exp.json"},
+		{"name":"f02.exp.json","file":"exp/f02.exp.json"},
+		{"name":"f03.exp.json","file":"exp/f03.exp.json"},
+		{"name":"f04.exp.json","file":"exp/f04.exp.json"},
+		{"name":"f05.exp.json","file":"exp/f05.exp.json"},
+		{"name":"f06.exp.json","file":"exp/f06.exp.json"},
+		{"name":"f07.exp.json","file":"exp/f07.exp.json"},
+		{"name":"f08.exp.json","file":"exp/f08.exp.json"},
+		{"name":"f09.exp.json","file":"exp/f09.exp.json"},
+		{"name":"f10.exp.json","file":"exp/f10.exp.json"}
 	],
 	"motions":{
 		"":[
-			{"file":"mtn/P01.mtn"},
+			{"file":"mtn/p01.mtn"},
 			{"file":"mtn/tsumiki_m_01.mtn"},
 			{"file":"mtn/tsumiki_m_01_df.mtn"},
 			{"file":"mtn/tsumiki_m_02.mtn"},
@@ -51,6 +51,5 @@
 		]
 	},
 	"physics":"tsumiki.physics.json",
-	"project_settings":"embed://14.json",
-	"name":""
+	"name":"tsumiki"
 }

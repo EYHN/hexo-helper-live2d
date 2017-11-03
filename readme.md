@@ -3,21 +3,159 @@
 
 # hexo-helper-live2d
 
-> Updated to Version 2.0
+> Updated to Version 2.0!
 
-[简体中文文档](./readme-zh-CN.md)
+[简体中文文档](./readme.zh-CN.md)
 
 <br>
 
 Add the Sseexxyyy live2d to your hexo!
 
+Demo: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+
+
+## Installation
+
+Install module:
+
 ```
 npm install -save hexo-helper-live2d
 ```
 
-Demo： [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+> Tips: If you run into a npm problem, try to use `npm cache verify` or `npm cache clean` to fix it.
 
-## Screenshots:
+And then add the next line to your hexo theme.
+
+Usually added before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
+
+ejs:
+``` ejs
+<%- live2d() %>
+```
+
+swig (like "next" theme):
+``` swig
+{{ live2d() }}
+```
+
+
+## Config
+
+Two Methods
+
+#### Method 1
+
+Add configuration in hexo's `_config.yml` file.
+
+``` yml
+live2d:
+  model: nipsilon
+```
+
+#### Method 2
+
+Add configuration in hexo theme's `_config.yml` file.
+
+``` yml
+live2d:
+  model: nipsilon
+```
+
+> Notes: Option 2 has higher priority, it will overwrite Option 1.
+
+
+## Settings
+
+``` yml
+# Live2D
+## https://github.com/EYHN/hexo-helper-live2d
+live2d:
+  model: z16 # The model that you are willing to show. default: z16
+  width: 150 # The width of your model. default: 150
+  height: 300 # The height of your model. default: 300
+  mobileShow: true # Whether to show on mobile devices. default: true
+  mobileWidth: 75 # The width of your model on mobile devices. default: 150
+  mobileHeight: 150 # The height of your model on mobile devices. default: 75
+  position: right # Which side the model is shown at. default: right
+  horizontalOffset: 0 # The horizontal offset. default: 0
+  verticalOffset: -20 # The offset of the bottom. default: -20
+  className: live2d # The class name of the element. default: live2d
+  id: live2dcanvas # The ID of the live2d element. default: live2dcanvas
+```
+
+> To use settings in Chinese, please have a look at Chinese document.
+
+- `model`: The model that you are willing to show. default: z16
+  - Epsilon2.1
+  - Gantzert_Felixander
+  - haru01
+  - haru02
+  - haruto
+  - hibiki
+  - hijiki
+  - koharu
+  - miku
+  - nico
+  - ni-j
+  - nipsilon
+  - nito
+  - shizuku
+  - tororo
+  - tsumiki
+  - Unitychan
+  - wanko
+  - z16
+
+- `width`: The width of your model. default: 150
+- `height`: The height of your model. default: 300
+- `mobileShow`: Whether to show on mobile devices. default: true
+- `mobileWidth`: The width of your model on mobile devices. default: 150
+- `mobileHeight`: The height of your model on mobile devices. default: 75
+- `horizontalOffset`: The horizontal offset. default: 0
+- `bottomOffset`: The offset of the bottom. default: -20
+- `position`:  `left` or `right` side the model is shown at. default: right
+- `className`: The class name of the `<canvas>` element. default: live2d
+- `id`: The ID of the `<canvas>` element. default: live2dcanvas
+	Change this variable to adjust the position of model.
+
+
+## Custom model
+
+1. Create a `live2d_models` folder at your blog's root directory.
+
+2. Create a folder by the name of your model.
+
+3. Copy your model to this folder.
+
+**Attention! The path of the model's json must be  `/live2d_models/{name}/{name}.model.json`**
+
+For example:
+
+Your model is named `mymiku`.
+
+Then, create a folder at  `/` (Which should exists `_config.yml` 、`sources` 、 `themes` ) named `mymiku`.
+
+Copy your model to `/live2d_models/mymiku/`.
+
+Up to now, there should be `mymiku.model.json` in the directory of `/live2d_models/mymiku/`.
+
+
+Have a look at[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22).
+
+<br>
+
+Enjoy!:beer:
+
+> This is my first hexo plugin, star :star: and watch :eyeglasses:, pull request is also welcomed.
+
+Github: [https://github.com/EYHN/hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d)
+
+issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/EYHN/hexo-helper-live2d/issues)
+
+
+## Screenshots
+
+**Attention! The name above the shown screenshoot may not be the true name of the model. Please go to the "Settings" to find the true value of "model"**
 
 #### Epsilon2.1
 ![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
@@ -76,93 +214,12 @@ Demo： [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/liv
 #### hijiki
 ![](https://huaji8.top/img/live2d/hijiki.gif)
 
-## Installation:
-
-```
-npm install -save hexo-helper-live2d
-```
-
-Add the next line to your hexo theme.
-
-Usually added before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
-
-ejs:
-``` ejs
-<%- live2d() %>
-```
-
-swig:
-``` swig
-{{ live2d() }}
-```
-
-## Usage:
-
-Two options:
-
-#### Option 1
-
-Add configuration in your theme.
-
-``` ejs
-<%- live2d({
-	model: "nipsilon"
-}) %>
-```
-
-#### Option 2
-
-Add configuration in hexo's _config.yml file.
-
-``` yml
-live2d:
-  model: nipsilon
-  bottom: -60
-```
-
-> Notes: Option 2 has higher priority, it will overwrite Option 1.
-
-## Configuration
-
-- model (default: z16)
-	- Gantzert_Felixander
-	- Epsilon2.1
-	- haru
-	- miku
-	- ni-j
-	- nico
-	- nito
-	- nipsilon
-	- nietzsche
-	- shizuku
-	- tsumiki
-	- wanko
-	- z16
-	- hibiki
-	- koharu
-	- haruto
-	- Unitychan
-	- tororo
-	- hijiki
-- width  default: 150
-- height  default: 300
-- className `<canvas>`  default: live2d
-- id `<canvas>`  default: live2dcanvas
-- bottom `<canvas>`  default: -20
-	Change this variable to adjust the position of model 
-
-Enjoy!:beer:
-
-> This is my first hexo plugin, star :star: and watch :eyeglasses:.
-
-Github: [https://github.com/EYHN/hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d)
-
-issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/EYHN/hexo-helper-live2d/issues)
-
 
 ## Todo
 
-- Implement interactive dialogs.
+> May have some delay, because I mostly edit Chinese document's Todo first.
+
+- Add module "Everyday Tips"(#16)
 
 ## About me
 
@@ -170,9 +227,16 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 [![QQ](https://img.shields.io/badge/QQ-1106996185-blue.svg?style=flat-square)](http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes)
 [![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
 
+
 ## License
 
 [![license](https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg?style=flat-square)](https://raw.githubusercontent.com/EYHN/hexo-helper-live2d/master/LICENSE)
 
-Open sourced under the GPL v2.0 license.
 
+## Included
+
+[device.js](https://github.com/matthewhudson/device.js)
+
+<br>
+
+Open sourced under the GPL v2.0 license.
