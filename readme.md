@@ -78,7 +78,7 @@ live2d:
   mobileHeight: 150 # The height of your model on mobile devices. default: 75
   position: right # Which side the model is shown at. default: right
   horizontalOffset: 0 # The horizontal offset. default: 0
-  bottomOffset: -20 # The offset of the bottom. default: -20
+  verticalOffset: -20 # The offset of the bottom. default: -20
   className: live2d # The class name of the element. default: live2d
   id: live2dcanvas # The ID of the live2d element. default: live2dcanvas
 ```

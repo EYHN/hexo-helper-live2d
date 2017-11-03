@@ -80,7 +80,7 @@ live2d:
   mobileHeight: 150 # 移动设备上的高度 默认值: 150
   position: right # 模型左右侧放置位置 默认值: right
   horizontalOffset: 0 # 元素的水平偏移 默认值: 0
-  bottomOffset: -20 # 元素的底部偏移 默认值: -20
+  verticalOffset: -20 # 元素的底部偏移 默认值: -20
   className: live2d # 元素的类名 默认值: live2d
   id: live2dcanvas # 元素的id 默认值: live2dcanvas
 ```
