@@ -19,7 +19,7 @@
 安装模块: 
 
 ```
-npm install -save hexo-helper-live2d
+npm install --save hexo-helper-live2d
 ```
 
 > Tips: 遇到npm的相关错误，试试 `npm cache verify` 或 `npm cache clean` 呗~

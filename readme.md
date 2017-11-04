@@ -19,7 +19,7 @@ Demo: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2
 Install module:
 
 ```
-npm install -save hexo-helper-live2d
+npm install --save hexo-helper-live2d
 ```
 
 > Tips: If you run into a npm problem, try to use `npm cache verify` or `npm cache clean` to fix it.
