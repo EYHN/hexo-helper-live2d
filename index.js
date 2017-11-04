@@ -82,6 +82,7 @@ fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model
 });
 
 registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'));
+registerFile('live2d/script.js.map', path.resolve(__dirname, './dist/bundle.js.map'));
 registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
 
 hexo.extend.generator.register('live2d', function (locals) {
