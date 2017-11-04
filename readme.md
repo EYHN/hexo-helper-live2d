@@ -73,9 +73,9 @@ live2d:
   model: z16 # The model that you are willing to show. default: z16
   width: 150 # The width of your model. default: 150
   height: 300 # The height of your model. default: 300
+  scaling: 2 # The scaling of the resolution. default: 2
   mobileShow: true # Whether to show on mobile devices. default: true
-  mobileWidth: 75 # The width of your model on mobile devices. default: 150
-  mobileHeight: 150 # The height of your model on mobile devices. default: 75
+  mobileScaling: 0.5 # The scaling on mobile. default: 0.5
   position: right # Which side the model is shown at. default: right
   horizontalOffset: 0 # The horizontal offset. default: 0
   verticalOffset: -20 # The offset of the bottom. default: -20
@@ -108,9 +108,9 @@ live2d:
 
 - `width`: The width of your model. default: 150
 - `height`: The height of your model. default: 300
+- `scaling`: The scaling of the resolution. default: 2
 - `mobileShow`: Whether to show on mobile devices. default: true
-- `mobileWidth`: The width of your model on mobile devices. default: 150
-- `mobileHeight`: The height of your model on mobile devices. default: 75
+- `mobileScaling`: The scaling on mobile. default: 0.5
 - `horizontalOffset`: The horizontal offset. default: 0
 - `verticalOffset`: The offset of the bottom. default: -20
 - `position`:  `left` or `right` side the model is shown at. default: right

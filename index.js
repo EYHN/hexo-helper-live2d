@@ -25,9 +25,9 @@ var config = Object.assign( {
     model: "z16",
     width: 150,
     height: 300,
+    scaling: 2,
     mobileShow: "true",
-    mobileWidth: 75,
-    mobileHeight: 150,
+    mobileScaling: 0.5,
     position: "right",
     horizontalOffset: 0,
     verticalOffset: -20,
@@ -40,12 +40,14 @@ var config = Object.assign( {
 
 hexo.extend.helper.register('live2d', function() {
   return `
-	<div id="hexo-helper-live2d">
-      <canvas id="${config.id}" width="${config.width}" height="${config.height}" class="${config.className}"></canvas>
-	</div>
+  <div id="hexo-helper-live2d">
+      <canvas id="${config.id}" width="${config.width * config.scaling}" height="${config.height * config.scaling}" class="${config.className}"></canvas>
+  </div>
     <style>
       #${config.id} {
         position: fixed;
+        width: ${config.width}px;
+        height: ${config.height}px;
         ${config.position}: ${config.horizontalOffset}px;
         z-index: 999;
         pointer-events: none;
@@ -57,8 +59,8 @@ hexo.extend.helper.register('live2d', function() {
     (function(){
     if(device.mobile()){
       ${config.mobileShow ? `
-      document.getElementById("${config.id}").width = ${config.mobileWidth};
-      document.getElementById("${config.id}").height = ${config.mobileHeight};
+      document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
+      document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
       document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
       document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
       ` : ``}
@@ -73,9 +75,9 @@ hexo.extend.helper.register('live2d', function() {
 
 fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)), function(exists){
   if(exists){
-  	registerDir("live2d/assets/", path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)));
+    registerDir("live2d/assets/", path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)));
   }else{
-	registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
+  registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
   }
 });
 
