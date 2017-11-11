@@ -75,7 +75,9 @@ live2d:
   model: z16 # 模型名称 默认值: z16
   width: 150 # 宽度 默认值: 150
   height: 300 # 高度 默认值: 300
-  scaling: 2 # 分辨率缩放倍率 默认值: 2
+  scaling: 1 # 分辨率缩放倍率 默认值: 2
+  opacityDefault: 1 # 初始的透明度 默认值: 1
+  #opacityHover: 1 # 鼠标悬浮时的透明度 默认值: 1
   mobileShow: true # 是否在移动设备上显示 默认值: true
   mobileScaling: 0.5 # 移动设备缩放倍率 默认值: 0.5
   position: right # 模型左右侧放置位置 默认值: right
@@ -107,17 +109,18 @@ live2d:
   - wanko
   - z16
 
-- `width`: 宽度 默认值: 150
-- `height`: 高度 默认值: 300
-- `scaling`: 分辨率缩放倍率 越大越不模糊 默认值: 2
-- `mobileShow`: 是否在移动设备上显示 默认值: true
-- `mobileScaling`: 移动设备缩放倍率 默认值: 0.5
-- `position`: 模型左右侧放置位置 `left` 或 `right` 默认值: false
-- `horizontalOffset`: `<canvas>` 元素的水平偏移 默认值: 0
-- `verticalOffset`: `<canvas>` 元素的底部偏移 默认值: -20
-- `className`: `<canvas>` 元素的类名 默认值: live2d
-- `id`: `<canvas>` 元素的id 默认值: live2dcanvas
-  如果嫌模型位置不正确 可以调整这个参数
+- `width`: 宽度  *( 实数 ) 默认值: 150*
+- `height`: 高度  *( 实数 ) 默认值: 300*
+- `scaling`: 分辨率缩放倍率 越大马赛克效应越小 **目前存在BUG，详细参考#32 在BUG解决前，请将数值设置为1**  *( 1 = 100% ) 默认值: 2*
+- `opacityDefault`: 初始的透明度 *(Beta)*  *( 0 - 1 ) 默认值: 1*
+~- `opacityHover`: 鼠标悬浮时透明度 *(Beta)*  *( 0 - 1 ) 默认值: 1*~ 暂时无法使用
+- `mobileShow`: 是否在移动设备上显示  *( true / false ) 默认值: true*
+- `mobileScaling`: 移动设备缩放倍率  *( 1 = 100% ) 默认值: 0.5*
+- `position`: 模型左右侧放置位置 `left` 左 或 `right` 右  *( left / right ) 默认值: right*
+- `horizontalOffset`: `<canvas>` 元素的水平方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: 0*
+- `verticalOffset`: `<canvas>` 元素的竖直方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: -20*
+- `className`: `<canvas>` 元素的类名  *( 字符串 ) 默认值: live2d*
+- `id`: `<canvas>` 元素的id  *( 字符串 ) 默认值:live2dcanvas*
 
 
 ## Custom model 增加自己喜欢的模型
@@ -219,7 +222,7 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 ## Todo
 
-- 接入每日一句(json) 接入互动对话框(#16)
+- 参见Issues
 
 ## About me 关于我
 

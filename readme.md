@@ -73,7 +73,9 @@ live2d:
   model: z16 # The model that you are willing to show. default: z16
   width: 150 # The width of your model. default: 150
   height: 300 # The height of your model. default: 300
-  scaling: 2 # The scaling of the resolution. default: 2
+  scaling: 1 # The scaling of the resolution. default: 2
+  opacityDefault: 1 # The default opacity. default: 1
+  #opacityHover: 1 # The opacity when hover. default: 1
   mobileShow: true # Whether to show on mobile devices. default: true
   mobileScaling: 0.5 # The scaling on mobile. default: 0.5
   position: right # Which side the model is shown at. default: right
@@ -106,17 +108,18 @@ live2d:
   - wanko
   - z16
 
-- `width`: The width of your model. default: 150
-- `height`: The height of your model. default: 300
-- `scaling`: The scaling of the resolution. default: 2
-- `mobileShow`: Whether to show on mobile devices. default: true
-- `mobileScaling`: The scaling on mobile. default: 0.5
-- `horizontalOffset`: The horizontal offset. default: 0
-- `verticalOffset`: The offset of the bottom. default: -20
-- `position`:  `left` or `right` side the model is shown at. default: right
-- `className`: The class name of the `<canvas>` element. default: live2d
-- `id`: The ID of the `<canvas>` element. default: live2dcanvas
-	Change this variable to adjust the position of model.
+- `width`: The width of your model.  *( real ) default: 150*
+- `height`: The height of your model.  *( real ) default: 300*
+- `scaling`: The scaling of the resolution. The greater the value is setted, less mosaic it will be. **Now have bug, see #32, not until the bug is solved, please set this value to 1.**  *( 1 = 100% ) default: 2*
+- `opacityDefault`: The default opacity. *(Beta)*  *( 0 - 1 ) default: 1*
+~- `opacityHover`: The opacity when hover. *(Beta)*  *( 0 - 1 ) default: 1*~ Not work now.
+- `mobileShow`: Whether to show on mobile devices.  *( true / false ) default: true*
+- `mobileScaling`: The scaling on mobile. default:  *( 1 = 100% ) 0.5*
+- `position`:  `left` or `right` side the model is shown at.  *( left / right ) default: right*
+- `horizontalOffset`: The horizontal offset. Change this variable to adjust the position of model.  *( real ) default: 0*
+- `verticalOffset`: The offset of the bottom. Change this variable to adjust the position of model.  *( real ) default: -20*
+- `className`: The class name of the `<canvas>` element.  *( string ) default: live2d*
+- `id`: The ID of the `<canvas>` element.  *( string ) default: live2dcanvas*
 
 
 ## Custom model
@@ -219,7 +222,7 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 > May have some delay, because I mostly edit Chinese document's Todo first.
 
-- Add module "Everyday Tips"(#16)
+- See Issues.
 
 ## About me
 
