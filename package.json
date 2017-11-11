@@ -1,6 +1,6 @@
 {
   "name": "hexo-helper-live2d",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "为你的hexo添加色气满满的live2d吧！",
   "main": "./index.js",
   "devDependencies": {
