@@ -8,6 +8,8 @@
     "babel-loader": "^7.0.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.5.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "github-changes": "^1.1.1",
     "html-webpack-plugin": "^2.28.0",
     "source-map-loader": "^0.2.1",
     "uglify-js": "^3.0.10",
@@ -23,8 +25,18 @@
   },
   "author": "EYHN",
   "license": "GPL-2.0",
-  "bugs": {
-    "url": "https://github.com/EYHN/hexo-helper-live2d/issues"
+  "repository": {
+    "type" : "git",
+	"url" : "https://github.com/EYHN/hexo-helper-live2d.git"
   },
-  "homepage": "https://github.com/EYHN/hexo-helper-live2d#readme"
+  "bugs": {
+    "url": "https://github.com/EYHN/hexo-helper-live2d/issues",
+	"email": "cneyhn@gmail.com"
+  },
+  "homepage": "https://github.com/EYHN/hexo-helper-live2d#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

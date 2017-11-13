@@ -224,16 +224,25 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 - See Issues.
 
-## Build
+
+## Build 
+
+http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
+
+### Build
 
 - npm install
 
 - npm run build
 
-- git commit -m "something"
+- git cz
 
+### Release
 
 - github-changes -o EYHN -r hexo-helper-live2d -f CHANGELOG.md
+
+- git push
+
 
 ## About me
 
