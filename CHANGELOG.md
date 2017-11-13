@@ -1,5 +1,9 @@
 ## Change Log
 
+### upcoming (2017/11/13 12:50 +00:00)
+- [9997c22](https://github.com/EYHN/hexo-helper-live2d/commit/9997c225f5365833341359e28467263570e87720) build(Commit system and build flow): Commit system and build flow (@xiazeyu)
+- [76f70bf](https://github.com/EYHN/hexo-helper-live2d/commit/76f70bfe130d15d7c47bf681e88375046e3fbc14) docs: add CHANGELOG YEAH~~~~~ (@xiazeyu)
+
 ### 2.1.3 (2017/11/11 14:33 +00:00)
 - [f9f535e](https://github.com/EYHN/hexo-helper-live2d/commit/f9f535e0e3fea2453b8f20d257ef7baa26250495) v2.1.3 (@xiazeyu)
 - [7e80cae](https://github.com/EYHN/hexo-helper-live2d/commit/7e80cae7d920758cc16cac8b6fe7c9a0e1866dd1) update readme and add opacity (BROKEN) (@xiazeyu)
