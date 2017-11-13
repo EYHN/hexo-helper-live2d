@@ -224,6 +224,17 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 - 参见Issues
 
+## Build 构建
+
+- npm install
+
+- npm run build
+
+- git commit -m "something"
+
+
+- github-changes -o EYHN -r hexo-helper-live2d -f CHANGELOG.md
+
 ## About me 关于我
 
 [![Author](https://img.shields.io/badge/author-cneyhn-green.svg?style=flat-square)](https://delusion.coding.me/)
