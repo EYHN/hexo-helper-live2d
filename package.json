@@ -24,8 +24,7 @@
     "dev": "webpack -w",
     "devenv": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g webpack&&npm install -g conventional-changelog-cli&&npm install",
     "commit": "git-cz",
-    "rewritechangelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "author": "EYHN",
   "license": "GPL-2.0",
