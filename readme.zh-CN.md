@@ -1,24 +1,23 @@
-
-<div align="center">
-
 [![npm][npm]][npm-url]
 [![deps][deps]][deps-url]
 [![devdeps][devdeps]][devdeps-url]
+
 [![downloads][downloads]][downloads-url]
 [![downloads-month][downloads-month]][downloads-month-url]
+
 [![GitHub stars][GitHub stars]][GitHub stars-url]
 [![GitHub forks][GitHub forks]][GitHub forks-url]
 [![GitHub issues][GitHub issues]][GitHub issues-url]
+
 [![Commitizen friendly][Commitizen friendly]][Commitizen friendly-url]
 [![PRs Welcome][PRs Welcome]][PRs Welcome-url]
 [![license][license]][license-url]
 
-</div>
 
 
 # hexo-helper-live2d
 
-> 现已更新 2.0！
+> 3.0即将来临！
 
 [English README](./readme.md) by [@gwzz](https://github.com/gwzz) & [@xiazeyu](https://github.com/xiazeyu)
 

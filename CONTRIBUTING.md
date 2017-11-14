@@ -49,6 +49,8 @@ work is not in vain.
 
 ### 3. Commit those changes
 
+- `git add *`, or choose the file you want to commit.
+
 - `npm run commit`, **Never use `git commit` again**
 
 ### 4. Push the changes
