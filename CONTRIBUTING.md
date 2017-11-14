@@ -65,7 +65,7 @@ work is not in vain.
 
 ### 7. Update Changelogs
 
-- `npm changelog`
+- `npm run changelog`
 
 ### 8. Commit package.json and CHANGELOG.md files
 
