@@ -1,5 +1,20 @@
 
-[![npm version](https://badge.fury.io/js/hexo-helper-live2d.svg)](https://badge.fury.io/js/hexo-helper-live2d)
+<div align="center">
+
+[![npm][npm]][npm-url]
+[![deps][deps]][deps-url]
+[![devdeps][devdeps]][devdeps-url]
+[![downloads][downloads]][downloads-url]
+[![downloads-month][downloads-month]][downloads-month-url]
+[![GitHub stars][GitHub stars]][GitHub stars-url]
+[![GitHub forks][GitHub forks]][GitHub forks-url]
+[![GitHub issues][GitHub issues]][GitHub issues-url]
+[![Commitizen friendly][Commitizen friendly]][Commitizen friendly-url]
+[![PRs Welcome][PRs Welcome]][PRs Welcome-url]
+[![license][license]][license-url]
+
+</div>
+
 
 # hexo-helper-live2d
 
@@ -218,42 +233,18 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 ![](https://huaji8.top/img/live2d/hijiki.gif)
 
 
-## Todo
+## Contribute
 
-> May have some delay, because I mostly edit Chinese document's Todo first.
-
-- See Issues.
-
-
-## Build 
-
-http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
-
-### Build
-
-- npm install
-
-- npm run build
-
-- git cz
-
-### Release
-
-- github-changes -o EYHN -r hexo-helper-live2d -f CHANGELOG.md
-
-- git push
+[CONTRIBUTING](./CONTRIBUTING.md)
 
 
 ## About me
 
 [![Author](https://img.shields.io/badge/author-cneyhn-green.svg?style=flat-square)](https://delusion.coding.me/)
+
 [![QQ](https://img.shields.io/badge/QQ-1106996185-blue.svg?style=flat-square)](http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes)
+
 [![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
-
-
-## License
-
-[![license](https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg?style=flat-square)](https://raw.githubusercontent.com/EYHN/hexo-helper-live2d/master/LICENSE)
 
 
 ## Included
@@ -263,3 +254,36 @@ http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
 <br>
 
 Open sourced under the GPL v2.0 license.
+
+[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg
+[npm-url]: https://www.npmjs.com/package/hexo-helper-live2d
+
+[deps]: https://img.shields.io/david/EYHN/hexo-helper-live2d.svg
+[deps-url]: #
+
+[devdeps]:  https://img.shields.io/david/dev/EYHN/hexo-helper-live2d.svg
+[devdeps-url]: #
+
+[license]: https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg
+[license-url]: https://github.com/EYHN/hexo-helper-live2d/blob/master/LICENSE
+
+[PRs Welcome]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[PRs Welcome-url]: http://makeapullrequest.com
+
+[downloads]:  https://img.shields.io/npm/dt/hexo-helper-live2d.svg
+[downloads-url]: https://www.npmjs.com/package/hexo-helper-live2d
+
+[downloads-month]: https://img.shields.io/npm/dm/hexo-helper-live2d.svg
+[downloads-month-url]: https://www.npmjs.com/package/hexo-helper-live2d
+
+[Commitizen friendly]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+[Commitizen friendly-url]: http://commitizen.github.io/cz-cli/
+
+[GitHub stars]: https://img.shields.io/github/stars/EYHN/hexo-helper-live2d.svg
+[GitHub stars-url]: https://github.com/EYHN/hexo-helper-live2d/stargazers
+
+[GitHub forks]: https://img.shields.io/github/forks/EYHN/hexo-helper-live2d.svg
+[GitHub forks-url]: https://github.com/EYHN/hexo-helper-live2d/network
+
+[GitHub issues]: https://img.shields.io/github/issues/EYHN/hexo-helper-live2d.svg
+[GitHub issues-url]: https://github.com/EYHN/hexo-helper-live2d/issues
