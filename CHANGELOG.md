@@ -1,7 +1,9 @@
 <a name="Unreleased"></a>
 # Unreleased (2017-11-15)
 
+* feat: npm run CHANGELOG now will show result. ([5ba0456](https://github.com/EYHN/hexo-helper-live2d/commit/5ba0456))
 * docs: update changelog ([c62fcf2](https://github.com/EYHN/hexo-helper-live2d/commit/c62fcf2))
+* docs: update CHANGELOG ([7c26e97](https://github.com/EYHN/hexo-helper-live2d/commit/7c26e97))
 
 
 
