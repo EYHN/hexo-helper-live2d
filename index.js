@@ -87,17 +87,28 @@ hexo.extend.helper.register('live2d', function() {
 `
 });
 
+// 复制live2d模型文件
+// 先在 博客目录/live2d_models/ 目录下寻找
 fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)), function(exists){
   if(exists){
     registerDir("live2d/assets/", path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)));
-  }else{
-  registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
+  }else{ // 若未找到，在 插件目录/assets/ 下继续寻找
+    registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
   }
 });
 
+// 复制 live2d客户端 脚本
 registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'));
-registerFile('live2d/script.js.map', path.resolve(__dirname, './dist/bundle.js.map'));
-registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
+
+// 复制 device.js 脚本
+fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
+  if(exists){
+    registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
+  }else{
+    console.log("live2d serverJs can't find device.js");
+    return ;
+  }
+});
 
 hexo.extend.generator.register('live2d', function (locals) {
   return generators;

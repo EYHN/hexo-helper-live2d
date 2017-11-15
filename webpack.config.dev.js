@@ -22,14 +22,18 @@ module.exports = {
     devtool: "source-map",
 
     plugins: [
-        new HtmlWebpackPlugin(HtmlWebpackConfig),
+        new webpack.DefinePlugin({
+          'process.env': {
+            NODE_ENV: '"production"'
+          }
+        }),
         new webpack.optimize.UglifyJsPlugin({
-          compress: {
-            warnings: true
-          },
+          compress: true,
+          warnings: true,
           sourceMap: true,
-          mangle: false
-        })
+          mangle: true
+        }),
+        new HtmlWebpackPlugin(HtmlWebpackConfig)
     ],
 
     resolve: {

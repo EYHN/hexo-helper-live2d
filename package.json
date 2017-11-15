@@ -10,6 +10,7 @@
     "babel-preset-env": "^1.6.1",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
+    "device.js": "git+ssh://git@github.com/matthewhudson/device.js.git",
     "html-webpack-plugin": "^2.30.1",
     "source-map-loader": "^0.2.3",
     "uglify-js": "^3.1.9",
@@ -23,20 +24,34 @@
     "devenv": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g webpack&&npm install -g conventional-changelog-cli&&npm install",
     "dev": "webpack --config webpack.config.dev.js",
     "devw": "webpack --config webpack.config.dev.js -w",
-    "rel": "webpack",
+    "rel": "webpack --config webpack.config.device.js&&webpack",
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "test": "echo \"Nothing here, but someday there will be something here. xD\" && exit 1"
   },
-  "author": "EYHN",
+  "author": {
+    "name": "EYHN",
+    "email": "cneyhn@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "xiazeyu",
+      "email": "xiazeyu_2011@126.com"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "xiazeyu",
+      "email": "xiazeyu_2011@126.com"
+    }
+  ],
   "license": "GPL-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EYHN/hexo-helper-live2d.git"
+    "url": "git://github.com/EYHN/hexo-helper-live2d.git"
   },
   "bugs": {
-    "url": "https://github.com/EYHN/hexo-helper-live2d/issues",
-    "email": "cneyhn@gmail.com"
+    "url": "https://github.com/EYHN/hexo-helper-live2d/issues"
   },
   "homepage": "https://github.com/EYHN/hexo-helper-live2d#readme",
   "config": {

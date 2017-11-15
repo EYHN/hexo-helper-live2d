@@ -1,21 +1,13 @@
 var webpack = require('webpack');
 var path = require('path')
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-
-var HtmlWebpackConfig = {
-    filename: 'insert.html',
-    template: "./src/insert.html",
-    hash: true,
-    showErrors: true
-};
 
 module.exports = {
     entry: [
-        "./src/main.js"
+        "./node_modules/device.js/lib/device.js"
     ],
     output: {
-        filename: "bundle.js",
+        filename: "device.min.js",
         path: __dirname + "/dist"
     },
 
@@ -30,8 +22,7 @@ module.exports = {
           warnings: true,
           sourceMap: false,
           mangle: true
-        }),
-        new HtmlWebpackPlugin(HtmlWebpackConfig)
+        })
     ],
 
     resolve: {
