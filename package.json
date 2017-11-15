@@ -26,7 +26,7 @@
     "devw": "webpack --config webpack.config.dev.js -w",
     "rel": "webpack --config webpack.config.device.js&&webpack",
     "commit": "git-cz",
-    "changelog": "git pull&&conventional-changelog -i CHANGELOG.md -r 0 -s -u&&git add CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push",
+    "changelog": "git pull&&conventional-changelog -i CHANGELOG.md -r 0 -s -u&&git add CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status",
     "test": "echo \"Nothing here, but someday there will be something here. xD\" && exit 1"
   },
   "author": {
