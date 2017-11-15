@@ -73,15 +73,20 @@ hexo.extend.helper.register('live2d', function() {
     <script src="/live2d/device.min.js"></script>
     <script type="text/javascript">
     (function(){
-    if(device.mobile()){
-      ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
-      document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
-      document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
-      document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');` : ``}
-    }else{
-      document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
-      document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
-    }
+	  if(typeof(device) != "undefined"){
+        if(device.mobile()){
+          ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
+          document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
+          document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
+          document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');` : ``}
+        }else{
+          document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
+          document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
+        }
+	  }else{
+        document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
+        document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');    
+	  }
     })();
     </script>
 `
@@ -105,7 +110,7 @@ fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
   if(exists){
     registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
   }else{
-    console.log("live2d serverJs can't find device.js");
+    console.log("Live2d serverJs: can't find device.js, contant the author for support.");
     return ;
   }
 });
