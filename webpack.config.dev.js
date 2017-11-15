@@ -4,8 +4,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 var HtmlWebpackConfig = {
-    filename: 'insert.html',
-    template: "./src/insert.html",
+    filename: 'dev.html',
+    template: "./src/dev.html",
     hash: true,
     showErrors: true
 };
@@ -19,19 +19,16 @@ module.exports = {
         path: __dirname + "/dist"
     },
 
+    devtool: "source-map",
+
     plugins: [
         new HtmlWebpackPlugin(HtmlWebpackConfig),
         new webpack.optimize.UglifyJsPlugin({
           compress: {
             warnings: true
           },
-          sourceMap: false,
-          mangle: true
-        }),
-        new webpack.DefinePlugin({
-          'process.env': {
-            NODE_ENV: '"production"'
-          }
+          sourceMap: true,
+          mangle: false
         })
     ],
 

@@ -39,29 +39,33 @@ work is not in vain.
 
 ### 1. Install environments
 
-- `npm run devenv`
+- `npm run devenv` to install all the necessery environments.
 
-### 2. Make changes
+### 2. Make changes: **clientJs only** (serverJs skip)
 
-- `npm run build` to build client js files.
+- `npm run dev` to build client js files **with debug files**.
 
-- `npm run dev` to build client js files with debug files.
+- `npm run devw` to build client js files **with debug files** and **let webpack watch the file**.
 
 ### 3. Commit those changes
 
+- **`npm run rel` to build final client js. Important!!!**
+
 - `git add *`, or choose the file you want to commit.
 
-- `npm run commit`, **Never use `git commit` again**
+- `npm run commit`, **Never use `git commit`!!!**
 
 ### 4. Push the changes
 
-- `git push`
+- `git push` to push the changes to the github server.
 
-### 5. ~~Make sure you passed the tests.~~
+### ~~5. Make sure you passed the tests.~~
 
 - ~~`npm run test`~~
 
 ### 6. Bump version in package.json
+
+- *Let the Collaborator or author do it.*
 
 ### 7. Update Changelogs
 
@@ -69,7 +73,11 @@ work is not in vain.
 
 ### 8. Commit package.json and CHANGELOG.md files
 
+- `npm run commit`, **Never use `git commit`!!!**
+
 ### 9. Tag
+
+- *Let the Collaborator or author do it.*
 
 ### 10. Push again
 
