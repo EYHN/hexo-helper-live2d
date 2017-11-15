@@ -35,7 +35,7 @@ appreciated and welcome. If you're planning to implement a new feature or change
 the api please create an issue first. This way we can ensure that your precious
 work is not in vain.
 
-## Workflow
+## Workflow: modify the code
 
 ### 1. Install environments
 
@@ -47,39 +47,50 @@ work is not in vain.
 
 - `npm run devw` to build client js files **with debug files** and **let webpack watch the file**.
 
-### 3. Commit those changes
+### ~~3. Make sure you passed all the tests.~~
 
-- **`npm run rel` to build final client js. Important!!!**
+- ~~`npm run test`~~
+
+### 4. Commit those changes
+
+- **`npm run rel` to build final client js. Important!!! The step must be done!!!**
 
 - `git add *`, or choose the file you want to commit.
 
 - `npm run commit`, **Never use `git commit`!!!**
 
-### 4. Push the changes
+### 5. Push the changes
 
 - `git push` to push the changes to the github server.
 
-### ~~5. Make sure you passed the tests.~~
-
-- ~~`npm run test`~~
-
-### 6. Bump version in package.json
-
-- *Let the Collaborator or author do it.*
-
-### 7. Update Changelogs
+### 6. Update Changelogs
 
 - `npm run changelog`
 
-### 8. Commit package.json and CHANGELOG.md files
+## Workflow(author): Release a new version
+
+*Let the Collaborator or author do it.*
+
+### 1. Bump the version
+
+- bump the version in `package.json`
+
+- delete `package-lock.json`
+
+- run `npm install` to generate new `package-lock.json`
+
+### 2. Commit package.json and package-lock.json
 
 - `npm run commit`, **Never use `git commit`!!!**
 
-### 9. Tag
+### 3. Tag and release a new version
 
-- *Let the Collaborator or author do it.*
+- In the Github page.
 
-### 10. Push again
+### 4. Update changelog
 
-- `git push`
+- `npm run changelog`
 
+### 5. Publish the package to npm.
+
+- `npm publish`
