@@ -63,9 +63,6 @@ work is not in vain.
 
 - `git push` to push the changes to the github server.
 
-### 6. Update Changelogs
-
-- `npm run changelog`
 
 ## Workflow(author): Release a new version
 

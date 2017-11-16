@@ -99,6 +99,9 @@ function init(modelurl) {
   setContext(gl);
   if (!gl) {
     console.error("Failed to create WebGL context.");
+    if(!!window.WebGLRenderingContext){
+      console.error("Your browser don't support WebGL, check https://get.webgl.org/ for futher information.");
+    }
     return;
   }
   window.Live2D.setGL(gl);
