@@ -1,16 +1,19 @@
 # Contributing
 
+
 ## Issues
 
 Most of the time, if this plugin is not working correctly for you it is a simple configuration issue.
 
 **If you have discovered a bug or have a feature suggestion, feel free to create an issue on Github.**
 
+
 ## Contributing directly to the source code
 
 **Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github) 
 
 See workflow for more information.
+
 
 ## Submitting Changes
 
@@ -24,6 +27,7 @@ Some things that will increase the chance that your pull request is accepted:
 * Follow the existing coding style
 * Write a good commit message use `npm run commit`
 
+
 ## Documentation
 
 Hexo-helper-live2d is insanely feature rich and documentation is a huge time sink. We
@@ -35,17 +39,24 @@ appreciated and welcome. If you're planning to implement a new feature or change
 the api please create an issue first. This way we can ensure that your precious
 work is not in vain.
 
+
 ## Workflow: modify the code
+
 
 ### 1. Install environments
 
 - `npm run devenv` to install all the necessery environments.
 
-### 2. Make changes: **clientJs only** (serverJs skip)
+### 2. Make changes
+
+#### clientJs: modify src/main.js
 
 - `npm run dev` to build client js files **with debug files**.
 
 - `npm run devw` to build client js files **with debug files** and **let webpack watch the file**.
+
+#### serverJs: modify index.js
+
 
 ### ~~3. Make sure you passed all the tests.~~
 
@@ -91,3 +102,4 @@ work is not in vain.
 ### 5. Publish the package to npm.
 
 - `npm publish`
+
