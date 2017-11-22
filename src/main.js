@@ -383,7 +383,6 @@ function mouseEvent(e)
         // if (e.wheelDelta > 0) modelScaling(1.1); 
         // else modelScaling(0.9); 
     } else if (e.type == "mousedown") {
-        if("button" in e && e.button != 0) return;
         modelTapEvent(e);
     } else if (e.type == "mousemove") {
         modelTurnHead(e);
