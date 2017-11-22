@@ -300,13 +300,38 @@ function modelTurnHead(event)
     let vy = transformViewY(target.y - rect.top);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
+        console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
+
+    lastMouseX = sx;
+    lastMouseY = sy;
+
+    dragMgr.setPoint(vx, vy);
+}
+
+function modelTapEvent(event)
+{
+    drag = true;
+    
+    let rect = canvas.getBoundingClientRect();
+    
+    let sx = transformScreenX(event.clientX - rect.left);
+    let sy = transformScreenY(event.clientY - rect.top);
+    let target = transformRect({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height * head_pos
+    }, {
+        x: event.clientX,
+        y: event.clientY
+    }, rect)
+    let vx = transformViewX(target.x - rect.left);
+    let vy = transformViewY(target.y - rect.top);
+
+    if (LAppDefine.DEBUG_MOUSE_LOG)
         console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     lastMouseX = sx;
     lastMouseY = sy;
 
-    dragMgr.setPoint(vx, vy); 
-    
     live2DMgr.tapEvent(vx, vy);
 }
 
@@ -359,7 +384,7 @@ function mouseEvent(e)
         // else modelScaling(0.9); 
     } else if (e.type == "mousedown") {
         if("button" in e && e.button != 0) return;
-        // modelTurnHead(e);
+        modelTapEvent(e);
     } else if (e.type == "mousemove") {
         modelTurnHead(e);
     } else if (e.type == "mouseup") {
@@ -374,7 +399,7 @@ function touchEvent(e)
 {
     var touch = e.touches[0];
     if (e.type == "touchstart") {
-        if (e.touches.length == 1) modelTurnHead(touch);
+        if (e.touches.length == 1) modelTapEvent(touch);
         // onClick(touch);
     } else if (e.type == "touchmove") {
         followPointer(touch);
