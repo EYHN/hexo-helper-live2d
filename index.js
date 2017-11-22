@@ -63,7 +63,6 @@ hexo.extend.helper.register('live2d', function() {
 		-o-transition:opacity 0.95s ease-out; /* Opera */`: ``}
         ${config.position}: ${config.horizontalOffset}px;
         z-index: 999;
-        pointer-events: none;
         bottom: ${config.verticalOffset}px;
       }
 	  ${config.opacityDefault != config.opacityHover ? `#${config.id}:hover{
