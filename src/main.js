@@ -451,4 +451,4 @@ function loadlive2d(id,modelurl,headPos) {
     init(modelurl);
 }
 
-window.loadlive2d = loadlive2d;
+window.loadlive2d = loadlive2d
