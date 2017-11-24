@@ -48,32 +48,32 @@ hexo.extend.helper.register('live2d', function() {
     <style>
       #${config.id}{
       	-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        ms-user-select: none;
+        user-select: none;
         position: fixed;
         width: ${config.width}px;
         height: ${config.height}px;
         opacity:${config.opacityDefault};
         ${config.opacityDefault != config.opacityHover ? `transition:opacity 0.95s ease-out;
-		-moz-transition:opacity 0.95s ease-out; /* Firefox 4 */
-		-webkit-transition:opacity 0.95s ease-out; /* Safari and Chrome */
-		-o-transition:opacity 0.95s ease-out; /* Opera */`: ``}
+        moz-transition:opacity 0.95s ease-out; /* Firefox 4 */
+        -webkit-transition:opacity 0.95s ease-out; /* Safari and Chrome */
+        -o-transition:opacity 0.95s ease-out; /* Opera */`: ``}
         ${config.position}: ${config.horizontalOffset}px;
         z-index: 999;
         pointer-events: none;
         bottom: ${config.verticalOffset}px;
       }
-	  ${config.opacityDefault != config.opacityHover ? `#${config.id}:hover{
-		opacity:${config.opacityHover};
+    ${config.opacityDefault != config.opacityHover ? `#${config.id}:hover{
+    opacity:${config.opacityHover};
       }`: ``}
     </style>
     <script src="/live2d/device.min.js"></script>
     <script type="text/javascript">
     (function(){
-	  if(typeof(device) != "undefined"){
+        if(typeof(device) != "undefined"){
         if(device.mobile()){
           ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
           document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
@@ -83,10 +83,10 @@ hexo.extend.helper.register('live2d', function() {
           document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
           document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
         }
-	  }else{
+       }else{
         document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
         document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');    
-	  }
+    }
     })();
     </script>
 `
@@ -118,4 +118,3 @@ fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
 hexo.extend.generator.register('live2d', function (locals) {
   return generators;
 });
-
