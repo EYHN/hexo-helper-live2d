@@ -42,6 +42,11 @@ work is not in vain.
 
 ## Workflow: modify the code
 
+- We use [EditorConfig](http://editorconfig.org/) to define and maintain consistent coding styles, so have a look first.
+
+- It is also recommend to have these documents read:
+
+- [(Chinese) Angular代码规范](http://www.reqianduan.com/1722.html)
 
 ### 1. Install environments
 

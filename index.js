@@ -118,4 +118,3 @@ fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
 hexo.extend.generator.register('live2d', function (locals) {
   return generators;
 });
-
