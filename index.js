@@ -87,7 +87,9 @@ hexo.extend.helper.register('live2d', function() {
         document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
         document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');    
     }
-    })();
+    }
+	const device = device.default;
+	)();
     </script>
 `
 });
