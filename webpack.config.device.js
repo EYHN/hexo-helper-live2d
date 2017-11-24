@@ -4,7 +4,7 @@ var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
     entry: [
-        "./node_modules/device.js/lib/device.js"
+        "./node_modules/current-device/lib/index.js"
     ],
     output: {
         filename: "device.min.js",
