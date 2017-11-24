@@ -103,6 +103,7 @@ live2d:
 
 
 - `model`: 模型名称 默认值: z16
+  - chitose
   - Epsilon2.1
   - Gantzert_Felixander
   - haru01
@@ -110,6 +111,7 @@ live2d:
   - haruto
   - hibiki
   - hijiki
+  - izumi
   - koharu
   - miku
   - nico

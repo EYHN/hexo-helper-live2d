@@ -102,6 +102,7 @@ live2d:
 > To use settings in Chinese, please have a look at Chinese document.
 
 - `model`: The model that you are willing to show. default: z16
+  - chitose
   - Epsilon2.1
   - Gantzert_Felixander
   - haru01
@@ -109,6 +110,7 @@ live2d:
   - haruto
   - hibiki
   - hijiki
+  - izumi
   - koharu
   - miku
   - nico
