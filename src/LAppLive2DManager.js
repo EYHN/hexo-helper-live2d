@@ -32,10 +32,7 @@ LAppLive2DManager.prototype.changeModel = function (gl, modelurl) {
   // console.log("--> LAppLive2DManager.update(gl)");
 
   if (this.reloadFlg) {
-
     this.reloadFlg = false;
-
-    var thisRef = this;
     this.releaseModel(0, gl);
     this.createModel();
     this.models[0].load(gl, modelurl);

@@ -5,10 +5,15 @@
  *
  *  (c) Live2D Inc. All rights reserved.
  */
+
 /**
  * EYHN 修改
- * 
+ *
  * Copyright © 2016 - 2017 EYHN
+ */
+
+/**
+ *  xiazeyu 到此一改
  */
 
 function MatrixStack() {}
@@ -45,10 +50,10 @@ MatrixStack.loadIdentity = function()
 
 
 MatrixStack.push = function()
-{    
-    var offset = this.depth * 16;
+{
+    // var offset = this.depth * 16;
     var nextOffset = (this.depth + 1) * 16;
-    
+
     if (this.matrixStack.length < nextOffset + 16)
     {
         this.matrixStack.length = nextOffset + 16;

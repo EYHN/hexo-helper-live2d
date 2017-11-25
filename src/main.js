@@ -15,7 +15,7 @@ import {setContext} from "./webglcontext"
 //   console.error(errmsg);
 // }
 
-const platform = window.navigator.platform.toLowerCase();
+// const platform = window.navigator.platform.toLowerCase();
 
 const live2DMgr = new LAppLive2DManager();
 
@@ -35,15 +35,15 @@ let deviceToScreen = null;
 
 let drag = false;
 
-let oldLen = 0;
+// let oldLen = 0;
 
 let lastMouseX = 0;
 
 let lastMouseY = 0;
 
-let isModelShown = 0;
+// let isModelShown = 0;
 
-let modelurl = "";
+// let modelurl = "";
 
 let head_pos = 0.5;
 
@@ -130,21 +130,21 @@ function draw()
 {
     MatrixStack.reset();
     MatrixStack.loadIdentity();
-    dragMgr.update(); 
+    dragMgr.update();
     live2DMgr.setDrag(dragMgr.getX(), dragMgr.getY());
-    
+
     gl.clear(gl.COLOR_BUFFER_BIT);
-    
+
     MatrixStack.multMatrix(projMatrix.getArray());
     MatrixStack.multMatrix(viewMatrix.getArray());
     MatrixStack.push();
-    
+
     for (let i = 0; i < live2DMgr.numModels(); i++)
     {
         let model = live2DMgr.getModel(i);
 
         if(model == null) return;
-        
+
         if (model.initialized && !model.updating)
         {
             model.update();
@@ -160,12 +160,12 @@ function changeModel(modelurl)
     live2DMgr.count++;
     live2DMgr.changeModel(gl,modelurl);
 }
-
+/*
 function modelScaling(scale)
 {
     let isMaxScale = viewMatrix.isMaxScale();
     let isMinScale = viewMatrix.isMinScale();
-    
+
     viewMatrix.adjustScale(0, 0, scale);
 
     if (!isMaxScale)
@@ -175,7 +175,7 @@ function modelScaling(scale)
             live2DMgr.maxScaleEvent();
         }
     }
-    
+
     if (!isMinScale)
     {
         if (viewMatrix.isMinScale())
@@ -184,7 +184,7 @@ function modelScaling(scale)
         }
     }
 }
-
+*//*
 function transformRange(center, transform, range)
 {
     let a = {
@@ -202,7 +202,7 @@ function transformRange(center, transform, range)
         return transform;
     }
 }
-
+*/
 function dot(A,B)
 {
     return A.x * B.x + A.y * B.y;
@@ -284,9 +284,9 @@ function transformRect(center, transform, rect)
 function modelTurnHead(event)
 {
     drag = true;
-    
+
     let rect = canvas.getBoundingClientRect();
-    
+
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
     let target = transformRect({
@@ -311,9 +311,9 @@ function modelTurnHead(event)
 function modelTapEvent(event)
 {
     drag = true;
-    
+
     let rect = canvas.getBoundingClientRect();
-    
+
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
     let target = transformRect({
@@ -336,9 +336,9 @@ function modelTapEvent(event)
 }
 
 function followPointer(event)
-{    
+{
     let rect = canvas.getBoundingClientRect();
-    
+
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
     let target = transformRect({
@@ -358,12 +358,12 @@ function followPointer(event)
     {
         lastMouseX = sx;
         lastMouseY = sy;
-        dragMgr.setPoint(vx, vy); 
+        dragMgr.setPoint(vx, vy);
     }
 }
 
 function lookFront()
-{   
+{
     if (drag)
     {
         drag = false;
@@ -375,13 +375,13 @@ function mouseEvent(e)
 {
     //e.preventDefault();
     if (e.type == "mousewheel") {
-        // if (e.clientX < 0 || canvas.clientWidth < e.clientX || 
+        // if (e.clientX < 0 || canvas.clientWidth < e.clientX ||
         // e.clientY < 0 || canvas.clientHeight < e.clientY)
         // {
         //     return;
         // }
-        // if (e.wheelDelta > 0) modelScaling(1.1); 
-        // else modelScaling(0.9); 
+        // if (e.wheelDelta > 0) modelScaling(1.1);
+        // else modelScaling(0.9);
     } else if (e.type == "mousedown") {
         modelTapEvent(e);
     } else if (e.type == "mousemove") {
@@ -409,15 +409,15 @@ function touchEvent(e)
 
 function transformViewX(deviceX)
 {
-    var screenX = deviceToScreen.transformX(deviceX); 
-    return viewMatrix.invertTransformX(screenX); 
+    var screenX = deviceToScreen.transformX(deviceX);
+    return viewMatrix.invertTransformX(screenX);
 }
 
 
 function transformViewY(deviceY)
 {
-    var screenY = deviceToScreen.transformY(deviceY); 
-    return viewMatrix.invertTransformY(screenY); 
+    var screenY = deviceToScreen.transformY(deviceY);
+    return viewMatrix.invertTransformY(screenY);
 }
 
 
