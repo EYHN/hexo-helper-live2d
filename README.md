@@ -95,7 +95,6 @@ live2d:
   position: right # Which side the model is shown at. default: right
   horizontalOffset: 0 # The horizontal offset. default: 0
   verticalOffset: -20 # The offset of the bottom. default: -20
-  className: live2d # The class name of the element. default: live2d
   id: live2dcanvas # The ID of the live2d element. default: live2dcanvas
   deviceJsSource: local # The source of the current-device script. default: local
 ```
@@ -135,7 +134,6 @@ live2d:
 - `position`:  `left` or `right` side the model is shown at.  *( left / right ) default: right*
 - `horizontalOffset`: The horizontal offset. Change this variable to adjust the position of model.  *( real ) default: 0*
 - `verticalOffset`: The offset of the bottom. Change this variable to adjust the position of model.  *( real ) default: -20*
-- `className`: The class name of the `<canvas>` element.  *( string ) default: live2d*
 - `id`: The ID of the `<canvas>` element.  *( string ) default: live2dcanvas*
 - `deviceJsSource`: The source of the current-device script.  *( local / official / string ) default: local*
   - We have three options to choose:

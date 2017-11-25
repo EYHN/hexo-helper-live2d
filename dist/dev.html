@@ -8,10 +8,12 @@
   </head>
   <body>
     <div id="app">
-      <canvas id="live2dcanvas" width="680" height="940" style="border:dashed 1px #CCC"></canvas>
+      <canvas id="live2dcanvas" width="600" height="800" style="border:dashed 1px #CCC"></canvas>
     </div>
     <style>
       #live2dcanvas{
+        width: 600;
+        height: 800;
         position: fixed;
         opacity: 1;
         z-index: 999;
@@ -19,7 +21,8 @@
       }
     </style>
   <script type="text/javascript" src="device.min.js"></script>
-
+  width: <input type="text" id="twidth" value="600"><br>
+  height: <input type="text" id="theight" value="800"><br>
   modelName: <input type="text" id="tmodelName" value="shizuku"><br>
   headPos: <input type="text" id="theadPos" value="0.5"><br>
   scaling: <input type="text" id="tscaling" value="2"><br>
@@ -29,16 +32,20 @@
 
   <script language="JAVASCRIPT">
   function myfunc (){
+    var width = document.getElementById("twidth").value;
+    var height = document.getElementById("theight").value;
     var modelName = document.getElementById("tmodelName").value;
     var headPos = document.getElementById("theadPos").value;
     var scaling = document.getElementById("tscaling").value;
     var opacityDefault = document.getElementById("topacityDefault").value;
     var opacityHover = document.getElementById("topacityHover").value;
-    var modelUrl="../assets/name/name.model.json"
+    var modelUrl="../assets/name/name.model.json";
+    document.getElementById("live2dcanvas").style.width = width + 'px';
+    document.getElementById("live2dcanvas").style.height = height + 'px';
     modelUrl = modelUrl.replace(/name/g, modelName);
     console.log(modelUrl);
     loadlive2d("live2dcanvas", modelUrl, headPos, scaling, opacityDefault, opacityHover);
   }
   </script>
-  <script type="text/javascript" src="bundle.js?70ce383ad558350de0a2"></script></body>
+  <script type="text/javascript" src="bundle.js?a240b1d5f2559b7d0277"></script></body>
 </html>

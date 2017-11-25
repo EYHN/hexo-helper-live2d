@@ -97,7 +97,6 @@ live2d:
   position: right # 模型左右侧放置位置 默认值: right
   horizontalOffset: 0 # 元素的水平偏移 默认值: 0
   verticalOffset: -20 # 元素的底部偏移 默认值: -20
-  className: live2d # 元素的类名 默认值: live2d
   id: live2dcanvas # 元素的id 默认值: live2dcanvas
   deviceJsSource: local # current-device 脚本的来源 默认值: local
 ```
@@ -136,7 +135,6 @@ live2d:
 - `position`: 模型左右侧放置位置 `left` 左 或 `right` 右  *( left / right ) 默认值: right*
 - `horizontalOffset`: `<canvas>` 元素的水平方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: 0*
 - `verticalOffset`: `<canvas>` 元素的竖直方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: -20*
-- `className`: `<canvas>` 元素的类名  *( 字符串 ) 默认值: live2d*
 - `id`: `<canvas>` 元素的id  *( 字符串 ) 默认值:live2dcanvas*
 - `deviceJsSource`: current-device 脚本的来源.  *( local / official / 字符串 ) 默认值: local*
   - 你可以选择以下三种方式:

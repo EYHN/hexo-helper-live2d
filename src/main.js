@@ -47,7 +47,7 @@ let lastMouseY = 0;
 
 let head_pos = 0.5;
 
-function initL2dCanvas(canvasId) {
+function initCanvas(canvasId) {
   canvas = document.getElementById(canvasId);
   if (canvas.addEventListener) {
     //canvas.addEventListener("mousewheel", mouseEvent);
@@ -158,7 +158,7 @@ function changeModel(modelurl)
 {
     live2DMgr.reloadFlg = true;
     live2DMgr.count++;
-    live2DMgr.changeModel(gl,modelurl);
+    live2DMgr.changeModel(gl, modelurl);
 }
 /*
 function modelScaling(scale)
@@ -445,10 +445,10 @@ function getWebGLContext()
     return null;
 };
 
-function loadlive2d(id,modelurl,headPos) {
+function loadlive2d(id, modelUrl, headPos, scaling, opacityDefault, opacityHover) {
     head_pos = typeof headPos === 'undefined' ? 0.5 : headPos;
-    initL2dCanvas(id);
-    init(modelurl);
+    initCanvas(id);
+    init(modelUrl);
 }
 
 window.loadlive2d = loadlive2d;
