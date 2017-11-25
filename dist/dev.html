@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8" />
-<title>Live2d Test Env</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<div id="app">
-<canvas id="live2dcanvas" width="680" height="940" style="border:dashed 1px #CCC">
-</canvas>
-</div>
-<script type="text/javascript" src="device.min.js"></script>
-<input type="button" value="ok" onclick="javascript:fun_b()"> 
-<script language="JAVASCRIPT">
-function fun_b () 
-{ 
-Fun_a();
-}
-</script> 
-<script type="text/javascript" src="bundle.js?d705e12f91e833833472"></script></body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Live2d Test Env</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="live2dcanvas" width="680" height="940" style="border:dashed 1px #CCC"></canvas>
+    </div>
+    <style>
+      #live2dcanvas{
+        position: fixed;
+        opacity: 1;
+        z-index: 999;
+        pointer-events: none;
+      }
+    </style>
+  <script type="text/javascript" src="device.min.js"></script>
+
+  modelName: <input type="text" id="tmodelName" value="shizuku"><br>
+  headPos: <input type="text" id="theadPos" value="0.5"><br>
+  scaling: <input type="text" id="tscaling" value="2"><br>
+  opacityDefault: <input type="text" id="topacityDefault" value="0.7"><br>
+  opacityHover: <input type="text" id="topacityHover" value="1"><br>
+  <input type="button" value="GO!" onclick="javascript:myfunc()">
+
+  <script language="JAVASCRIPT">
+  function myfunc (){
+    var modelName = document.getElementById("tmodelName").value;
+    var headPos = document.getElementById("theadPos").value;
+    var scaling = document.getElementById("tscaling").value;
+    var opacityDefault = document.getElementById("topacityDefault").value;
+    var opacityHover = document.getElementById("topacityHover").value;
+    var modelUrl="../assets/name/name.model.json"
+    modelUrl = modelUrl.replace(/name/g, modelName);
+    console.log(modelUrl);
+    loadlive2d("live2dcanvas", modelUrl, headPos, scaling, opacityDefault, opacityHover);
+  }
+  </script>
+  <script type="text/javascript" src="bundle.js?70ce383ad558350de0a2"></script></body>
 </html>
-<!-- loadlive2d("live2dcanvas", "../assets/name/name.model.json", 0.5); -->
