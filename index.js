@@ -35,6 +35,7 @@ var config = Object.assign( {
     verticalOffset: -20,
     className: "live2d",
     id: "live2dcanvas",
+    deviceJsSource: "local"
   },
   hexo.config.live2d,
   hexo.theme.config.live2d
@@ -42,55 +43,64 @@ var config = Object.assign( {
 
 hexo.extend.helper.register('live2d', function() {
   return `
-  <div id="hexo-helper-live2d">
-      <canvas id="${config.id}" width="${config.width * config.scaling}" height="${config.height * config.scaling}" class="${config.className}"></canvas>
-  </div>
-    <style>
-      #${config.id}{
-      	-webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        ms-user-select: none;
-        user-select: none;
-        position: fixed;
-        width: ${config.width}px;
-        height: ${config.height}px;
-        opacity:${config.opacityDefault};
-        ${config.opacityDefault != config.opacityHover ? `transition:opacity 0.95s ease-out;
-        moz-transition:opacity 0.95s ease-out; /* Firefox 4 */
-        -webkit-transition:opacity 0.95s ease-out; /* Safari and Chrome */
-        -o-transition:opacity 0.95s ease-out; /* Opera */`: ``}
-        ${config.position}: ${config.horizontalOffset}px;
-        z-index: 999;
-        pointer-events: none;
-        bottom: ${config.verticalOffset}px;
-      }
-    ${config.opacityDefault != config.opacityHover ? `#${config.id}:hover{
-    opacity:${config.opacityHover};
-      }`: ``}
-    </style>
-    <script src="/live2d/device.min.js"></script>
-    <script type="text/javascript">
-    (function(){
-        if(typeof(device) != "undefined"){
-        if(device.mobile()){
-          ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
-          document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
-          document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
-          document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');` : ``}
-        }else{
-          document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
-          document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');
-        }
-       }else{
-        document.write('<script type="text/javascript" src="/live2d/script.js"><\\/script>');
-        document.write('<script>loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5)<\\/script>');    
+<div id="hexo-helper-live2d">
+  <canvas id="${config.id}" width="${config.width * config.scaling}" height="${config.height * config.scaling}" class="${config.className}"></canvas>
+</div>
+<style>
+  #${config.id}{
+    position: fixed;
+    width: ${config.width}px;
+    height: ${config.height}px;
+    opacity:${config.opacityDefault};
+    ${config.position}: ${config.horizontalOffset}px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: ${config.verticalOffset}px;
+  }
+</style>
+<script type="text/javascript" src="${config.deviceJsSource == "local" ? `/live2d/device.min.js`: (config.deviceJsSource == "official" ? `https://unpkg.com/current-device/umd/current-device.min.js` : config.deviceJsSource)}"></script>
+<script type="text/javascript">
+function loadScript(url, callback) {
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  if(typeof(callback) != "undefined"){
+    if (script.readyState) {
+      script.onreadystatechange = function () {
+        if (script.readyState == "loaded" || script.readyState == "complete") {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else {
+      script.onload = function () {
+        callback();
+      };
+    }
+  }
+  script.src = url;
+  document.body.appendChild(script);
+}
+(function(){
+  if(typeof(device) != 'undefined'){
+    if(device.mobile()){
+      ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
+      document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
+      loadScript("/live2d/script.js", function(){
+        loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);
+      });` : ``}
+    }else{
+      loadScript("/live2d/script.js", function(){
+        loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);
+      });
     }
-    }
-	const device = device.default;
-	)();
-    </script>
+  }else{
+    console.error('Cannot find current-device script.');
+    loadScript("/live2d/script.js", function(){
+      loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);
+    });
+  }
+})();
+</script>
 `
 });
 

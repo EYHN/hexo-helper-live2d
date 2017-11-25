@@ -97,6 +97,7 @@ live2d:
   verticalOffset: -20 # The offset of the bottom. default: -20
   className: live2d # The class name of the element. default: live2d
   id: live2dcanvas # The ID of the live2d element. default: live2dcanvas
+  deviceJsSource: local # The source of the current-device script. default: local
 ```
 
 > To use settings in Chinese, please have a look at Chinese document.
@@ -136,6 +137,11 @@ live2d:
 - `verticalOffset`: The offset of the bottom. Change this variable to adjust the position of model.  *( real ) default: -20*
 - `className`: The class name of the `<canvas>` element.  *( string ) default: live2d*
 - `id`: The ID of the `<canvas>` element.  *( string ) default: live2dcanvas*
+- `deviceJsSource`: The source of the current-device script.  *( local / official / string ) default: local*
+  - We have three options to choose:
+  - `local`: **Default, highly recommended.** Use the local version of script. Compressed using webpack.
+  - `official`: Use the official link. [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)
+  - `(your CDN url path)`: put your own CDN path here, must contain `.js`.
 
 
 ## Custom model
@@ -250,9 +256,9 @@ Please pay enough attention to this document if you want to commit your changes.
 [![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
 
 
-## Included
+## Imported
 
-[device.js](https://github.com/matthewhudson/device.js)
+[current-device](https://github.com/matthewhudson/current-device)
 
 <br>
 

@@ -99,6 +99,7 @@ live2d:
   verticalOffset: -20 # 元素的底部偏移 默认值: -20
   className: live2d # 元素的类名 默认值: live2d
   id: live2dcanvas # 元素的id 默认值: live2dcanvas
+  deviceJsSource: local # current-device 脚本的来源 默认值: local
 ```
 
 
@@ -137,6 +138,11 @@ live2d:
 - `verticalOffset`: `<canvas>` 元素的竖直方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: -20*
 - `className`: `<canvas>` 元素的类名  *( 字符串 ) 默认值: live2d*
 - `id`: `<canvas>` 元素的id  *( 字符串 ) 默认值:live2dcanvas*
+- `deviceJsSource`: current-device 脚本的来源.  *( local / official / 字符串 ) 默认值: local*
+  - 你可以选择以下三种方式:
+  - `local`: **默认 推荐** 使用本地来源，已使用webpack压缩。
+  - `official`: 使用官方来源。 [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)
+  - `(your CDN url path)`: 输入你的CDN地址。尾部需要包含 `.js`。
 
 
 ## Custom model 增加自己喜欢的模型
@@ -251,9 +257,9 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 [![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
 
-## Included 引用
+## Imported 引入
 
-[device.js](https://github.com/matthewhudson/device.js)
+[current-device](https://github.com/matthewhudson/current-device)
 
 
 <br>
