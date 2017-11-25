@@ -2,7 +2,7 @@ var fs = require('hexo-fs');
 var path = require('path');
 var url = require("url");
 
-
+// 将文件加入复制队列
 function registerFile(pathname, file) {
   generators.push( {
     path: pathname,
@@ -12,6 +12,8 @@ function registerFile(pathname, file) {
   });
 }
 
+// 使用DFS将目录中的所有文件加入队列
+// 目前仍使用同步
 function registerDir(pathname, dir) {
   var lsDir = fs.listDirSync(dir)
   lsDir.forEach(function (file) {
@@ -40,7 +42,7 @@ var config = Object.assign( {
   hexo.config.live2d,
   hexo.theme.config.live2d
 );
-
+// 将替换模板中 live2d 的网页代码
 hexo.extend.helper.register('live2d', function() {
   return `
 <div id="hexo-helper-live2d">
@@ -60,44 +62,18 @@ hexo.extend.helper.register('live2d', function() {
 </style>
 <script type="text/javascript" src="${config.deviceJsSource == "local" ? `/live2d/device.min.js`: (config.deviceJsSource == "official" ? `https://unpkg.com/current-device/umd/current-device.min.js` : config.deviceJsSource)}"></script>
 <script type="text/javascript">
-function loadScript(url, callback) {
-  var script = document.createElement("script");
-  script.type = "text/javascript";
-  if(typeof(callback) != "undefined"){
-    if (script.readyState) {
-      script.onreadystatechange = function () {
-        if (script.readyState == "loaded" || script.readyState == "complete") {
-          script.onreadystatechange = null;
-          callback();
-        }
-      };
-    } else {
-      script.onload = function () {
-        callback();
-      };
-    }
-  }
-  script.src = url;
-  document.body.appendChild(script);
-}
+function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
 (function(){
   if(typeof(device) != 'undefined'){
     if(device.mobile()){
-      ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
-      document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
-      loadScript("/live2d/script.js", function(){
-        loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);
-      });` : ``}
+      ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
+      loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});` : ``}
     }else{
-      loadScript("/live2d/script.js", function(){
-        loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);
-      });
+      loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});
     }
   }else{
     console.error('Cannot find current-device script.');
-    loadScript("/live2d/script.js", function(){
-      loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);
-    });
+    loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});
   }
 })();
 </script>
@@ -118,14 +94,16 @@ fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model
 registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'));
 
 // 复制 device.js 脚本
-fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
+if(config.deviceJsSource == "local"){
+  fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
   if(exists){
     registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
-  }else{
+  }else{// 若未找到，则报错
     console.log("Live2d serverJs: can't find device.js, contant the author for support.");
     return ;
   }
-});
+  });
+}
 
 hexo.extend.generator.register('live2d', function (locals) {
   return generators;
