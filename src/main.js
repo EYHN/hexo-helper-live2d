@@ -1,13 +1,8 @@
 import "./lib/live2d.min";
-
 import { L2DTargetPoint, L2DViewMatrix, L2DMatrix44 } from "./lib/Live2DFramework";
-
 import LAppLive2DManager from "./LAppLive2DManager"
-
 import LAppDefine from "./LAppDefine"
-
 import MatrixStack from "./lib/MatrixStack"
-
 import {setContext} from "./webglcontext"
 
 // window.onerror = function (msg, url, line, col, error) {
@@ -16,36 +11,24 @@ import {setContext} from "./webglcontext"
 // }
 
 // const platform = window.navigator.platform.toLowerCase();
-
 const live2DMgr = new LAppLive2DManager();
-
 let isDrawStart = false;
-
 let gl = null;
-
 let canvas = null;
-
 let dragMgr = null;
-
 let viewMatrix = null;
-
 let projMatrix = null;
-
 let deviceToScreen = null;
-
 let drag = false;
-
 // let oldLen = 0;
-
 let lastMouseX = 0;
-
 let lastMouseY = 0;
-
 // let isModelShown = 0;
-
 // let modelurl = "";
-
-let head_pos = 0.5;
+let headPos = 0.5;
+let scaling = 1;
+let opacityDefault = 0.7;
+let opacityHover = 1;
 
 function initCanvas(canvasId) {
   canvas = document.getElementById(canvasId);
@@ -291,7 +274,7 @@ function modelTurnHead(event)
     let sy = transformScreenY(event.clientY - rect.top);
     let target = transformRect({
         x: rect.left + rect.width / 2,
-        y: rect.top + rect.height * head_pos
+        y: rect.top + rect.height * headPos
     }, {
         x: event.clientX,
         y: event.clientY
@@ -318,7 +301,7 @@ function modelTapEvent(event)
     let sy = transformScreenY(event.clientY - rect.top);
     let target = transformRect({
         x: rect.left + rect.width / 2,
-        y: rect.top + rect.height * head_pos
+        y: rect.top + rect.height * headPos
     }, {
         x: event.clientX,
         y: event.clientY
@@ -343,7 +326,7 @@ function followPointer(event)
     let sy = transformScreenY(event.clientY - rect.top);
     let target = transformRect({
         x: rect.left + rect.width / 2,
-        y: rect.top + rect.height * head_pos
+        y: rect.top + rect.height * headPos
     }, {
         x: event.clientX,
         y: event.clientY
@@ -445,10 +428,13 @@ function getWebGLContext()
     return null;
 };
 
-function loadlive2d(id, modelUrl, headPos, scaling, opacityDefault, opacityHover) {
-    head_pos = typeof headPos === 'undefined' ? 0.5 : headPos;
-    initCanvas(id);
-    init(modelUrl);
+function loadlive2d(iID, iModelUrl, iHeadPos, iScaling, iOpacityDefault, iOpacityHover) {
+    headPos = typeof iHeadPos === 'undefined' ? 0.5 : iHeadPos;
+    scaling = typeof iScaling === 'undefined' ? 1 : iScaling;
+    opacityDefault = typeof iOpacityDefault === 'undefined' ? 0.7 : iOpacityDefault;
+    opacityHover = typeof iOpacityHover === 'undefined' ? 1 : iOpacityHover;
+    initCanvas(iID);
+    init(iModelUrl);
 }
 
 window.loadlive2d = loadlive2d;

@@ -28,7 +28,7 @@ var config = Object.assign( {
     width: 150,
     height: 300,
     scaling: 1,
-    opacityDefault: 1,
+    opacityDefault: 0.7,
     opacityHover: 1,
     mobileShow: "true",
     mobileScaling: 0.5,
