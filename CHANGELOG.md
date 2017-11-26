@@ -1,9 +1,42 @@
 <a name="Unreleased"></a>
-# Unreleased (2017-11-16)
+# Unreleased (2017-11-26)
+
+
+
+
+<a name="2.1.5"></a>
+## 2.1.5 (2017-11-26)
+
+* chore: Compress codes. ([146b5d9](https://github.com/EYHN/hexo-helper-live2d/commit/146b5d9))
+* chore: Use new device.js ([7562ab0](https://github.com/EYHN/hexo-helper-live2d/commit/7562ab0))
+* chore: v2.1.5 ([425de96](https://github.com/EYHN/hexo-helper-live2d/commit/425de96))
+* style: Fix tab and space issue ([1b447aa](https://github.com/EYHN/hexo-helper-live2d/commit/1b447aa))
+* style: improve coding style ([e57f16a](https://github.com/EYHN/hexo-helper-live2d/commit/e57f16a))
+* style: Linux line break(LF) ([8cb4ca7](https://github.com/EYHN/hexo-helper-live2d/commit/8cb4ca7))
+* style: Linux line break(LF) and added .editorconfig ([9e8e878](https://github.com/EYHN/hexo-helper-live2d/commit/9e8e878)), closes [#47](https://github.com/EYHN/hexo-helper-live2d/issues/47)
+* style(clientJs): path optimized ([54ffae1](https://github.com/EYHN/hexo-helper-live2d/commit/54ffae1))
+* refactor: Improve code quality ([e1cdad1](https://github.com/EYHN/hexo-helper-live2d/commit/e1cdad1))
+* refactor: noted unused function, variable according some to UgilyJs ([0cf2c63](https://github.com/EYHN/hexo-helper-live2d/commit/0cf2c63)), closes [#42](https://github.com/EYHN/hexo-helper-live2d/issues/42)
+* refactor: rename variable, add variables, style ([f684d23](https://github.com/EYHN/hexo-helper-live2d/commit/f684d23))
+* perf: remove unused variable, always true condition ([e2357a6](https://github.com/EYHN/hexo-helper-live2d/commit/e2357a6))
+* fix: device.js now will grab off from the global. ([e93460a](https://github.com/EYHN/hexo-helper-live2d/commit/e93460a))
+* fix: release problem ([d9c45f9](https://github.com/EYHN/hexo-helper-live2d/commit/d9c45f9))
+* fix: Restore pointer-events: none; ([bc922af](https://github.com/EYHN/hexo-helper-live2d/commit/bc922af))
+* feat: CDN and better loading for current-device ([fab0744](https://github.com/EYHN/hexo-helper-live2d/commit/fab0744)), closes [#46](https://github.com/EYHN/hexo-helper-live2d/issues/46)
+* feat(assets): Add new models ([c7ae026](https://github.com/EYHN/hexo-helper-live2d/commit/c7ae026))
+* feat(clientJs): Add mouse click event and remove style pointer-events: none ([2c8f27b](https://github.com/EYHN/hexo-helper-live2d/commit/2c8f27b))
+* feat(dev page): A whole new useful dev page!!! Cheer!!! ([b686c41](https://github.com/EYHN/hexo-helper-live2d/commit/b686c41))
+* Update main.js ([421e2ef](https://github.com/EYHN/hexo-helper-live2d/commit/421e2ef))
+
+
+
+<a name="2.0.0"></a>
+# 2.0.0 (2017-11-16)
 
 * docs: add workflow of publish new version ([932502a](https://github.com/EYHN/hexo-helper-live2d/commit/932502a))
 * docs: fix ambiguity of modify the source code ([f9d2596](https://github.com/EYHN/hexo-helper-live2d/commit/f9d2596))
 * docs: update changelog ([c62fcf2](https://github.com/EYHN/hexo-helper-live2d/commit/c62fcf2))
+* docs: update CHANGELOG ([504cf99](https://github.com/EYHN/hexo-helper-live2d/commit/504cf99))
 * docs: update CHANGELOG ([4b1fe03](https://github.com/EYHN/hexo-helper-live2d/commit/4b1fe03))
 * docs: update CHANGELOG ([e815980](https://github.com/EYHN/hexo-helper-live2d/commit/e815980))
 * docs: update CHANGELOG ([7c26e97](https://github.com/EYHN/hexo-helper-live2d/commit/7c26e97))
