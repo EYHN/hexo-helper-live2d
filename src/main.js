@@ -283,7 +283,7 @@ function modelTurnHead(event)
     let vy = transformViewY(target.y - rect.top);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
-        console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
+        console.log("modelTurnHead onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     lastMouseX = sx;
     lastMouseY = sy;
@@ -310,7 +310,7 @@ function modelTapEvent(event)
     let vy = transformViewY(target.y - rect.top);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
-        console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
+        console.log("modelTapEvent onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     lastMouseX = sx;
     lastMouseY = sy;
@@ -335,7 +335,7 @@ function followPointer(event)
     let vy = transformViewY(target.y - rect.top);
 
     if (LAppDefine.DEBUG_MOUSE_LOG)
-        console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
+        console.log("followPointer onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     if (drag)
     {
@@ -347,8 +347,7 @@ function followPointer(event)
 
 function lookFront()
 {
-    if (drag)
-    {
+    if (drag) {
         drag = false;
     }
     dragMgr.setPoint(0, 0);

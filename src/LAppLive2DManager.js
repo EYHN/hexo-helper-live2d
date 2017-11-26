@@ -34,6 +34,7 @@ LAppLive2DManager.prototype.changeModel = function (gl, modelurl) {
     this.createModel();
     this.models[0].load(gl, modelurl);
   }
+
 };
 
 

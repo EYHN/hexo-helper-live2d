@@ -63,9 +63,9 @@ work is not in vain.
 #### serverJs: modify index.js
 
 
-### ~~3. Make sure you passed all the tests.~~
+### 3. Make sure you passed all the tests.
 
-- ~~`npm run test`~~
+- We believe in you, so test yourself. xD
 
 ### 4. Commit those changes
 
