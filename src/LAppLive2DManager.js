@@ -6,10 +6,7 @@ import LAppDefine from "./LAppDefine"
 export default function LAppLive2DManager() {
   // console.log("--> LAppLive2DManager()");
 
-
   this.models = [];
-
-
   this.count = -1;
   this.reloadFlg = false;
 
@@ -20,11 +17,11 @@ export default function LAppLive2DManager() {
 
 LAppLive2DManager.prototype.createModel = function () {
 
-
   var model = new LAppModel();
   this.models.push(model);
 
   return model;
+
 }
 
 

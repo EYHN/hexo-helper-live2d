@@ -61,21 +61,19 @@ hexo.extend.helper.register('live2d', function() {
 </style>
 <script type="text/javascript" src="${config.deviceJsSource == "local" ? `/live2d/device.min.js`: (config.deviceJsSource == "official" ? `https://unpkg.com/current-device/umd/current-device.min.js` : config.deviceJsSource)}"></script>
 <script type="text/javascript">
-function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
 (function(){
-  if(typeof(device) != 'undefined'){
-    if(device.mobile()){
-      ${config.mobileShow ? `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';
-      loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});`
-       :
-      `document.getElementById('hexo-helper-live2d').parentNode.removeChild(document.getElementById('hexo-helper-live2d'));`}
-    }else{
-      loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});
-    }
-  }else{
-    console.error('Cannot find current-device script.');
-    loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});
-  }
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    ${config.mobileShow ?
+   `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
+    document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';`
+   :
+   `var trElement = document.getElementById('hexo-helper-live2d');
+    trElement.parentNode.removeChild(trElement);
+    return;`}
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});
 })();
 </script>
 `
