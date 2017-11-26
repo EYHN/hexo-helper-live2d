@@ -139,7 +139,7 @@ PlatformManager.prototype.jsonParseFromBytes = function(buf){
 //============================================================
 PlatformManager.prototype.log             = function(txt/*String*/)
 {
-    //console.log(txt);
+    console.log(txt);
 }
 /* // Alreday have getWebGLContext() in main.js
 function getWebGLContext(canvas)

@@ -2,8 +2,8 @@ import "./lib/live2d.min";
 import { L2DTargetPoint, L2DViewMatrix, L2DMatrix44 } from "./lib/Live2DFramework";
 import LAppLive2DManager from "./LAppLive2DManager"
 import LAppDefine from "./LAppDefine"
-import MatrixStack from "./lib/MatrixStack"
-import {setContext} from "./webglcontext"
+import MatrixStack from "./utils/MatrixStack"
+import {setContext} from "./lib/webglcontext"
 
 // window.onerror = function (msg, url, line, col, error) {
 //   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;

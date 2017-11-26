@@ -1,5 +1,5 @@
 import { Live2DFramework } from "./lib/Live2DFramework.js"
-import PlatformManager from "./PlatformManager"
+import PlatformManager from "./lib/PlatformManager"
 import LAppModel from "./LAppModel"
 import LAppDefine from "./LAppDefine"
 

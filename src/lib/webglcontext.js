@@ -1,4 +1,3 @@
-
 var context = undefined;
 
 export function setContext(webglContext) {
