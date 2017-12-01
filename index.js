@@ -73,7 +73,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
     return;`}
   }else
     if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.618, ${config.opacityDefault}, ${config.opacityHover});});
+  loadScript("/live2d/cLive2d.min.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.618, ${config.opacityDefault}, ${config.opacityHover});});
 })();
 </script>
 `
@@ -90,7 +90,7 @@ fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model
 });
 
 // 复制 live2d客户端 脚本
-registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'));
+registerFile('live2d/cLive2d.min.js', path.resolve(__dirname, './dist/cLive2d.min.js'));
 
 // 复制 device.js 脚本
 if(config.deviceJsSource == "local"){

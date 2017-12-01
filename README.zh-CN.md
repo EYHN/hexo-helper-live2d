@@ -18,8 +18,7 @@
 # hexo-helper-live2d
 
 > 3.0即将来临！
-
-> 希望是2017年12月31日吧~
+希望是2017年12月31日吧~
 
 [English README](./readme.md) by [@gwzz](https://github.com/gwzz) & [@xiazeyu](https://github.com/xiazeyu)
 

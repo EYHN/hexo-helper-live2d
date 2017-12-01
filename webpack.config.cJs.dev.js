@@ -15,7 +15,7 @@ module.exports = {
         "./src/main.js"
     ],
     output: {
-        filename: "bundle.js",
+        filename: "cLive2d.min.js",
         path: __dirname + "/dist"
     },
 
