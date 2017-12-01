@@ -82,6 +82,10 @@ work is not in vain.
 
 - Use `git push` to push the changes to the github server.
 
+### 6. Push to the webbranch
+
+- Use `push-gh-pages.bat` or `push-gh-pages.sh`
+
 
 ## Workflow(author): Release a new version
 

@@ -40,7 +40,7 @@
     var scaling = document.getElementById("tscaling").value;
     var opacityDefault = document.getElementById("topacityDefault").value;
     var opacityHover = document.getElementById("topacityHover").value;
-    var modelUrl="../assets/name/name.model.json";
+    var modelUrl="assets/name/name.model.json";
 	// 初始化canvas
 	document.getElementById("live2dcanvas").width = width * scaling;
     document.getElementById("live2dcanvas").height = height * scaling;
@@ -51,17 +51,17 @@
     modelUrl = modelUrl.replace(/name/g, modelName);
     console.log(modelUrl);
     loadlive2d("live2dcanvas", modelUrl, headPos, opacityDefault, opacityHover);
-	
+
 	canvas = document.getElementById('live2dcanvas');
 	// DEBUG Area Start
-	
+
 	var twidth = canvas.width;
     var theight = canvas.height;
     var tsWidth = parseInt(canvas.style.width);
     var tsHeight = parseInt(canvas.style.height);
-	
+
 	// DEBUG Area Ends Here
-	
+
   }
   </script>
   <script type="text/javascript" src="cLive2d.min.js?6a633c83e3e84142650a"></script></body>

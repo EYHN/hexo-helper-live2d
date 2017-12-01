@@ -18,14 +18,15 @@
 # hexo-helper-live2d
 
 > 3.0 is comming soon!
-
-> Due by December 31, 2017, hopefully.
+Due by December 31, 2017, hopefully.
 
 [简体中文文档](./readme.zh-CN.md)
 
 <br>
 
 Add the Sseexxyyy live2d to your hexo!
+
+New web Demo and code generator: [https://eyhn.in/hexo-helper-live2d/](https://eyhn.in/hexo-helper-live2d/)
 
 Demo: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 

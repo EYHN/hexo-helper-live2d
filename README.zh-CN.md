@@ -26,6 +26,8 @@
 
 为你的hexo添加色气满满的live2d吧！
 
+崭新的示例和代码在线生成器: [https://eyhn.in/hexo-helper-live2d/](https://eyhn.in/hexo-helper-live2d/)
+
 示例: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
 
