@@ -123,7 +123,7 @@ live2d:
 |id|`live2dcanvas`|*string*|元素的id|
 |deviceJsSource|`local`|*`local` / `official` / `string`*|current-device 脚本的来源<br>你可以选择以下三种方式:<br>`local`: **默认 推荐** 使用本地来源，已使用webpack压缩。<br>`official`: 使用官方来源。 [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)<br>`(your CDN url path)`: 输入你的CDN地址。尾部需要包含 `.js`。|
 
-当前支持的模型:
+<details><summary>当前支持的模型:</summary><br>
 
   - `chitose`
   - `Epsilon2.1`
@@ -146,6 +146,8 @@ live2d:
   - `Unitychan`
   - `wanko`
   - `z16`
+
+</details>
 
 ## Custom model 增加自己喜欢的模型
 

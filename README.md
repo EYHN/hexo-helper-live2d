@@ -125,7 +125,7 @@ live2d:
 |id|`live2dcanvas`|*string*|The ID of the `<canvas>` element.|
 |deviceJsSource|`local`|*`local` / `official` / `string`*|The source of the current-device script.<br>We have three options to choose:<br>`local`: **Default, highly recommended.** Use the local version of script. Compressed using webpack.<br>`official`: Use the official link. [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)<br>`(your CDN url path)`: put your own CDN path here, must contain `.js`.|
 
-Current supported models:
+<details><summary>Current supported models:</summary><br>
 
   - `chitose`
   - `Epsilon2.1`
@@ -148,6 +148,8 @@ Current supported models:
   - `Unitychan`
   - `wanko`
   - `z16`
+
+</details>
 
 ## Custom model
 
