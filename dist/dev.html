@@ -8,12 +8,12 @@
   </head>
   <body>
     <div id="app">
-      <canvas id="live2dcanvas" width="600" height="800" style="border:dashed 1px #CCC"></canvas>
+      <canvas id="live2dcanvas" width="1" height="2" style="border:dashed 1px #CCC"></canvas>
     </div>
     <style>
       #live2dcanvas{
-        width: 600;
-        height: 800;
+        width: 3;
+        height: 4;
         position: fixed;
         opacity: 1;
         z-index: 999;
@@ -32,6 +32,7 @@
 
   <script language="JAVASCRIPT">
   function myfunc (){
+    // 获取输入数值
     var width = document.getElementById("twidth").value;
     var height = document.getElementById("theight").value;
     var modelName = document.getElementById("tmodelName").value;
@@ -40,12 +41,28 @@
     var opacityDefault = document.getElementById("topacityDefault").value;
     var opacityHover = document.getElementById("topacityHover").value;
     var modelUrl="../assets/name/name.model.json";
+	// 初始化canvas
+	document.getElementById("live2dcanvas").width = width * scaling;
+    document.getElementById("live2dcanvas").height = height * scaling;
     document.getElementById("live2dcanvas").style.width = width + 'px';
     document.getElementById("live2dcanvas").style.height = height + 'px';
+	document.getElementById("live2dcanvas").style.opacity = opacityDefault;
+	// 初始化绘制
     modelUrl = modelUrl.replace(/name/g, modelName);
     console.log(modelUrl);
-    loadlive2d("live2dcanvas", modelUrl, headPos, scaling, opacityDefault, opacityHover);
+    loadlive2d("live2dcanvas", modelUrl, headPos, opacityDefault, opacityHover);
+	
+	canvas = document.getElementById('live2dcanvas');
+	// DEBUG Area Start
+	
+	var twidth = canvas.width;
+    var theight = canvas.height;
+    var tsWidth = parseInt(canvas.style.width);
+    var tsHeight = parseInt(canvas.style.height);
+	
+	// DEBUG Area Ends Here
+	
   }
   </script>
-  <script type="text/javascript" src="bundle.js?7bcd089c4eae3526afb7"></script></body>
+  <script type="text/javascript" src="bundle.js?bafff5dcf6654174d79f"></script></body>
 </html>

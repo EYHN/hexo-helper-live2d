@@ -3,16 +3,21 @@
 
 ## Issues
 
-Most of the time, if this plugin is not working correctly for you it is a simple configuration issue.
+- Most of the time, if this plugin is not working correctly for you it is a simple **configuration** issue.
 
-**If you have discovered a bug or have a feature suggestion, feel free to create an issue on Github.**
+- **Search on the internet** and **among closed issues** in advance would do a great help for us.
+
+- Please **keep focus on the topic** of any issue, and use **English** as far as possible so that everyone will understand you.
+
+- **If you have discovered a bug or have a feature suggestion, feel free to create an issue on Github.**
 
 
 ## Contributing directly to the source code
 
-**Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github) 
+**Working on your first Pull Request?** You can learn how from this *free* series
+[How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github) 
 
-See workflow for more information.
+See workflow for more code developing information.
 
 
 ## Submitting Changes
@@ -23,15 +28,15 @@ your pull request should be accepted quickly.
 
 Some things that will increase the chance that your pull request is accepted:
 
-* ~~[Write tests](./test/README.md)~~
-* Follow the existing coding style
-* Write a good commit message use `npm run commit`
+- Follow the existing coding style
+- Write a good commit message use `npm run commit`
+- Make sure that your code can work properly.
 
 
 ## Documentation
 
-Hexo-helper-live2d is insanely feature rich and documentation is a huge time sink. We
-greatly appreciate any time spent fixing typos or clarifying sections in the
+Hexo-helper-live2d's feature is now becoming richer and richer, and documentation is a huge time sink.
+We greatly appreciate any time spent fixing typos or clarifying sections in the
 documentation.
 
 From opening a bug report to creating a pull request: every contribution is
@@ -40,44 +45,42 @@ the api please create an issue first. This way we can ensure that your precious
 work is not in vain.
 
 
+
 ## Workflow: modify the code
 
-- We use [EditorConfig](http://editorconfig.org/) to define and maintain consistent coding styles, so have a look first.
+- We use **[EditorConfig](http://editorconfig.org/)** to define and maintain consistent coding styles, so have a look first.
 
-- It is also recommend to have these documents read:
-
-- [(Chinese) Angular代码规范](http://www.reqianduan.com/1722.html)
+- Please use the latest version of Node.js to work with.
 
 ### 1. Install environments
 
-- `npm run devenv` to install all the necessery environments.
+- Use `npm run inst:dev` to install all the environments.
 
 ### 2. Make changes
 
-#### clientJs: modify src/main.js
+#### clientJs: modify files in `/src/`
 
-- `npm run dev` to build client js files **with debug files**.
+- Use `npm run build:dev` to build client js files **with debug files and watchdog.**.
 
-- `npm run devw` to build client js files **with debug files** and **let webpack watch the file**.
+#### serverJs: modify `/index.js`
 
-#### serverJs: modify index.js
+- Highly recommended to build a test Hexo environment to test it.
 
 
-### 3. Make sure you passed all the tests.
-
-- We believe in you, so test yourself. xD
+### 3. Debug until you make sure that your code works properly.
 
 ### 4. Commit those changes
 
-- **`npm run rel` to build final client js. Important!!! The step must be done!!!**
+- **Use `npm run build:prod` to build final client js.**
+**Important!!! The step must be done before commit!!!**
 
-- `git add *`, or choose the file you want to commit.
+- Use `git add *`, or choose the file you want to commit.
 
-- `npm run commit`, **Never use `git commit`!!!**
+- Use `npm run commit` to commit, **Never use `git commit`!!!**
 
 ### 5. Push the changes
 
-- `git push` to push the changes to the github server.
+- Use `git push` to push the changes to the github server.
 
 
 ## Workflow(author): Release a new version
@@ -94,7 +97,7 @@ work is not in vain.
 
 ### 2. Commit package.json and package-lock.json
 
-- `npm run commit`, **Never use `git commit`!!!**
+- Use `npm run commit` to commit, **Never use `git commit`!!!**
 
 ### 3. Tag and release a new version
 
@@ -102,9 +105,8 @@ work is not in vain.
 
 ### 4. Update changelog
 
-- `npm run changelog`
+- Use `npm run changelog`
 
 ### 5. Publish the package to npm.
 
-- `npm publish`
-
+- Use `npm publish` to publish it.

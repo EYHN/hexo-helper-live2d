@@ -1,7 +1,7 @@
 {
   "name": "hexo-helper-live2d",
   "version": "2.1.5",
-  "description": "为你的hexo添加色气满满的live2d吧！",
+  "description": "Add the Sseexxyyy live2d to your hexo and webpages!",
   "main": "./index.js",
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -21,13 +21,12 @@
     "path": "^0.12.7"
   },
   "scripts": {
-    "devenv": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g webpack&&npm install -g conventional-changelog-cli&&npm install",
-    "dev": "webpack --config webpack.config.dev.js",
-    "devw": "webpack --config webpack.config.dev.js -w",
-    "rel": "webpack --config webpack.config.device.js&&webpack",
+    "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
+    "inst:dev": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g webpack&&npm install -g conventional-changelog-cli&&npm install",
+    "build:dev": "webpack --progress --colors --config webpack.config.device.prod.js&&webpack --progress --colors --watch --config webpack.config.cJs.dev.js",
+    "build:prod": "webpack --progress --colors --config webpack.config.cJs.prod.js&&webpack --progress --colors --config webpack.config.device.prod.js",
     "commit": "git-cz",
-    "changelog": "git pull&&conventional-changelog -i CHANGELOG.md -r 0 -s -u&&git add CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status",
-    "test": "echo \"Nothing here, but someday there will be something here. xD\" && exit 1"
+    "changelog": "git pull&&conventional-changelog -i CHANGELOG.md -r 0 -s -u&&git add CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status"
   },
   "author": {
     "name": "EYHN",

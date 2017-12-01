@@ -17,7 +17,9 @@
 
 # hexo-helper-live2d
 
-> 3.0 Comming soon!
+> 3.0 is comming soon!
+
+> Due by December 31, 2017, hopefully.
 
 [简体中文文档](./readme.zh-CN.md)
 
@@ -240,7 +242,7 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 ## Contribute
 
-Please pay enough attention to this document if you want to commit your changes.
+**Please pay enough attention to this document if you want to commit your changes or submit issues.**
 
 [CONTRIBUTING](./CONTRIBUTING.md)
 

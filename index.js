@@ -73,7 +73,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
     return;`}
   }else
     if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});
+  loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.618, ${config.opacityDefault}, ${config.opacityHover});});
 })();
 </script>
 `

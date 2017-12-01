@@ -26,7 +26,6 @@ let lastMouseY = 0;
 // let isModelShown = 0;
 // let modelurl = "";
 let headPos = 0.5;
-let scaling = 1;
 let opacityDefault = 0.7;
 let opacityHover = 1;
 
@@ -46,12 +45,16 @@ function initCanvas(canvasId) {
   }
 }
 
-function init(modelurl) {
+function init(modelUrl) {
+  // 此处获取的是canvas的大小 即绘制大小，与实际显示大小无关
   let width = canvas.width;
   let height = canvas.height;
+  // 以下为实际显示大小
+  // let sWidth = parseInt(canvas.style.width);
+  // let sHeight = parseInt(canvas.style.height);
 
   dragMgr = new L2DTargetPoint();
-
+  // 绘图相关..暂时看不懂
   let ratio = height / width;
   let left = LAppDefine.VIEW_LOGICAL_LEFT;
   let right = LAppDefine.VIEW_LOGICAL_RIGHT;
@@ -60,14 +63,13 @@ function init(modelurl) {
 
   viewMatrix = new L2DViewMatrix();
 
-
   viewMatrix.setScreenRect(left, right, bottom, top);
 
   viewMatrix.setMaxScreenRect(LAppDefine.VIEW_LOGICAL_MAX_LEFT,
     LAppDefine.VIEW_LOGICAL_MAX_RIGHT,
     LAppDefine.VIEW_LOGICAL_MAX_BOTTOM,
     LAppDefine.VIEW_LOGICAL_MAX_TOP);
-
+  // 这2行可能没用
   viewMatrix.setMaxScale(LAppDefine.VIEW_MAX_SCALE);
   viewMatrix.setMinScale(LAppDefine.VIEW_MIN_SCALE);
 
@@ -80,16 +82,16 @@ function init(modelurl) {
 
   gl = getWebGLContext();
   setContext(gl);
-  if (!gl) {
+  if (!gl) { // 检测是否成功创造WebGL元素
     console.error("Failed to create WebGL context.");
-    if(!!window.WebGLRenderingContext){
+    if(!window.WebGLRenderingContext){
       console.error("Your browser don't support WebGL, check https://get.webgl.org/ for futher information.");
     }
     return;
   }
   window.Live2D.setGL(gl);
   gl.clearColor(0.0, 0.0, 0.0, 0.0);
-  changeModel(modelurl);
+  changeModel(modelUrl);
   startDraw();
 }
 
@@ -137,10 +139,10 @@ function draw()
     MatrixStack.pop();
 }
 
-function changeModel(modelurl)
+function changeModel(modelurl) // 更换模型
 {
     live2DMgr.reloadFlg = true;
-    live2DMgr.count++;
+    live2DMgr.count++; // 现在仍有多模型支持，稍后可以精简
     live2DMgr.changeModel(gl, modelurl);
 }
 /*
@@ -324,7 +326,11 @@ function followPointer(event)
 
     let sx = transformScreenX(event.clientX - rect.left);
     let sy = transformScreenY(event.clientY - rect.top);
-    let target = transformRect({
+
+    // log but seems ok
+    // console.log("ecx=" + event.clientX + " ecy=" + event.clientY + " sx=" + sx + " sy=" + sy);
+
+    let target = transformRect({// seems ok here
         x: rect.left + rect.width / 2,
         y: rect.top + rect.height * headPos
     }, {
@@ -427,9 +433,8 @@ function getWebGLContext()
     return null;
 };
 
-function loadlive2d(iID, iModelUrl, iHeadPos, iScaling, iOpacityDefault, iOpacityHover) {
+function loadlive2d(iID, iModelUrl, iHeadPos, iOpacityDefault, iOpacityHover) {
     headPos = typeof iHeadPos === 'undefined' ? 0.5 : iHeadPos;
-    scaling = typeof iScaling === 'undefined' ? 1 : iScaling;
     opacityDefault = typeof iOpacityDefault === 'undefined' ? 0.7 : iOpacityDefault;
     opacityHover = typeof iOpacityHover === 'undefined' ? 1 : iOpacityHover;
     initCanvas(iID);

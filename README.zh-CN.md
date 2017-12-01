@@ -19,6 +19,8 @@
 
 > 3.0即将来临！
 
+> 希望是2017年12月31日吧~
+
 [English README](./readme.md) by [@gwzz](https://github.com/gwzz) & [@xiazeyu](https://github.com/xiazeyu)
 
 <br>
@@ -242,7 +244,7 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 ## Contribute 贡献
 
-如果你想提交代码，请务必仔细阅读。
+如果你想提交代码或Issue，请务必仔细阅读
 
 [CONTRIBUTING](./CONTRIBUTING.md)
 

@@ -1,4 +1,4 @@
-import {Live2DFramework} from "./../lib/Live2DFramework"
+import {Live2DFramework} from "../lib/Live2DFramework"
 
 export default function ModelSettingJson()
 {
