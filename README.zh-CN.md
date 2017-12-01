@@ -17,7 +17,7 @@
 
 # hexo-helper-live2d
 
-> 3.0即将来临！
+> 3.0 即将来临！
 希望是2017年12月31日吧~
 
 [English README](./readme.md) by [@gwzz](https://github.com/gwzz) & [@xiazeyu](https://github.com/xiazeyu)
@@ -28,59 +28,62 @@
 
 崭新的示例和代码在线生成器: [https://eyhn.in/hexo-helper-live2d/](https://eyhn.in/hexo-helper-live2d/)
 
-示例: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+作者的示例: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
 
 ## Installation 食用方法
 
-安装模块: 
+### Hexo
+
+安装模块:
 
 ```
 npm install --save hexo-helper-live2d
 ```
 
-> Tips: 遇到npm的相关错误，试试 `npm cache verify` 或 `npm cache clean` 呗~
+<details><summary>遇到npm的相关错误 ?</summary><br>
 
-并将下面的代码加入主题。
+> 试试 `npm cache verify` 或 `npm cache clean` 呗~
 
-通常添加在 `layout/layout.ejs` 或 `layout/_layout.swig` 中的 `</body>` 之前
+</details>
 
-ejs: 
+<details><summary>使用过旧版本 ?</summary><br>
 
-``` ejs
-<%- live2d() %>
+请删除在 `layout/layout.ejs` 或 `layout/_layout.swig` 文件内，位于 `</body>` 前的 `{{ live2d() }}` or `<%- live2d() %>` 。
+
+</details>
+
+### Webpack
+
+<details><summary>当想要进行更高级的开发和使用时，请展开此节。</summary><br>
+
+安装模块:
+
+```
+npm install --save hexo-helper-live2d
 ```
 
-swig (next主题): 
+导入模块:
 
-``` swig
-{{ live2d() }}
 ```
+import loadlive2d from 'hexo-helper-live2d';
+
+// TBD.
+```
+
+</details>
 
 
 ## Config 配置
 
-有2种方法
-
-#### Method 1 第一种
-
 在 hexo 的 `_config.yml` 中添加参数: 
 
-``` yml
-live2d:
-  model: nipsilon
-```
-
-#### Method 2 第二种
-
-在 hexo 主题 的 `_config.yml` 中添加参数: 
+示例:
 
 ``` yml
 live2d:
   model: nipsilon
 ```
-
-> 第二种配置会覆盖第一种
 
 
 ## Settings 配置项
@@ -104,47 +107,45 @@ live2d:
   deviceJsSource: local # current-device 脚本的来源 默认值: local
 ```
 
+|选项|默认值|可选值|描述|
+|:-----|:-----------:|:------------:|:----------|
+|model|`z16`|*部分字符串* 见下方|模型名称|
+|width|`150`|*实数*|模型宽度|
+|height|`300`|*实数*|模型高度|
+|scaling|`2`|*实数 1 = 100%*|分辨率缩放倍率 越大马赛克效应越小 **目前存在BUG，详细参考#32 在BUG解决前，请将数值设置为1**|
+|opacityDefault|`0.7`|*实数 0 - 1*|初始的透明度 *(Beta)*|
+|opacityHover|`1`|*实数 0 - 1*|鼠标悬浮时透明度 *(Beta)*|
+|mobileShow|`true`|*`true` / `false`*|是否在移动设备上显示|
+|mobileScaling|`0.5`|*实数 1 = 100%*|移动设备缩放倍率|
+|position|`right`|*`left` / `right`*|模型左右侧放置位置 `left` 左 或 `right` 右|
+|horizontalOffset|`0`|*实数*|水平方向偏移<br>如果嫌模型位置不正确 可以调整这个参数|
+|verticalOffset|`-20`|*实数*|竖直方向偏移<br>如果嫌模型位置不正确 可以调整这个参数|
+|id|`live2dcanvas`|*string*|元素的id|
+|deviceJsSource|`local`|*`local` / `official` / `string`*|current-device 脚本的来源<br>你可以选择以下三种方式:<br>`local`: **默认 推荐** 使用本地来源，已使用webpack压缩。<br>`official`: 使用官方来源。 [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)<br>`(your CDN url path)`: 输入你的CDN地址。尾部需要包含 `.js`。|
 
-- `model`: 模型名称 默认值: z16
-  - chitose
-  - Epsilon2.1
-  - Gantzert_Felixander
-  - haru01
-  - haru02
-  - haruto
-  - hibiki
-  - hijiki
-  - izumi
-  - koharu
-  - miku
-  - nico
-  - ni-j
-  - nipsilon
-  - nito
-  - shizuku
-  - tororo
-  - tsumiki
-  - Unitychan
-  - wanko
-  - z16
+当前支持的模型:
 
-- `width`: 宽度  *( 实数 ) 默认值: 150*
-- `height`: 高度  *( 实数 ) 默认值: 300*
-- `scaling`: 分辨率缩放倍率 越大马赛克效应越小 **目前存在BUG，详细参考#32 在BUG解决前，请将数值设置为1**  *( 1 = 100% ) 默认值: 2*
-- `opacityDefault`: 初始的透明度 *(Beta)*  *( 0 - 1 ) 默认值: 0.7*
-- `opacityHover`: 鼠标悬浮时透明度 *(Beta)*  *( 0 - 1 ) 默认值: 1*
-- `mobileShow`: 是否在移动设备上显示  *( true / false ) 默认值: true*
-- `mobileScaling`: 移动设备缩放倍率  *( 1 = 100% ) 默认值: 0.5*
-- `position`: 模型左右侧放置位置 `left` 左 或 `right` 右  *( left / right ) 默认值: right*
-- `horizontalOffset`: `<canvas>` 元素的水平方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: 0*
-- `verticalOffset`: `<canvas>` 元素的竖直方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: -20*
-- `id`: `<canvas>` 元素的id  *( 字符串 ) 默认值:live2dcanvas*
-- `deviceJsSource`: current-device 脚本的来源.  *( local / official / 字符串 ) 默认值: local*
-  - 你可以选择以下三种方式:
-  - `local`: **默认 推荐** 使用本地来源，已使用webpack压缩。
-  - `official`: 使用官方来源。 [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)
-  - `(your CDN url path)`: 输入你的CDN地址。尾部需要包含 `.js`。
-
+  - `chitose`
+  - `Epsilon2.1`
+  - `Gantzert_Felixander`
+  - `haru01`
+  - `haru02`
+  - `haruto`
+  - `hibiki`
+  - `hijiki`
+  - `izumi`
+  - `koharu`
+  - `miku`
+  - `nico`
+  - `ni-j`
+  - `nipsilon`
+  - `nito`
+  - `shizuku`
+  - `tororo`
+  - `tsumiki`
+  - `Unitychan`
+  - `wanko`
+  - `z16`
 
 ## Custom model 增加自己喜欢的模型
 
@@ -156,7 +157,7 @@ live2d:
 
 **注意！模型json路径必须为  `/live2d_models/{name}/{name}.model.json`**
 
-示例：
+<details><summary>示例:</summary><br>
 
 你的模型为 `mymiku`
 
@@ -166,9 +167,9 @@ live2d:
 
 此时在 `/live2d_models/mymiku/` 下应存在 `mymiku.model.json` 文件
 
+</details>
 
-~~请参见[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22)~~
-
+<br>~[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22) 曾经和此问题有关。~
 
 <br>
 
@@ -181,103 +182,146 @@ Github: [https://github.com/EYHN/hexo-helper-live2d](https://github.com/EYHN/hex
 issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/EYHN/hexo-helper-live2d/issues)
 
 
-## Screenshots 截图:
+## Screenshots 截图
 
 **注意！截图上方的名称可能非实际模型名，请进入“设置项”查看"model"的真实值**
 
-#### Epsilon2.1
+<details><summary>Epsilon2.1</summary><br>
+
 ![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
 
-#### Gantzert_Felixander
+</details>
+<details><summary>Gantzert_Felixander</summary><br>
+
 ![](https://huaji8.top/img/live2d/Gantzert_Felixander.gif)
 
-#### haru
+</details>
+<details><summary>haru</summary><br>
+
 ![](https://huaji8.top/img/live2d/haru.gif)
 
-#### miku
+</details>
+<details><summary>miku</summary><br>
+
 ![](https://huaji8.top/img/live2d/miku.gif)
 
-#### ni-j
+</details>
+<details><summary>ni-j</summary><br>
+
 ![](https://huaji8.top/img/live2d/ni-j.gif)
 
-#### nico
+</details>
+<details><summary>nico</summary><br>
+
 ![](https://huaji8.top/img/live2d/nico.gif)
 
-#### nietzche
+</details>
+<details><summary>nietzche</summary><br>
+
 ![](https://huaji8.top/img/live2d/nietzche.gif)
 
-#### nipsilon
+</details>
+<details><summary>nipsilon</summary><br>
+
 ![](https://huaji8.top/img/live2d/nipsilon.gif)
 
-#### nito
+</details>
+<details><summary>nito</summary><br>
+
 ![](https://huaji8.top/img/live2d/nito.gif)
 
-#### shizuku
+</details>
+<details><summary>shizuku</summary><br>
+
 ![](https://huaji8.top/img/live2d/shizuku.gif)
 
-#### tsumiki
+</details>
+<details><summary>tsumiki</summary><br>
+
 ![](https://huaji8.top/img/live2d/tsumiki.gif)
 
-#### wanko
+</details>
+<details><summary>wanko</summary><br>
+
 ![](https://huaji8.top/img/live2d/wanko.gif)
 
-#### z16
+</details>
+<details><summary>z16</summary><br>
+
 ![](https://huaji8.top/img/live2d/z16.gif)
 
-#### hibiki
+</details>
+<details><summary>hibiki</summary><br>
+
 ![](https://huaji8.top/img/live2d/hibiki.gif)
 
-#### koharu
+</details>
+<details><summary>koharu</summary><br>
+
 ![](https://huaji8.top/img/live2d/koharu.gif)
 
-#### haruto
+</details>
+<details><summary>haruto</summary><br>
+
 ![](https://huaji8.top/img/live2d/haruto.gif)
 
-#### Unitychan
+</details>
+<details><summary>Unitychan</summary><br>
+
 ![](https://huaji8.top/img/live2d/Unitychan.gif)
 
-#### tororo
+</details>
+<details><summary>tororo</summary><br>
+
 ![](https://huaji8.top/img/live2d/tororo.gif)
 
-#### hijiki
+</details>
+<details><summary>hijiki</summary><br>
+
 ![](https://huaji8.top/img/live2d/hijiki.gif)
 
+</details>
 
 ## Contribute 贡献
 
-如果你想提交代码或Issue，请务必仔细阅读
+**如果你想提交代码或Issue，请务必仔细阅读**
 
 [CONTRIBUTING](./CONTRIBUTING.md)
+
+## Releated projects 相关项目
+
+- [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
+
+- [pixi-live2d](https://github.com/avgjs/pixi-live2d)
+
+- [CubismJsComponents](https://github.com/Live2D/CubismJsComponents)
 
 
 ## About me 关于我
 
-[![Author](https://img.shields.io/badge/author-cneyhn-green.svg?style=flat-square)](https://delusion.coding.me/)
+[![Author][author]][author-url]
 
-[![QQ](https://img.shields.io/badge/QQ-1106996185-blue.svg?style=flat-square)](http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes)
+[![QQ][qq]][qq-url]
 
-[![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
+[![Email][email]][email-url]
 
-## Imported 引入
 
-[current-device](https://github.com/matthewhudson/current-device)
+## Imported 引入脚本
 
+[![current-device][current-device]][current-device-url]
 
 <br>
 
-Open sourced under the GPL v2.0 license.
-
 根据 GPL V2.0 许可证开源。
 
-
-[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg
+[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg?label=hexo-helper-live2d
 [npm-url]: https://www.npmjs.com/package/hexo-helper-live2d
 
 [deps]: https://img.shields.io/david/EYHN/hexo-helper-live2d.svg
-[deps-url]: #
+[deps-url]: javascript:void(0);
 
 [devdeps]:  https://img.shields.io/david/dev/EYHN/hexo-helper-live2d.svg
-[devdeps-url]: #
+[devdeps-url]: javascript:void(0);
 
 [license]: https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg
 [license-url]: https://github.com/EYHN/hexo-helper-live2d/blob/master/LICENSE
@@ -302,3 +346,15 @@ Open sourced under the GPL v2.0 license.
 
 [GitHub issues]: https://img.shields.io/github/issues/EYHN/hexo-helper-live2d.svg
 [GitHub issues-url]: https://github.com/EYHN/hexo-helper-live2d/issues
+
+[author]: https://img.shields.io/badge/author-cneyhn-green.svg
+[author-url]: https://delusion.coding.me/
+
+[qq]: https://img.shields.io/badge/QQ-1106996185-blue.svg
+[qq-url]: http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes
+
+[email]: https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg
+[email-url]: mailto:cneyhn@gmail.com
+
+[current-device]: https://img.shields.io/npm/v/current-device.svg?label=current-device
+[current-device-url]: https://github.com/matthewhudson/current-device

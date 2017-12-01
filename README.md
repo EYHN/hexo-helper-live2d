@@ -28,10 +28,12 @@ Add the Sseexxyyy live2d to your hexo!
 
 New web Demo and code generator: [https://eyhn.in/hexo-helper-live2d/](https://eyhn.in/hexo-helper-live2d/)
 
-Demo: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+Author's Demo: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
 
 ## Installation
+
+### Hexo
 
 Install module:
 
@@ -39,46 +41,49 @@ Install module:
 npm install --save hexo-helper-live2d
 ```
 
-> Tips: If you run into a npm problem, try to use `npm cache verify` or `npm cache clean` to fix it.
+<details><summary>Come across npm problem ?</summary><br>
 
-And then add the next line to your hexo theme.
+> Try to use `npm cache verify` or `npm cache clean` to fix it.
 
-Usually added before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
+</details>
 
-ejs:
-``` ejs
-<%- live2d() %>
+<details><summary>Used legacy version before ?</summary><br>
+
+Please delete `{{ live2d() }}` or `<%- live2d() %>` before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
+
+</details>
+
+### Webpack
+
+<details><summary>Only when you want to do some further developement or advanced useage.</summary><br>
+
+Install module:
+
+```
+npm install --save hexo-helper-live2d
 ```
 
-swig (like "next" theme):
-``` swig
-{{ live2d() }}
+Import module:
+
 ```
+import loadlive2d from 'hexo-helper-live2d';
+
+// TBD.
+```
+
+</details>
 
 
 ## Config
 
-Two Methods
-
-#### Method 1
-
 Add configuration in hexo's `_config.yml` file.
 
-``` yml
-live2d:
-  model: nipsilon
-```
-
-#### Method 2
-
-Add configuration in hexo theme's `_config.yml` file.
+An Example:
 
 ``` yml
 live2d:
   model: nipsilon
 ```
-
-> Notes: Option 2 has higher priority, it will overwrite Option 1.
 
 
 ## Settings
@@ -102,48 +107,47 @@ live2d:
   deviceJsSource: local # The source of the current-device script. default: local
 ```
 
-> To use settings in Chinese, please have a look at Chinese document.
+> To use settings in Chinese, please have a look at [Chinese document](./readme.zh-CN.md).
 
-- `model`: The model that you are willing to show. default: z16
-  - chitose
-  - Epsilon2.1
-  - Gantzert_Felixander
-  - haru01
-  - haru02
-  - haruto
-  - hibiki
-  - hijiki
-  - izumi
-  - koharu
-  - miku
-  - nico
-  - ni-j
-  - nipsilon
-  - nito
-  - shizuku
-  - tororo
-  - tsumiki
-  - Unitychan
-  - wanko
-  - z16
+|OPTION|default value|Optional value|description|
+|:-----|:-----------:|:------------:|:----------|
+|model|`z16`|*limited string* See below|The model that you are willing to show.|
+|width|`150`|*real*|The width of your model.|
+|height|`300`|*real*|The height of your model.|
+|scaling|`2`|*real 1 = 100%*|The scaling of the resolution. The greater the value is setted, less mosaic it will be. **Now have bug, see #32, not until the bug is solved, please set this value to 1.**|
+|opacityDefault|`0.7`|*real 0 - 1*|The default opacity. *(Beta)*|
+|opacityHover|`1`|*real 0 - 1*|The opacity when hover. *(Beta)*|
+|mobileShow|`true`|*`true` / `false`*|Whether to show on mobile devices.|
+|mobileScaling|`0.5`|*real 1 = 100%*|The scaling on mobile.|
+|position|`right`|*`left` / `right`*|`left` or `right` side the model is shown at.|
+|horizontalOffset|`0`|*real*|The horizontal offset. <br>Change this variable to adjust the position of model.|
+|verticalOffset|`-20`|*real*|The offset of the bottom. <br>Change this variable to adjust the position of model.|
+|id|`live2dcanvas`|*string*|The ID of the `<canvas>` element.|
+|deviceJsSource|`local`|*`local` / `official` / `string`*|The source of the current-device script.<br>We have three options to choose:<br>`local`: **Default, highly recommended.** Use the local version of script. Compressed using webpack.<br>`official`: Use the official link. [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)<br>`(your CDN url path)`: put your own CDN path here, must contain `.js`.|
 
-- `width`: The width of your model.  *( real ) default: 150*
-- `height`: The height of your model.  *( real ) default: 300*
-- `scaling`: The scaling of the resolution. The greater the value is setted, less mosaic it will be. **Now have bug, see #32, not until the bug is solved, please set this value to 1.**  *( 1 = 100% ) default: 2*
-- `opacityDefault`: The default opacity. *(Beta)*  *( 0 - 1 ) default: 0.7*
-- `opacityHover`: The opacity when hover. *(Beta)*  *( 0 - 1 ) default: 1*
-- `mobileShow`: Whether to show on mobile devices.  *( true / false ) default: true*
-- `mobileScaling`: The scaling on mobile. default:  *( 1 = 100% ) 0.5*
-- `position`:  `left` or `right` side the model is shown at.  *( left / right ) default: right*
-- `horizontalOffset`: The horizontal offset. Change this variable to adjust the position of model.  *( real ) default: 0*
-- `verticalOffset`: The offset of the bottom. Change this variable to adjust the position of model.  *( real ) default: -20*
-- `id`: The ID of the `<canvas>` element.  *( string ) default: live2dcanvas*
-- `deviceJsSource`: The source of the current-device script.  *( local / official / string ) default: local*
-  - We have three options to choose:
-  - `local`: **Default, highly recommended.** Use the local version of script. Compressed using webpack.
-  - `official`: Use the official link. [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)
-  - `(your CDN url path)`: put your own CDN path here, must contain `.js`.
+Current supported models:
 
+  - `chitose`
+  - `Epsilon2.1`
+  - `Gantzert_Felixander`
+  - `haru01`
+  - `haru02`
+  - `haruto`
+  - `hibiki`
+  - `hijiki`
+  - `izumi`
+  - `koharu`
+  - `miku`
+  - `nico`
+  - `ni-j`
+  - `nipsilon`
+  - `nito`
+  - `shizuku`
+  - `tororo`
+  - `tsumiki`
+  - `Unitychan`
+  - `wanko`
+  - `z16`
 
 ## Custom model
 
@@ -155,7 +159,7 @@ live2d:
 
 **Attention! The path of the model's json must be  `/live2d_models/{name}/{name}.model.json`**
 
-For example:
+<details><summary>An Example:</summary><br>
 
 Your model is named `mymiku`.
 
@@ -165,8 +169,9 @@ Copy your model to `/live2d_models/mymiku/`.
 
 Up to now, there should be `mymiku.model.json` in the directory of `/live2d_models/mymiku/`.
 
+</details>
 
-Have a look at[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22).
+<br>~The problem was once releated to [(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22).~
 
 <br>
 
@@ -183,63 +188,101 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 **Attention! The name above the shown screenshoot may not be the true name of the model. Please go to the "Settings" to find the true value of "model"**
 
-#### Epsilon2.1
+<details><summary>Epsilon2.1</summary><br>
+
 ![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
 
-#### Gantzert_Felixander
+</details>
+<details><summary>Gantzert_Felixander</summary><br>
+
 ![](https://huaji8.top/img/live2d/Gantzert_Felixander.gif)
 
-#### haru
+</details>
+<details><summary>haru</summary><br>
+
 ![](https://huaji8.top/img/live2d/haru.gif)
 
-#### miku
+</details>
+<details><summary>miku</summary><br>
+
 ![](https://huaji8.top/img/live2d/miku.gif)
 
-#### ni-j
+</details>
+<details><summary>ni-j</summary><br>
+
 ![](https://huaji8.top/img/live2d/ni-j.gif)
 
-#### nico
+</details>
+<details><summary>nico</summary><br>
+
 ![](https://huaji8.top/img/live2d/nico.gif)
 
-#### nietzche
+</details>
+<details><summary>nietzche</summary><br>
+
 ![](https://huaji8.top/img/live2d/nietzche.gif)
 
-#### nipsilon
+</details>
+<details><summary>nipsilon</summary><br>
+
 ![](https://huaji8.top/img/live2d/nipsilon.gif)
 
-#### nito
+</details>
+<details><summary>nito</summary><br>
+
 ![](https://huaji8.top/img/live2d/nito.gif)
 
-#### shizuku
+</details>
+<details><summary>shizuku</summary><br>
+
 ![](https://huaji8.top/img/live2d/shizuku.gif)
 
-#### tsumiki
+</details>
+<details><summary>tsumiki</summary><br>
+
 ![](https://huaji8.top/img/live2d/tsumiki.gif)
 
-#### wanko
+</details>
+<details><summary>wanko</summary><br>
+
 ![](https://huaji8.top/img/live2d/wanko.gif)
 
-#### z16
+</details>
+<details><summary>z16</summary><br>
+
 ![](https://huaji8.top/img/live2d/z16.gif)
 
-#### hibiki
+</details>
+<details><summary>hibiki</summary><br>
+
 ![](https://huaji8.top/img/live2d/hibiki.gif)
 
-#### koharu
+</details>
+<details><summary>koharu</summary><br>
+
 ![](https://huaji8.top/img/live2d/koharu.gif)
 
-#### haruto
+</details>
+<details><summary>haruto</summary><br>
+
 ![](https://huaji8.top/img/live2d/haruto.gif)
 
-#### Unitychan
+</details>
+<details><summary>Unitychan</summary><br>
+
 ![](https://huaji8.top/img/live2d/Unitychan.gif)
 
-#### tororo
+</details>
+<details><summary>tororo</summary><br>
+
 ![](https://huaji8.top/img/live2d/tororo.gif)
 
-#### hijiki
+</details>
+<details><summary>hijiki</summary><br>
+
 ![](https://huaji8.top/img/live2d/hijiki.gif)
 
+</details>
 
 ## Contribute
 
@@ -247,32 +290,40 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 [CONTRIBUTING](./CONTRIBUTING.md)
 
+## Releated projects
+
+- [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
+
+- [pixi-live2d](https://github.com/avgjs/pixi-live2d)
+
+- [CubismJsComponents](https://github.com/Live2D/CubismJsComponents)
+
 
 ## About me
 
-[![Author](https://img.shields.io/badge/author-cneyhn-green.svg?style=flat-square)](https://delusion.coding.me/)
+[![Author][author]][author-url]
 
-[![QQ](https://img.shields.io/badge/QQ-1106996185-blue.svg?style=flat-square)](http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes)
+[![QQ][qq]][qq-url]
 
-[![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
+[![Email][email]][email-url]
 
 
 ## Imported
 
-[current-device](https://github.com/matthewhudson/current-device)
+[![current-device][current-device]][current-device-url]
 
 <br>
 
 Open sourced under the GPL v2.0 license.
 
-[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg
+[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg?label=hexo-helper-live2d
 [npm-url]: https://www.npmjs.com/package/hexo-helper-live2d
 
 [deps]: https://img.shields.io/david/EYHN/hexo-helper-live2d.svg
-[deps-url]: #
+[deps-url]: javascript:void(0);
 
 [devdeps]:  https://img.shields.io/david/dev/EYHN/hexo-helper-live2d.svg
-[devdeps-url]: #
+[devdeps-url]: javascript:void(0);
 
 [license]: https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg
 [license-url]: https://github.com/EYHN/hexo-helper-live2d/blob/master/LICENSE
@@ -297,3 +348,15 @@ Open sourced under the GPL v2.0 license.
 
 [GitHub issues]: https://img.shields.io/github/issues/EYHN/hexo-helper-live2d.svg
 [GitHub issues-url]: https://github.com/EYHN/hexo-helper-live2d/issues
+
+[author]: https://img.shields.io/badge/author-cneyhn-green.svg
+[author-url]: https://delusion.coding.me/
+
+[qq]: https://img.shields.io/badge/QQ-1106996185-blue.svg
+[qq-url]: http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes
+
+[email]: https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg
+[email-url]: mailto:cneyhn@gmail.com
+
+[current-device]: https://img.shields.io/npm/v/current-device.svg?label=current-device
+[current-device-url]: https://github.com/matthewhudson/current-device
