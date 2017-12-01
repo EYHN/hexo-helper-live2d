@@ -1,4 +1,4 @@
-var LAppDefine = {
+var cDefine = {
 
     DEBUG_LOG : false,
     DEBUG_MOUSE_LOG : false,
@@ -36,4 +36,4 @@ var LAppDefine = {
 
 };
 
-module.exports = LAppDefine;
+module.exports = cDefine;

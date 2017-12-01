@@ -1,9 +1,9 @@
 import "./lib/live2d.min";
 import { L2DTargetPoint, L2DViewMatrix, L2DMatrix44 } from "./lib/Live2DFramework";
-import LAppLive2DManager from "./LAppLive2DManager"
-import LAppDefine from "./LAppDefine"
-import MatrixStack from "./utils/MatrixStack"
-import {setContext} from "./lib/webglcontext"
+import { cManager } from "./cManager"
+import { MatrixStack } from "./utils/MatrixStack"
+import { setContext } from "./lib/webGLContext"
+import { cDefine } from "./cDefine"
 
 // window.onerror = function (msg, url, line, col, error) {
 //   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
@@ -11,7 +11,7 @@ import {setContext} from "./lib/webglcontext"
 // }
 
 // const platform = window.navigator.platform.toLowerCase();
-const live2DMgr = new LAppLive2DManager();
+const live2DMgr = new cManager();
 let isDrawStart = false;
 let gl = null;
 let canvas = null;
@@ -28,6 +28,14 @@ let lastMouseY = 0;
 let headPos = 0.5;
 let opacityDefault = 0.7;
 let opacityHover = 1;
+
+function loadlive2d(iID, iModelUrl, iHeadPos, iOpacityDefault, iOpacityHover) {
+    headPos = typeof iHeadPos === 'undefined' ? 0.5 : iHeadPos;
+    opacityDefault = typeof iOpacityDefault === 'undefined' ? 0.7 : iOpacityDefault;
+    opacityHover = typeof iOpacityHover === 'undefined' ? 1 : iOpacityHover;
+    initCanvas(iID);
+    init(iModelUrl);
+}
 
 function initCanvas(canvasId) {
   canvas = document.getElementById(canvasId);
@@ -56,8 +64,8 @@ function init(modelUrl) {
   dragMgr = new L2DTargetPoint();
   // 绘图相关..暂时看不懂
   let ratio = height / width;
-  let left = LAppDefine.VIEW_LOGICAL_LEFT;
-  let right = LAppDefine.VIEW_LOGICAL_RIGHT;
+  let left = cDefine.VIEW_LOGICAL_LEFT;
+  let right = cDefine.VIEW_LOGICAL_RIGHT;
   let bottom = -ratio;
   let top = ratio;
 
@@ -65,13 +73,13 @@ function init(modelUrl) {
 
   viewMatrix.setScreenRect(left, right, bottom, top);
 
-  viewMatrix.setMaxScreenRect(LAppDefine.VIEW_LOGICAL_MAX_LEFT,
-    LAppDefine.VIEW_LOGICAL_MAX_RIGHT,
-    LAppDefine.VIEW_LOGICAL_MAX_BOTTOM,
-    LAppDefine.VIEW_LOGICAL_MAX_TOP);
+  viewMatrix.setMaxScreenRect(cDefine.VIEW_LOGICAL_MAX_LEFT,
+    cDefine.VIEW_LOGICAL_MAX_RIGHT,
+    cDefine.VIEW_LOGICAL_MAX_BOTTOM,
+    cDefine.VIEW_LOGICAL_MAX_TOP);
   // 这2行可能没用
-  viewMatrix.setMaxScale(LAppDefine.VIEW_MAX_SCALE);
-  viewMatrix.setMinScale(LAppDefine.VIEW_MIN_SCALE);
+  viewMatrix.setMaxScale(cDefine.VIEW_MAX_SCALE);
+  viewMatrix.setMinScale(cDefine.VIEW_MIN_SCALE);
 
   projMatrix = new L2DMatrix44();
   projMatrix.multScale(1, (width / height));
@@ -284,7 +292,7 @@ function modelTurnHead(event)
     let vx = transformViewX(target.x - rect.left);
     let vy = transformViewY(target.y - rect.top);
 
-    if (LAppDefine.DEBUG_MOUSE_LOG)
+    if (cDefine.DEBUG_MOUSE_LOG)
         console.log("modelTurnHead onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     lastMouseX = sx;
@@ -311,7 +319,7 @@ function modelTapEvent(event)
     let vx = transformViewX(target.x - rect.left);
     let vy = transformViewY(target.y - rect.top);
 
-    if (LAppDefine.DEBUG_MOUSE_LOG)
+    if (cDefine.DEBUG_MOUSE_LOG)
         console.log("modelTapEvent onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     lastMouseX = sx;
@@ -340,7 +348,7 @@ function followPointer(event)
     let vx = transformViewX(target.x - rect.left);
     let vy = transformViewY(target.y - rect.top);
 
-    if (LAppDefine.DEBUG_MOUSE_LOG)
+    if (cDefine.DEBUG_MOUSE_LOG)
         console.log("followPointer onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     if (drag)
@@ -432,13 +440,5 @@ function getWebGLContext()
     }
     return null;
 };
-
-function loadlive2d(iID, iModelUrl, iHeadPos, iOpacityDefault, iOpacityHover) {
-    headPos = typeof iHeadPos === 'undefined' ? 0.5 : iHeadPos;
-    opacityDefault = typeof iOpacityDefault === 'undefined' ? 0.7 : iOpacityDefault;
-    opacityHover = typeof iOpacityHover === 'undefined' ? 1 : iOpacityHover;
-    initCanvas(iID);
-    init(iModelUrl);
-}
 
 window.loadlive2d = loadlive2d;

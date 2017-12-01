@@ -1,14 +1,14 @@
 import { Live2DFramework, L2DBaseModel, L2DEyeBlink } from "./lib/Live2DFramework"
-import ModelSettingJson from "./utils/ModelSettingJson"
-import LAppDefine from "./LAppDefine"
-import MatrixStack from "./utils/MatrixStack"
+import { ModelSettingJson } from "./utils/ModelSettingJson"
+import { MatrixStack } from "./utils/MatrixStack"
+import { cDefine } from "./cDefine"
 
 //============================================================
 //============================================================
-//  class LAppModel     extends L2DBaseModel
+//  class cModel     extends L2DBaseModel
 //============================================================
 //============================================================
-export default function LAppModel()
+export default function cModel()
 {
     //L2DBaseModel.apply(this, arguments);
     L2DBaseModel.prototype.constructor.call(this);
@@ -18,10 +18,10 @@ export default function LAppModel()
     this.tmpMatrix = [];
 }
 
-LAppModel.prototype = new L2DBaseModel();
+cModel.prototype = new L2DBaseModel();
 
 
-LAppModel.prototype.load = function(gl, modelSettingPath, callback)
+cModel.prototype.load = function(gl, modelSettingPath, callback)
 {
     this.setUpdating(true);
     this.setInitialized(false);
@@ -154,7 +154,7 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
                         // thisRef.live2DModel.setGL(gl);
 
 
-                        thisRef.preloadMotionGroup(LAppDefine.MOTION_GROUP_IDLE);
+                        thisRef.preloadMotionGroup(cDefine.MOTION_GROUP_IDLE);
                         thisRef.mainMotionManager.stopAllMotions();
 
                         thisRef.setUpdating(false);
@@ -171,7 +171,7 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
 
 
 
-LAppModel.prototype.release = function(gl)
+cModel.prototype.release = function(gl)
 {
     // this.live2DModel.deleteTextures();
     var pm = Live2DFramework.getPlatformManager();
@@ -181,7 +181,7 @@ LAppModel.prototype.release = function(gl)
 
 
 
-LAppModel.prototype.preloadMotionGroup = function(name)
+cModel.prototype.preloadMotionGroup = function(name)
 {
     var thisRef = this;
 
@@ -197,13 +197,13 @@ LAppModel.prototype.preloadMotionGroup = function(name)
 }
 
 
-LAppModel.prototype.update = function()
+cModel.prototype.update = function()
 {
-    // console.log("--> LAppModel.update()");
+    // console.log("--> cModel.update()");
 
     if(this.live2DModel == null)
     {
-        if (LAppDefine.DEBUG_LOG) console.error("Failed to update.");
+        if (cDefine.DEBUG_LOG) console.error("Failed to update.");
 
         return;
     }
@@ -216,7 +216,7 @@ LAppModel.prototype.update = function()
     if (this.mainMotionManager.isFinished())
     {
 
-        this.startRandomMotion(LAppDefine.MOTION_GROUP_IDLE, LAppDefine.PRIORITY_IDLE);
+        this.startRandomMotion(cDefine.MOTION_GROUP_IDLE, cDefine.PRIORITY_IDLE);
     }
 
     //-----------------------------------------------------------------
@@ -298,7 +298,7 @@ LAppModel.prototype.update = function()
 
 
 
-LAppModel.prototype.setRandomExpression = function()
+cModel.prototype.setRandomExpression = function()
 {
     var tmp = [];
     for (var name in this.expressions)
@@ -313,7 +313,7 @@ LAppModel.prototype.setRandomExpression = function()
 
 
 
-LAppModel.prototype.startRandomMotion = function(name, priority)
+cModel.prototype.startRandomMotion = function(name, priority)
 {
     var max = this.modelSetting.getMotionNum(name);
     var no = parseInt(Math.random() * max);
@@ -322,7 +322,7 @@ LAppModel.prototype.startRandomMotion = function(name, priority)
 
 
 
-LAppModel.prototype.startMotion = function(name, no, priority)
+cModel.prototype.startMotion = function(name, no, priority)
 {
     // console.log("startMotion : " + name + " " + no + " " + priority);
 
@@ -330,18 +330,18 @@ LAppModel.prototype.startMotion = function(name, no, priority)
 
     if (motionName == null || motionName == "")
     {
-        if (LAppDefine.DEBUG_LOG)
+        if (cDefine.DEBUG_LOG)
             console.error("Failed to motion.");
         return;
     }
 
-    if (priority == LAppDefine.PRIORITY_FORCE)
+    if (priority == cDefine.PRIORITY_FORCE)
     {
         this.mainMotionManager.setReservePriority(priority);
     }
     else if (!this.mainMotionManager.reserveMotion(priority))
     {
-        if (LAppDefine.DEBUG_LOG)
+        if (cDefine.DEBUG_LOG)
             console.log("Motion is running.")
         return;
     }
@@ -369,7 +369,7 @@ LAppModel.prototype.startMotion = function(name, no, priority)
 }
 
 
-LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
+cModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
 {
     var motionName = this.modelSetting.getMotionFile(name, no);
 
@@ -377,7 +377,7 @@ LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
     motion.setFadeOut(this.modelSetting.getMotionFadeOut(name, no));
 
 
-    if (LAppDefine.DEBUG_LOG)
+    if (cDefine.DEBUG_LOG)
             console.log("Start motion : " + motionName);
 
     if (this.modelSetting.getMotionSound(name, no) == null)
@@ -392,7 +392,7 @@ LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
         var snd = document.createElement("audio");
         snd.src = this.modelHomeDir + soundName;
 
-        if (LAppDefine.DEBUG_LOG)
+        if (cDefine.DEBUG_LOG)
             console.log("Start sound : " + soundName);
 
         snd.play();
@@ -402,11 +402,11 @@ LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
 
 
 
-LAppModel.prototype.setExpression = function(name)
+cModel.prototype.setExpression = function(name)
 {
     var motion = this.expressions[name];
 
-    if (LAppDefine.DEBUG_LOG)
+    if (cDefine.DEBUG_LOG)
         console.log("Expression : " + name);
 
     this.expressionManager.startMotion(motion, false);
@@ -414,9 +414,9 @@ LAppModel.prototype.setExpression = function(name)
 
 
 
-LAppModel.prototype.draw = function(gl)
+cModel.prototype.draw = function(gl)
 {
-    //console.log("--> LAppModel.draw()");
+    //console.log("--> cModel.draw()");
 
     // if(this.live2DModel == null) return;
 
@@ -435,7 +435,7 @@ LAppModel.prototype.draw = function(gl)
 
 
 
-LAppModel.prototype.hitTest = function(id, testX, testY)
+cModel.prototype.hitTest = function(id, testX, testY)
 {
     var len = this.modelSetting.getHitAreaNum();
     for (var i = 0; i < len; i++)
