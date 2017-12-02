@@ -1,17 +1,3 @@
-import "./lib/live2d.min";
-import "./canvasManager";
-import { device } from 'current-device';
-import { L2DTargetPoint, L2DViewMatrix, L2DMatrix44 } from "./lib/Live2DFramework";
-import { cManager } from "./cManager";
-import { MatrixStack } from "./utils/MatrixStack";
-import { setContext } from "./lib/webGLContext";
-import { cDefine } from "./cDefine";
-
-// window.onerror = function (msg, url, line, col, error) {
-//   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
-//   console.error(errmsg);
-// }
-
 // const platform = window.navigator.platform.toLowerCase();
 const live2DMgr = new cManager();
 let isDrawStart = false;

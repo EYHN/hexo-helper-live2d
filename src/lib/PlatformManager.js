@@ -1,3 +1,4 @@
+
 /**
  *
  *  You can modify and use this source freely
@@ -8,8 +9,9 @@
 
 // Modified by xiazeyu.
 
-import { getContext } from "./webGLContext"
-import { Live2DModelWebGL } from "./live2d.min"
+import { getContext } from "./webGLContext";
+import { Live2DModelWebGL } from "./live2d.min";
+
 
 //============================================================
 //============================================================

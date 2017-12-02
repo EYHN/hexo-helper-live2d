@@ -1,57 +1,62 @@
 var webpack = require('webpack');
 var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var Visualizer = require('webpack-visualizer-plugin');
 var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
-var HtmlWebpackConfig = {
-    filename: 'dev.html',
-    template: "./src/dev.html",
-    hash: true,
-    showErrors: true
-};
-
 module.exports = {
-    entry: [
-        "./src/main.js"
-    ],
-    output: {
-        filename: "cLive2d.min.js",
-        path: __dirname + "/dist"
-    },
+  entry: [ // Set cJs source entry
+    "./src/main.js",
+  ],
+  output: { // Set cJs.min output
+    filename: "cLive2d.min.js",
+    path: __dirname + "/dist"
+  },
 
-    devtool: "source-map",
+  devtool: "source-map",
 
-    plugins: [
-        new webpack.DefinePlugin({
-          'process.env': {
-            NODE_ENV: '"production"'
+  plugins: [
+    new webpack.DefinePlugin({ // Set the development environment
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development')
+      }
+    }),
+
+    new webpack.BannerPlugin("DEVELOPING BUILD\nhttps://github.com/EYHN/hexo-helper-live2d -The file is creted at " + new Date()),
+
+    new Visualizer(), // https://github.com/chrisbateman/webpack-visualizer
+                      // visualizer generator
+
+    new webpack.optimize.UglifyJsPlugin({ // Compress cJs
+      compress: true,
+      warnings: true,
+      sourceMap: true,
+      mangle: true
+    }),
+
+    new HtmlWebpackPlugin({ // Generate html template only with hash
+      filename: 'insert.noloadscript.html',
+      template: "./src/tmplate/insert.noloadscript.tmpl.html",
+      hash: true,
+      showErrors: true,
+    })
+
+  ],
+
+  resolve: {
+    extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+  },
+
+  module: {
+    rules: [{
+      test: /\.js$/,
+      exclude: path.resolve(__dirname, "node_modules"),
+      use: [{
+        loader: 'babel-loader',
+          query: {
+            presets: ["env"]
           }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-          compress: true,
-          warnings: true,
-          sourceMap: true,
-          mangle: true
-        }),
-        new HtmlWebpackPlugin(HtmlWebpackConfig)
-    ],
-
-    resolve: {
-        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
-    },
-
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: path.resolve(__dirname, "node_modules"),
-                use: [{
-                    loader: 'babel-loader',
-                    query: {
-                        presets: ["env"]
-                    }
-                }],
-            }
-        ]
-    }
+      }],
+    }]
+  }
 }

@@ -1,7 +1,7 @@
-import { Live2DFramework, L2DBaseModel, L2DEyeBlink } from "./lib/Live2DFramework"
-import { ModelSettingJson } from "./utils/ModelSettingJson"
-import { MatrixStack } from "./utils/MatrixStack"
-import { cDefine } from "./cDefine"
+import { Live2DFramework, L2DBaseModel, L2DEyeBlink } from "./lib/Live2DFramework";
+import { ModelSettingJson } from "./utils/ModelSettingJson";
+import { MatrixStack } from "./utils/MatrixStack";
+import { cDefine } from "./cDefine";
 
 //============================================================
 //============================================================

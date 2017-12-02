@@ -14,7 +14,8 @@
     "html-webpack-plugin": "^2.30.1",
     "source-map-loader": "^0.2.3",
     "uglify-js": "^3.1.10",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
     "hexo-fs": "^0.2.2",
@@ -23,8 +24,8 @@
   "scripts": {
     "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
     "inst:dev": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g webpack&&npm install -g conventional-changelog-cli&&npm install",
-    "build:dev": "webpack --progress --colors --config webpack.config.device.prod.js&&webpack --progress --colors --watch --config webpack.config.cJs.dev.js",
-    "build:prod": "webpack --progress --colors --config webpack.config.cJs.prod.js&&webpack --progress --colors --config webpack.config.device.prod.js",
+    "build:dev": "webpack --progress --colors --watch --config webpack.config.cJs.dev.js",
+    "build:prod": "webpack --progress --colors --config webpack.config.cJs.prod.js",
     "commit": "git-cz",
     "changelog": "git pull&&conventional-changelog -i CHANGELOG.md -r 0 -s -u&&git add CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status"
   },

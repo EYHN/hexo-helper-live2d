@@ -1,7 +1,7 @@
-import { Live2DFramework } from "./lib/Live2DFramework"
-import { PlatformManager } from "./lib/PlatformManager"
-import { cModel } from "./cModel"
-import { cDefine } from "./cDefine"
+import { Live2DFramework } from "./lib/Live2DFramework";
+import { PlatformManager } from "./lib/PlatformManager";
+import { cModel } from "./cModel";
+import { cDefine } from "./cDefine";
 
 export default function cManager() {
   // console.log("--> cManager()");

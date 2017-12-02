@@ -1,0 +1,64 @@
+<script>
+/* // loadScript source code
+const loadScript = function loadScript(url, callback) {
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  if(typeof(callback) != "undefined"){
+    if (script.readyState) {
+      script.onreadystatechange = function () {
+        if (script.readyState == "loaded" || script.readyState == "complete") {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else {
+      script.onload = function () {
+        callback();
+      };
+    }
+  }
+  script.src = url;
+  document.body.appendChild(script);
+}
+*/
+
+/**
+* @desc set the environment first and load this script to load live2d
+* @param
+    config.id
+    config.model
+    config.headPos
+    config.opacityDefault
+    config.opacityHover
+    config.cJsPath
+* @returns {Element} webGL context being captured
+*/
+
+(function(){
+  var script = document.createElement("script");
+  var callback = function() {
+    loadlive2d(
+      ${JSON.stringify(config.id)},
+      ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))},
+      ${config.headPos},
+      ${config.opacityDefault},
+      ${config.opacityHover});
+  };
+
+  script.type = "text/javascript";
+  if (script.readyState) { // IE
+    script.onreadystatechange = function () {
+      if (script.readyState == "loaded" || script.readyState == "complete") {
+        script.onreadystatechange = null;
+        callback();
+      }
+    };
+  } else { // Others
+    script.onload = function () {
+      callback();
+    };
+  }
+  script.src = ${JSON.stringify(config.cJsPath)};
+  document.body.appendChild(script);
+})();
+</script>
