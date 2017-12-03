@@ -19,7 +19,7 @@
 
 # Important! 3.0 is under developement, informations below CANNOT WORK PROPERLY. Please visit https://www.npmjs.com/package/hexo-helper-live2d for USEABLE VERSION.
 
-[简体中文文档](./readme.zh-CN.md)
+[简体中文文档](./README.zh-CN.md)
 
 <br>
 
@@ -106,7 +106,7 @@ live2d:
   deviceJsSource: local # The source of the current-device script. default: local
 ```
 
-> To use settings in Chinese, please have a look at [Chinese document](./readme.zh-CN.md).
+> To use settings in Chinese, please have a look at [Chinese document](./README.zh-CN.md).
 
 |OPTION|default value|Optional value|description|
 |:-----|:-----------:|:------------:|:----------|
