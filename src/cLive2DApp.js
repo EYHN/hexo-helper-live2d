@@ -1,4 +1,12 @@
-// const platform = window.navigator.platform.toLowerCase();
+import "./lib/live2d.min";
+import { createCanvas, initCanvas } from "./lib/canvasManager";
+import { device } from 'current-device';
+import { L2DTargetPoint, L2DViewMatrix, L2DMatrix44 } from "./lib/Live2DFramework";
+import { cManager } from "./cManager";
+import { MatrixStack } from "./utils/MatrixStack";
+import { setContext } from "./lib/webGLContext";
+import { cDefine } from "./cDefine";
+
 const live2DMgr = new cManager();
 let isDrawStart = false;
 let gl = null;
@@ -8,38 +16,23 @@ let viewMatrix = null;
 let projMatrix = null;
 let deviceToScreen = null;
 let drag = false;
-// let oldLen = 0;
 let lastMouseX = 0;
 let lastMouseY = 0;
-// let isModelShown = 0;
-// let modelurl = "";
 let headPos = 0.5;
 let opacityDefault = 0.7;
 let opacityHover = 1;
 
-function loadlive2d(iID, iModelUrl, iHeadPos, iOpacityDefault, iOpacityHover) {
+export function loadlive2d(iID, iModelUrl, iHeadPos, iOpacityDefault, iOpacityHover) {
     headPos = typeof iHeadPos === 'undefined' ? 0.5 : iHeadPos;
     opacityDefault = typeof iOpacityDefault === 'undefined' ? 0.7 : iOpacityDefault;
     opacityHover = typeof iOpacityHover === 'undefined' ? 1 : iOpacityHover;
+    initSettings();
+    createCanvas(iID);
     initCanvas(iID);
     init(iModelUrl);
 }
+window.loadlive2d = loadlive2d;
 
-function initCanvas(canvasId) {
-  canvas = document.getElementById(canvasId);
-  if (canvas.addEventListener) {
-    //canvas.addEventListener("mousewheel", mouseEvent);
-    window.addEventListener("click", mouseEvent);
-    window.addEventListener("mousedown", mouseEvent);
-    window.addEventListener("mousemove", mouseEvent);
-    window.addEventListener("mouseup", mouseEvent);
-    document.addEventListener("mouseleave", mouseEvent);
-    //canvas.addEventListener("contextmenu", mouseEvent);
-    window.addEventListener("touchstart", touchEvent);
-    window.addEventListener("touchend", touchEvent);
-    window.addEventListener("touchmove", touchEvent);
-  }
-}
 
 function init(modelUrl) {
   // 此处获取的是canvas的大小 即绘制大小，与实际显示大小无关
@@ -428,5 +421,3 @@ function getWebGLContext()
     }
     return null;
 };
-
-window.loadlive2d = loadlive2d;

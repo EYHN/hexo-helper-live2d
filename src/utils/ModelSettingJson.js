@@ -1,3 +1,9 @@
+// Modified by xiazeyu.
+
+/**
+* @desc To get the model settings from given json file
+*/
+
 import { Live2DFramework } from "../lib/Live2DFramework"
 
 /**

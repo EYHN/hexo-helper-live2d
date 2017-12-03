@@ -17,8 +17,7 @@
 
 # hexo-helper-live2d
 
-> 3.0 is comming soon!
-Due by December 31, 2017, hopefully.
+# Important! 3.0 is under developement, informations below CANNOT WORK PROPERLY. Please visit https://www.npmjs.com/package/hexo-helper-live2d for USEABLE VERSION.
 
 [简体中文文档](./readme.zh-CN.md)
 

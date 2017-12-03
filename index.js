@@ -92,18 +92,6 @@ fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model
 // 复制 live2d客户端 脚本
 registerFile('live2d/cLive2d.min.js', path.resolve(__dirname, './dist/cLive2d.min.js'));
 
-// 复制 device.js 脚本
-if(config.deviceJsSource == "local"){
-  fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
-  if(exists){
-    registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
-  }else{// 若未找到，则报错
-    console.log("Live2d serverJs: can't find device.js, contant the author for support.");
-    return ;
-  }
-  });
-}
-
 hexo.extend.generator.register('live2d', function (locals) {
   return generators;
 });

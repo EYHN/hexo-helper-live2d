@@ -34,9 +34,16 @@ module.exports = {
       mangle: true
     }),
 
+    new HtmlWebpackPlugin({ // Generate dev page
+      filename: 'dev.html',
+      template: "./src/tmplate/dev.tmpl.html",
+      hash: true,
+      showErrors: true,
+    }),
+
     new HtmlWebpackPlugin({ // Generate html template only with hash
-      filename: 'insert.noloadscript.html',
-      template: "./src/tmplate/insert.noloadscript.tmpl.html",
+      filename: 'insert.html',
+      template: "./src/tmplate/insert.tmpl.html",
       hash: true,
       showErrors: true,
     })

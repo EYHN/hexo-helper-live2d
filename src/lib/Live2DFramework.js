@@ -6,6 +6,10 @@
 
 // Modified by xiazeyu.
 
+/**
+* @desc Basic functions releated to model react
+*/
+
 //============================================================
 //============================================================
 //  class L2DBaseModel

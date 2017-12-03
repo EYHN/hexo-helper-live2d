@@ -1,3 +1,9 @@
+// Modified by xiazeyu.
+
+/**
+* @desc The definitions of values releated to model react
+*/
+
 var cDefine = {
 
     DEBUG_LOG : false,

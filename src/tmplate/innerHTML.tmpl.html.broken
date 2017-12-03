@@ -1,0 +1,15 @@
+<div id="___divID">
+  <canvas id="___canvasID" width="___width" height="___height"></canvas>
+</div>
+<style>
+  #___canvasID{
+    position: fixed;
+    width: ___sytleWidthpx;
+    height: ___styleHeightpx;
+    opacity:___opacityDefault;
+    ___position: ___horizontalOffset;
+    bottom: ___verticalOffsetpx;
+    z-index: 999;
+    pointer-events: none;
+  }
+</style>

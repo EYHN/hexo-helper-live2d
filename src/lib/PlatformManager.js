@@ -9,6 +9,11 @@
 
 // Modified by xiazeyu.
 
+/**
+* @desc A library that provide basic IO and json function
+*/
+
+
 import { getContext } from "./webGLContext";
 import { Live2DModelWebGL } from "./live2d.min";
 
