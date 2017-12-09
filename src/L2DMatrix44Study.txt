@@ -1,0 +1,17 @@
+[tr]
+0:ScaleX
+1:
+2:scale
+3:
+4:
+5:ScaleY
+6:
+7:
+8:
+9:
+10:
+11:
+12:shiftX(translateX)
+13:shiftY(translateY)
+14:
+15:

@@ -1,4 +1,12 @@
 /**
+ *
+ *  You can modify and use this source freely
+ *  only for the development of application related Live2D.
+ *
+ *  (c) Live2D Inc. All rights reserved.
+ */
+
+/**
  * EYHN 基于 live2d 官方 Live2DFramework.js 修改
  *
  * Copyright © 2016 - 2017 EYHN
@@ -305,14 +313,6 @@ L2DBaseModel.prototype.hitTestSimple = function (drawID, testX, testY) {
     return (left <= tx && tx <= right && top <= ty && ty <= bottom);
 }
 
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
-
 //============================================================
 //============================================================
 //  class L2DExpressionMotion  extends     AMotion
@@ -420,14 +420,6 @@ function L2DExpressionParam() {
     this.value = null;
 }
 
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
-
 //============================================================
 //============================================================
 //  class L2DEyeBlink
@@ -533,13 +525,6 @@ EYE_STATE.STATE_INTERVAL = "STATE_INTERVAL"
 EYE_STATE.STATE_CLOSING = "STATE_CLOSING"
 EYE_STATE.STATE_CLOSED = "STATE_CLOSED"
 EYE_STATE.STATE_OPENING = "STATE_OPENING"
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
 
 //============================================================
 //============================================================
@@ -554,8 +539,9 @@ function L2DMatrix44() {
 //============================================================
 //    static L2DMatrix44.mul()
 //============================================================
+// matrix multiplication
 L2DMatrix44.mul = function (a/*float[]*/, b/*float[]*/, dst/*float[]*/) {
-    var c = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var c = [0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0];
     var n = 4;
     var i, j, k;
     for (i = 0; i < n; i++) {
@@ -687,13 +673,6 @@ L2DMatrix44.prototype.scale = function (scaleX/*float*/, scaleY/*float*/) {
     this.tr[0] = scaleX;
     this.tr[5] = scaleY;
 }
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
 
 //============================================================
 //============================================================
@@ -803,14 +782,6 @@ L2DModelMatrix.prototype.setWidth = function (w/*float*/) {
     this.scale(scaleX, scaleY);
 }
 
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
-
 //============================================================
 //============================================================
 //  class L2DMotionManager     extends     MotionQueueManager
@@ -887,14 +858,6 @@ L2DMotionManager.prototype.startMotionPrio = function (motion/*AMotion*/, priori
     this.currentPriority = priority;
     return this.startMotion(motion, false);
 }
-
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
 
 //============================================================
 //============================================================
@@ -980,14 +943,6 @@ L2DPhysics.prototype.updateParam = function (model/*ALive2DModel*/) {
         this.physicsList[i].update(model, timeMSec);
     }
 }
-
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
 
 //============================================================
 //============================================================
@@ -1169,13 +1124,6 @@ L2DPartsParam.prototype.initIndex = function (model/*ALive2DModel*/) {
     this.partsIndex = model.getPartsDataIndex(PartsDataID.getID(this.id));
     model.setParamFloat(this.paramIndex, 1);
 }
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
 
 //============================================================
 //============================================================
@@ -1262,13 +1210,6 @@ L2DTargetPoint.prototype.update = function () {
     this.faceX += this.faceVX;
     this.faceY += this.faceVY;
 }
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
 
 //============================================================
 //============================================================
@@ -1276,62 +1217,18 @@ L2DTargetPoint.prototype.update = function () {
 //============================================================
 //============================================================
 function L2DViewMatrix() {
-    L2DMatrix44.prototype.constructor.call(this);
-    this.screenLeft = null;
-    this.screenRight = null;
-    this.screenTop = null;
-    this.screenBottom = null;
-    this.maxLeft = null;
-    this.maxRight = null;
-    this.maxTop = null;
-    this.maxBottom = null;
-    this.max = Number.MAX_VALUE;
-    this.min = 0;
+  L2DMatrix44.prototype.constructor.call(this);
+  this.screenLeft = null;
+  this.screenRight = null;
+  this.screenTop = null;
+  this.screenBottom = null;
+  this.maxLeft = null;
+  this.maxRight = null;
+  this.maxTop = null;
+  this.maxBottom = null;
 }
 
 L2DViewMatrix.prototype = new L2DMatrix44(); //L2DViewMatrix extends L2DMatrix44
-
-//============================================================
-//    L2DViewMatrix # getMaxScale()
-//============================================================
-L2DViewMatrix.prototype.getMaxScale = function () {
-    return this.max;
-}
-
-//============================================================
-//    L2DViewMatrix # getMinScale()
-//============================================================
-L2DViewMatrix.prototype.getMinScale = function () {
-    return this.min;
-}
-
-//============================================================
-//    L2DViewMatrix # setMaxScale()
-//============================================================
-L2DViewMatrix.prototype.setMaxScale = function (v/*float*/) {
-    this.max = v;
-}
-
-//============================================================
-//    L2DViewMatrix # setMinScale()
-//============================================================
-L2DViewMatrix.prototype.setMinScale = function (v/*float*/) {
-    this.min = v;
-}
-
-//============================================================
-//    L2DViewMatrix # isMaxScale()
-//============================================================
-L2DViewMatrix.prototype.isMaxScale = function () {
-    return this.getScaleX() == this.max;
-}
-
-//============================================================
-//    L2DViewMatrix # isMinScale()
-//============================================================
-L2DViewMatrix.prototype.isMinScale = function () {
-    return this.getScaleX() == this.min;
-}
 
 //============================================================
 //    L2DViewMatrix # adjustTranslate()
@@ -1358,12 +1255,6 @@ L2DViewMatrix.prototype.adjustTranslate = function (shiftX/*float*/, shiftY/*flo
 //============================================================
 L2DViewMatrix.prototype.adjustScale = function (cx/*float*/, cy/*float*/, scale/*float*/) {
     var targetScale = scale * this.tr[0];
-    if (targetScale < this.min) {
-        if (this.tr[0] > 0) scale = this.min / this.tr[0];
-    }
-    else if (targetScale > this.max) {
-        if (this.tr[0] > 0) scale = this.max / this.tr[0];
-    }
     var tr1 = [1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, 1, 0,
@@ -1456,14 +1347,6 @@ L2DViewMatrix.prototype.getMaxBottom = function () {
 L2DViewMatrix.prototype.getMaxTop = function () {
     return this.maxTop;
 }
-
-/**
- *
- *  You can modify and use this source freely
- *  only for the development of application related Live2D.
- *
- *  (c) Live2D Inc. All rights reserved.
- */
 
 //============================================================
 //============================================================

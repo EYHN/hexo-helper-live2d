@@ -17,8 +17,6 @@
 
 # hexo-helper-live2d
 
-# 3.0 正在开发，以下内容无法使用，请访问 https://www.npmjs.com/package/hexo-helper-live2d 获取来可用版本。
-
 [English README](./README.md) by [@gwzz](https://github.com/gwzz) & [@xiazeyu](https://github.com/xiazeyu)
 
 <br>

@@ -17,8 +17,6 @@
 
 # hexo-helper-live2d
 
-# Important! 3.0 is under developement, informations below CANNOT WORK PROPERLY. Please visit https://www.npmjs.com/package/hexo-helper-live2d for USEABLE VERSION.
-
 [简体中文文档](./README.zh-CN.md)
 
 <br>

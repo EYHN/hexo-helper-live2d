@@ -73,30 +73,6 @@ cManager.prototype.setDrag = function (x, y) {
   }
 }
 
-
-
-cManager.prototype.maxScaleEvent = function () {
-  if (cDefine.DEBUG_LOG)
-    console.log("Max scale event.");
-  for (var i = 0; i < this.models.length; i++) {
-    this.models[i].startRandomMotion(cDefine.MOTION_GROUP_PINCH_IN,
-      cDefine.PRIORITY_NORMAL);
-  }
-}
-
-
-
-cManager.prototype.minScaleEvent = function () {
-  if (cDefine.DEBUG_LOG)
-    console.log("Min scale event.");
-  for (var i = 0; i < this.models.length; i++) {
-    this.models[i].startRandomMotion(cDefine.MOTION_GROUP_PINCH_OUT,
-      cDefine.PRIORITY_NORMAL);
-  }
-}
-
-
-
 cManager.prototype.tapEvent = function (x, y) {
   if (cDefine.DEBUG_LOG)
     console.log("tapEvent view x:" + x + " y:" + y);

@@ -5,41 +5,41 @@
 */
 
 var cDefine = {
+  // above are output log settings
+  DEBUG_LOG : false, // false, output events
+  DEBUG_MOUSE_LOG : false, // false, output mouse tracking
+  // These two commented definitions havn't been achieved yet.
+  //
+  // DEBUG_DRAW_HIT_AREA : false, // # 63
+  // DEBUG_DRAW_ALPHA_MODEL : false, // #63
 
-    DEBUG_LOG : false,
-    DEBUG_MOUSE_LOG : false,
-    // DEBUG_DRAW_HIT_AREA : false,
-    // DEBUG_DRAW_ALPHA_MODEL : false,
+  // above are viewMatrix value settings
+  VIEW_LOGICAL_LEFT : -1, // -1, the left abscissa of viewMatrix
+  VIEW_LOGICAL_RIGHT : 1, // 1, the right abscissa of viewMatrix
+  VIEW_LOGICAL_MAX_LEFT : -2, // -2, the max left abscissa of viewMatrix
+  VIEW_LOGICAL_MAX_RIGHT : 2, // 2, the max right abscissa of viewMatrix
+  VIEW_LOGICAL_MAX_BOTTOM : -2, // -2, the max bottom abscissa of viewMatrix
+  VIEW_LOGICAL_MAX_TOP : 2, // 2, the max top abscissa of viewMatrix
 
+  // above are the motions priority settings.
+  PRIORITY_NONE : 0, // 0，do nothing
+  PRIORITY_IDLE : 1, // 1, idle motions
+  PRIORITY_NORMAL : 2, // 2, normal motions
+  PRIORITY_FORCE : 3, // 3, force to show motion
 
-    VIEW_MAX_SCALE : 2, // 2
-    VIEW_MIN_SCALE : 0.8, // 0.8
+  // above are the index to the motions in model.json
+  // #43
+  MOTION_GROUP_IDLE : "idle",
+  MOTION_GROUP_TAP_BODY : "tap_body",
+  MOTION_GROUP_FLICK_HEAD : "flick_head", // unused
+  MOTION_GROUP_PINCH_IN : "pinch_in", // unused
+  MOTION_GROUP_PINCH_OUT : "pinch_out", // unused
+  MOTION_GROUP_SHAKE : "shake", // unused
 
-    VIEW_LOGICAL_LEFT : -1, // -1
-    VIEW_LOGICAL_RIGHT : 1, // 1
-
-    VIEW_LOGICAL_MAX_LEFT : -2, // -2
-    VIEW_LOGICAL_MAX_RIGHT : 2, // 2
-    VIEW_LOGICAL_MAX_BOTTOM : -2, // -2
-    VIEW_LOGICAL_MAX_TOP : 2, // 2
-
-
-    PRIORITY_NONE : 0, // 0
-    PRIORITY_IDLE : 1, // 1
-    PRIORITY_NORMAL : 2, // 2
-    PRIORITY_FORCE : 3, // 3
-
-    MOTION_GROUP_IDLE : "idle",
-    MOTION_GROUP_TAP_BODY : "tap_body",
-    MOTION_GROUP_FLICK_HEAD : "flick_head",
-    MOTION_GROUP_PINCH_IN : "pinch_in",
-    MOTION_GROUP_PINCH_OUT : "pinch_out",
-    MOTION_GROUP_SHAKE : "shake",
-
-
-    HIT_AREA_HEAD : "head",
-    HIT_AREA_BODY : "body"
-
+  // above are the index to the hit areas in model.json
+  // #43
+  HIT_AREA_HEAD : "head",
+  HIT_AREA_BODY : "body"
 };
 
 module.exports = cDefine;

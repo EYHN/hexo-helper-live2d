@@ -22,7 +22,7 @@ let headPos = 0.5;
 let opacityDefault = 0.7;
 let opacityHover = 1;
 
-export function loadlive2d(iID, iModelUrl, iHeadPos, iOpacityDefault, iOpacityHover) {
+export function loadlive2d(settings) {
     headPos = typeof iHeadPos === 'undefined' ? 0.5 : iHeadPos;
     opacityDefault = typeof iOpacityDefault === 'undefined' ? 0.7 : iOpacityDefault;
     opacityHover = typeof iOpacityHover === 'undefined' ? 1 : iOpacityHover;
@@ -39,15 +39,15 @@ function init(modelUrl) {
   let width = canvas.width;
   let height = canvas.height;
   // 以下为实际显示大小
-  // let sWidth = parseInt(canvas.style.width);
-  // let sHeight = parseInt(canvas.style.height);
+  // #32
+  let sWidth = parseInt(canvas.style.width);
+  let sHeight = parseInt(canvas.style.height);
 
   dragMgr = new L2DTargetPoint();
-  // 绘图相关..暂时看不懂
   let ratio = height / width;
   let left = cDefine.VIEW_LOGICAL_LEFT;
   let right = cDefine.VIEW_LOGICAL_RIGHT;
-  let bottom = -ratio;
+  let bottom = -(ratio);
   let top = ratio;
 
   viewMatrix = new L2DViewMatrix();
@@ -58,20 +58,19 @@ function init(modelUrl) {
     cDefine.VIEW_LOGICAL_MAX_RIGHT,
     cDefine.VIEW_LOGICAL_MAX_BOTTOM,
     cDefine.VIEW_LOGICAL_MAX_TOP);
-  // 这2行可能没用
-  viewMatrix.setMaxScale(cDefine.VIEW_MAX_SCALE);
-  viewMatrix.setMinScale(cDefine.VIEW_MIN_SCALE);
 
   projMatrix = new L2DMatrix44();
   projMatrix.multScale(1, (width / height));
 
   deviceToScreen = new L2DMatrix44();
-  deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
-  deviceToScreen.multScale(2 / width, -2 / width);
+  // deviceToScreen.multTranslate(-width / 2.0, -height / 2.0); // old codes
+  // deviceToScreen.multScale(2 / width, -2 / width); // old codes
+  deviceToScreen.multTranslate(-sWidth / 2.0, -sHeight / 2.0);  // #32
+  deviceToScreen.multScale(2 / sWidth, -2 / sHeight);  // #32
 
   gl = getWebGLContext();
   setContext(gl);
-  if (!gl) { // 检测是否成功创造WebGL元素
+  if (!gl) { // Check if WebGL element is created successfully.
     console.error("Failed to create WebGL context.");
     if(!window.WebGLRenderingContext){
       console.error("Your browser don't support WebGL, check https://get.webgl.org/ for futher information.");
@@ -134,31 +133,11 @@ function changeModel(modelurl) // 更换模型
     live2DMgr.count++; // 现在仍有多模型支持，稍后可以精简
     live2DMgr.changeModel(gl, modelurl);
 }
-/*
-function modelScaling(scale)
-{
-    let isMaxScale = viewMatrix.isMaxScale();
-    let isMinScale = viewMatrix.isMinScale();
 
-    viewMatrix.adjustScale(0, 0, scale);
-
-    if (!isMaxScale)
-    {
-        if (viewMatrix.isMaxScale())
-        {
-            live2DMgr.maxScaleEvent();
-        }
-    }
-
-    if (!isMinScale)
-    {
-        if (viewMatrix.isMinScale())
-        {
-            live2DMgr.minScaleEvent();
-        }
-    }
+function modelScaling(scale) {
+  viewMatrix.adjustScale(0, 0, scale);
 }
-*//*
+/*
 function transformRange(center, transform, range)
 {
     let a = {

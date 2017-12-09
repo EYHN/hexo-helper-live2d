@@ -107,7 +107,7 @@ MatrixStack.getMatrix = function(){
 
 /**
 * @name multMatrix
-* @desc do something to multiply the matrix
+* @desc matrix multiplication, save to the currentMatrix
 * @param null
 * @returns null
 * @memberOf MatrixStack
