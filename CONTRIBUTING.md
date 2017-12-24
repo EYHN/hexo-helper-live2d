@@ -58,14 +58,9 @@ work is not in vain.
 
 ### 2. Make changes
 
-#### clientJs: modify files in `/src/`
-
-- Use `npm run build:dev` to build client js files **with debug files and watchdog.**.
-
-#### serverJs: modify `/index.js`
+- Modify `/index.js`
 
 - Highly recommended to build a test Hexo environment to test it.
-
 
 ### 3. Debug until you make sure that your code works properly.
 

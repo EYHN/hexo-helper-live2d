@@ -95,3 +95,38 @@ registerFile('live2d/cLive2d.min.js', path.resolve(__dirname, './dist/cLive2d.mi
 hexo.extend.generator.register('live2d', function (locals) {
   return generators;
 });
+
+const path = require('path');
+const fs = require('fs');
+
+var fileArr = new Array();
+var modelJsonPath;
+
+function getModelJson(pathName){
+  var fileName = path.parse(pathName).name.split('.');
+  if(fileName[1] === 'model'){
+      modelJsonPath = pathName;
+  }
+}
+
+function addFile(destPath, sourceFile){
+  getModelJson(destPath);
+  fileArr.push({
+    path: destPath,
+    data: () => fs.createReadStream(sourceFile),
+  });
+}
+
+function addDir(destPath, sourceDir) {
+  var lsDir = fs.readdirSync(sourceDir)
+  lsDir.forEach(function (file) {
+    addFile(destPath + file, path.resolve(sourceDir, file));
+  }, this);
+}
+
+addDir('live2d/assets/', path.resolve(__dirname, './assets/'));
+
+module.exports = {
+  fileArr: fileArr,
+  modelJsonPath: modelJsonPath,
+};

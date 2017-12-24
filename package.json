@@ -1,33 +1,18 @@
 {
   "name": "hexo-helper-live2d",
   "version": "2.1.5",
-  "description": "Add the Sseexxyyy live2d to your hexo and webpages!",
+  "description": "Add the Sseexxyyy live2d to your hexo!",
   "main": "./index.js",
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "commitizen": "^2.9.6",
-    "current-device": "^0.6.3",
-    "cz-conventional-changelog": "^2.1.0",
-    "html-webpack-plugin": "^2.30.1",
-    "source-map-loader": "^0.2.3",
-    "uglify-js": "^3.1.10",
-    "webpack": "^3.8.1",
-    "webpack-visualizer-plugin": "^0.1.11"
-  },
+  "devDependencies": {},
   "dependencies": {
     "hexo-fs": "^0.2.2",
     "path": "^0.12.7"
   },
   "scripts": {
     "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
-    "inst:dev": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g webpack&&npm install -g conventional-changelog-cli&&npm install",
-    "build:dev": "webpack --progress --colors --watch --config webpack.config.cJs.dev.js",
-    "build:prod": "webpack --progress --colors --config webpack.config.cJs.prod.js",
+    "inst:dev": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g conventional-changelog-cli&&npm install",
     "commit": "git-cz",
-    "changelog": "git pull&&conventional-changelog -i CHANGELOG.md -r 0 -s -u&&git add CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status"
+    "changelog": "git pull&&conventional-changelog -i doc/CHANGELOG.md -r 0 -s -u&&git add doc/CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status"
   },
   "author": {
     "name": "EYHN",
