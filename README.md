@@ -248,6 +248,7 @@ Please pay enough attention to this document if you want to commit your changes.
 ## About me
 
 [![Author](https://img.shields.io/badge/author-cneyhn-green.svg?style=flat-square)](https://delusion.coding.me/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FEYHN%2Fhexo-helper-live2d.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FEYHN%2Fhexo-helper-live2d?ref=badge_shield)
 
 [![QQ](https://img.shields.io/badge/QQ-1106996185-blue.svg?style=flat-square)](http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes)
 
@@ -294,3 +295,7 @@ Open sourced under the GPL v2.0 license.
 
 [GitHub issues]: https://img.shields.io/github/issues/EYHN/hexo-helper-live2d.svg
 [GitHub issues-url]: https://github.com/EYHN/hexo-helper-live2d/issues
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FEYHN%2Fhexo-helper-live2d.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FEYHN%2Fhexo-helper-live2d?ref=badge_large)
