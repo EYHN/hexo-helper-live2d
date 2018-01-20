@@ -6,29 +6,31 @@
   "devDependencies": {},
   "dependencies": {
     "hexo-fs": "^0.2.2",
-    "path": "^0.12.7"
+    "live2d-widget": "3.x",
+    "live2d-widget-models": "^1.0.2",
+    "path": "^0.12.7",
+    "uglify-js": "^3.3.7"
   },
   "scripts": {
     "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
-    "inst:dev": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g conventional-changelog-cli&&npm install",
-    "commit": "git-cz",
+    "inst:dev": "npm install -g commitizen&&npm install",
+    "commit": "git pull&&git-cz",
+    "v:major": "npm version major",
+    "v:pmajor": "npm version premajor",
+    "v:minor": "npm version minor",
+    "v:pminor": "npm version preminor",
+    "v:patch": "npm version patch",
+    "v:ppatch": "npm version prepatch",
     "changelog": "git pull&&conventional-changelog -i doc/CHANGELOG.md -r 0 -s -u&&git add doc/CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status"
   },
-  "author": {
-    "name": "EYHN",
-    "email": "cneyhn@gmail.com"
-  },
+  "author": "EYHN <cneyhn@gmail.com>",
   "contributors": [
-    {
-      "name": "xiazeyu",
-      "email": "xiazeyu_2011@126.com"
-    }
+    "xiazeyu <xiazeyu_2011@126.com>",
+    "EYHN <cneyhn@gmail.com>"
   ],
   "maintainers": [
-    {
-      "name": "xiazeyu",
-      "email": "xiazeyu_2011@126.com"
-    }
+    "xiazeyu <xiazeyu_2011@126.com>",
+    "EYHN <cneyhn@gmail.com>"
   ],
   "license": "GPL-2.0",
   "repository": {

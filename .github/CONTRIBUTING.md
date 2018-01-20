@@ -35,7 +35,7 @@ Some things that will increase the chance that your pull request is accepted:
 
 ## Documentation
 
-Hexo-helper-live2d's feature is now becoming richer and richer, and documentation is a huge time sink.
+live2d-widget.js's feature is now becoming richer and richer, and documentation is a huge time sink.
 We greatly appreciate any time spent fixing typos or clarifying sections in the
 documentation.
 
@@ -58,9 +58,9 @@ work is not in vain.
 
 ### 2. Make changes
 
-- Modify `/index.js`
+- Modify files in `/src/`
 
-- Highly recommended to build a test Hexo environment to test it.
+- Use `npm run build:dev` to build client js files **with debug files and watchdog.**.
 
 ### 3. Debug until you make sure that your code works properly.
 
