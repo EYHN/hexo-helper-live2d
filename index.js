@@ -69,6 +69,8 @@ function addDir(destPath, sourceDir) {
 
 /**
  * Deprecated version support
+ * since 3.0
+ * Don't manually add live2d tag into your site template
  */
 
 hexo.extend.helper.register('live2d', function(){
