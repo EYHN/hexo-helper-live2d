@@ -10,15 +10,16 @@ const fs = require('hexo-fs'),
       url = require('url'),
       _ = require('lodash'),
       jsOnLocalPath = '/live2d/lib/clL2D.min.js',
-      clJsPath = require.resolve('live2d-widget/lib/manifest'),
+      clJs = require.resolve('live2d-widget/lib/manifest'),
       defaultConfig = require('live2d-widget/src/config/defaultConfig');
 
-let fileArray = new Array(),
+let fileArr = new Array(),
+    modelPath = null,
     modelJsonPath,
     jsPath,
     config = _.defaultsDeep(hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
 
-
+// Check if enabled
 if(_.hasIn(config, 'enable')){
   if(!config.enable){
     return;
@@ -26,6 +27,7 @@ if(_.hasIn(config, 'enable')){
   _.unset(config, 'enable');
 }
 
+// Generate jsPath for injecting
 if(_.hasIn(config, 'jsPath')){
   switch(config.jsPath){
     case 'local':
@@ -43,6 +45,11 @@ if(_.hasIn(config, 'jsPath')){
   _.unset(config, 'jsPath');
 }else{
   jsPath = jsOnLocalPath;
+}
+
+if(_.hasIn(config, 'model.path')){
+  modelPath = config.model.path;
+  _.unset(config, '.path');
 }
 
 
@@ -77,7 +84,41 @@ hexo.extend.helper.register('live2d', function(){
   console.warn('hexo-helper-live2d: live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.');
 });
 
+// Copy Live2D models
+// a. no user defined config, use default config, copy nothing
+if(modelPath !== null){
+  // b. in /live2d_models/ folder, find modelJson, copy
+  let tryPath = path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model.path));
+  fs.exists(tryPath, function(exists){
+    if(exists){
+      // copy
+      // find modelJson
+      // apply modelJson
+    }else{
+      // c. in npm_modules or built-in models, find modelJson, copy
 
+      // find module
+      // copy
+      // find modelJson
+      // apply modelJson
+
+      // d. doesn't found, may be a url, apply to config, copy nothing
+      //       // apply modelJson
+    }
+  })
+}
+
+if(jsPath === jsOnLocalPath){
+  // a. local, copy clJs, apply jsOnLocalPath
+  // copy clJs
+  // apply jsOnLocalPath
+}else{
+  // b. is a CDN or url, apply jsOnLocalPath
+  config.model.jsonPath = jsPath;
+}
+
+// injector borrowed form here:
+// https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
 hexo.extend.filter.register('after_render:html', function(htmlContent){
   let launcherScript = `L2Dwidget.init(${JSON.stringify(config)});`;
   let injectExtraScript = `<script src="${jsPath}"></script><script>${launcherScript}</script>`
@@ -87,18 +128,4 @@ hexo.extend.filter.register('after_render:html', function(htmlContent){
   }
   return htmlContent;
 });
-/*
 
-// 复制live2d模型文件
-// 先在 博客目录/live2d_models/ 目录下寻找
-fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)), function(exists){
-  if(exists){
-    registerDir("live2d/assets/", path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)));
-  }else{ // 若未找到，在 插件目录/assets/ 下继续寻找
-    registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
-  }
-});
-
-// 复制 live2d客户端 脚本
-registerFile('live2d/cLive2d.min.js', path.resolve(__dirname, './dist/cLive2d.min.js'));
-*/
