@@ -5,12 +5,12 @@
   "main": "./index.js",
   "devDependencies": {
     "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.1.0"
+    "cz-conventional-changelog": "^2.1.0",
+    "live2d-widget-model-wanko": "^1.0.2"
   },
   "dependencies": {
     "hexo-fs": "^0.2.2",
     "live2d-widget": "3.x",
-    "live2d-widget-models": "^1.0.2",
     "lodash": "^4.17.4",
     "path": "^0.12.7"
   },

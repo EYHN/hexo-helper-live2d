@@ -9,7 +9,7 @@ const fs = require('hexo-fs'),
       path = require('path'),
       url = require('url'),
       _ = require('lodash'),
-      jsOnLocalPath = '/live2d/lib/clL2D.min.js',
+      jsOnLocalPath = '/live2d/lib/',
       clJs = require.resolve('live2d-widget/lib/manifest'),
       defaultConfig = require('live2d-widget/src/config/defaultConfig');
 
