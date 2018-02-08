@@ -10,7 +10,7 @@ const fs = require('hexo-fs'),
       url = require('url'),
       _ = require('lodash'),
       localJsPath = '/live2dw/lib/',
-      localModelPath = '/live2dw/assets/'
+      localModelPath = '/live2dw/assets/',
       coreJsList = require('live2d-widget/lib/manifest'),
       coreJsDepPath = require('live2d-widget/lib'),
       defaultConfig = require('live2d-widget/src/config/defaultConfig');
@@ -20,20 +20,20 @@ let fileArr = new Array(),
     jsPath,
     coreJsNameLength,
     modelJsonPath,
-    config = _.defaultsDeep(hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
+    config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
 
-function getCoreJs(path){
-  let fileName = path.parse(path).name;
+function getCoreJs(where){
+  let fileName = path.parse(where).name;
   if((fileName.length < coreJsNameLength) || (coreJsNameLength === undefined)){
-    jsPath = fileName;
+    jsPath = where;
     coreJsNameLength = fileName.length;
   }
 }
 
-function getModelJson(path){
-  let fileName = path.parse(path).name.split('.');
+function getModelJson(where){
+  let fileName = path.parse(where).name.split('.');
   if(fileName[1] === 'model'){
-      modelJsonPath = path;
+      modelJsonPath = where;
   }
 }
 
@@ -47,8 +47,12 @@ function addFile(destPath, sourceFile){
 function addDir(destPath, sourceDir, func) {
   let lsDir = fs.readdirSync(sourceDir)
   lsDir.forEach(function (file) {
-    addFile(destPath + file, path.resolve(sourceDir, file));
-    if(func !== undefined) func(destPath);
+    if (fs.statSync(path.resolve(sourceDir, file)).isDirectory()) {
+      addDir(path.resolve(destPath, file), path.resolve(sourceDir, file), func)
+    } else {
+      addFile(path.resolve(destPath, file), path.resolve(sourceDir, file));
+      if(func !== undefined) func(path.resolve(destPath, file));
+    }
   }, this);
 }
 
@@ -65,7 +69,7 @@ if(_.hasIn(config, 'enable')){
 if(_.hasIn(config, 'jsPath')){
   switch(config.jsPath){
     case 'local':
-      jsPath = jsOnLocalPath;
+      jsPath = localJsPath;
       break;
     case 'jsdelivr':
       jsPath = 'https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/clL2D.min.js';
@@ -90,7 +94,7 @@ if(_.hasIn(config, 'model.jsonPath')){
 // Set modelPath and config.model.use in some case
 // Copy file and apply config.model.jsonPath only if !_.hasIn(config, 'model.jsonPath')
 if(_.hasIn(config, 'model.use')){
-  try(){
+  try{
     // 2.a is a npm-module
     modelPath = path.resolve(path.dirname(require.resolve(config.model.use + '/package')), './assets/');
   }catch(e){
@@ -119,17 +123,18 @@ if(_.hasIn(config, 'model.use')){
 // and copy files
 if(!_.hasIn(config, 'model.jsonPath')){
   addDir(localModelPath, modelPath, getModelJson);
-  config.model.jsonPath = localModelPath + modelJsonPath;
+  config.model.jsonPath = modelJsonPath;
+  console.log(config.model.jsonPath)
 }
 
 
 // Process jsPath with jsPath(processed)
 // and copy files
-if(jsPath === jsOnLocalPath){
+if(jsPath === localJsPath){
   // a. is local
   // copy coreJs
   for(let f of Object.keys(coreJsList)){
-    addFile(localJsPath + f, path.resolve(coreJsDepPath, f));
+    addFile(localJsPath + f, path.resolve(coreJsDepPath, coreJsList[f]));
     getCoreJs(localJsPath + f);
   }
 }else{
@@ -157,4 +162,8 @@ hexo.extend.filter.register('after_render:html', function(htmlContent){
     htmlContent = htmlContent.substring(0, lastIndex) + injectExtraScript + htmlContent.substring(lastIndex, htmlContent.length);
   }
   return htmlContent;
+});
+
+hexo.extend.generator.register('live2d', function (locals) {
+  return fileArr;
 });
