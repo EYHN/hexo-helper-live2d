@@ -19,7 +19,7 @@
 
 > 3.0 Comming soon!
 
-[简体中文文档](./readme.zh-CN.md)
+[简体中文文档](./README.zh-CN.md)
 
 <br>
 
