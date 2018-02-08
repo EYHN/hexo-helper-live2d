@@ -9,20 +9,31 @@ const fs = require('hexo-fs'),
       path = require('path'),
       url = require('url'),
       _ = require('lodash'),
-      localJsPath = '/live2d/lib/',
+      localJsPath = '/live2dw/lib/',
+      localModelPath = '/live2dw/assets/'
       coreJsList = require('live2d-widget/lib/manifest'),
+      coreJsDepPath = require('live2d-widget/lib'),
       defaultConfig = require('live2d-widget/src/config/defaultConfig');
 
 let fileArr = new Array(),
     modelPath,
     jsPath,
+    coreJsNameLength,
     modelJsonPath,
     config = _.defaultsDeep(hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
 
-function getModelJson(pathName){
-  var fileName = path.parse(pathName).name.split('.');
+function getCoreJs(path){
+  let fileName = path.parse(path).name;
+  if((fileName.length < coreJsNameLength) || (coreJsNameLength === undefined)){
+    jsPath = fileName;
+    coreJsNameLength = fileName.length;
+  }
+}
+
+function getModelJson(path){
+  let fileName = path.parse(path).name.split('.');
   if(fileName[1] === 'model'){
-      modelJsonPath = pathName;
+      modelJsonPath = path;
   }
 }
 
@@ -33,10 +44,11 @@ function addFile(destPath, sourceFile){
   });
 }
 
-function addDir(destPath, sourceDir) {
+function addDir(destPath, sourceDir, func) {
   let lsDir = fs.readdirSync(sourceDir)
   lsDir.forEach(function (file) {
     addFile(destPath + file, path.resolve(sourceDir, file));
+    if(func !== undefined) func(destPath);
   }, this);
 }
 
@@ -78,24 +90,24 @@ if(_.hasIn(config, 'model.jsonPath')){
 // Set modelPath and config.model.use in some case
 // Copy file and apply config.model.jsonPath only if !_.hasIn(config, 'model.jsonPath')
 if(_.hasIn(config, 'model.use')){
-  // 2.a is a npm-module
   try(){
-    modelPath = require.resolve(config.model.use);
+    // 2.a is a npm-module
+    modelPath = path.resolve(path.dirname(require.resolve(config.model.use + '/package')), './assets/');
   }catch(e){
     // 2.b is in live2d_models/ folder
     let tryPath = path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model.use));
     fs.exists(tryPath, function(exists){
       if(exists){
-        // 2.b continue
+        // 2.b founded in live2d_models/
+        // 3.b Apply config.model.jsonPath
+        modelPath = tryPath;
       }else{
-        // 2.c maybe an url or something, just apply it.
+        // 2.c maybe an url or something, let it go~
         // 3.c Apply config.model.jsonPath
         config.model.jsonPath = config.model.use;
       }
     })
   }
-
-
   _.unset(config, 'model.use');
 }else{
   // 2.d doesn't have config.model.use use default
@@ -106,20 +118,22 @@ if(_.hasIn(config, 'model.use')){
 // Process config.model.jsonPath
 // and copy files
 if(!_.hasIn(config, 'model.jsonPath')){
-
+  addDir(localModelPath, modelPath, getModelJson);
+  config.model.jsonPath = localModelPath + modelJsonPath;
 }
 
 
-// Process jsPath with real_jsPath(not a varible)
+// Process jsPath with jsPath(processed)
 // and copy files
 if(jsPath === jsOnLocalPath){
   // a. is local
   // copy coreJs
-
-  // apply jsPath
-
+  for(let f of Object.keys(coreJsList)){
+    addFile(localJsPath + f, path.resolve(coreJsDepPath, f));
+    getCoreJs(localJsPath + f);
+  }
 }else{
-  // b. is a CDN or url, let it go ~
+  // b. is a url or something, let it go ~
 }
 
 
