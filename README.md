@@ -23,9 +23,9 @@
 
 Add the Sseexxyyy live2d to your hexo!
 
-New web Demo and code generator: [https://eyhn.in/hexo-helper-live2d/](https://eyhn.in/hexo-helper-live2d/)
+Demo: [https://eyhn.in/hexo-helper-live2d/](https://xiazeyu.github.io/live2d-widget.js-doc/dev.html)
 
-Author's Demo: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+Author's Blog: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
 
 ## Installation
@@ -38,38 +38,15 @@ Install module:
 npm install --save hexo-helper-live2d
 ```
 
-<details><summary>Come across npm problem ?</summary><br>
-
-> Try to use `npm cache verify` or `npm cache clean` to fix it.
-
-</details>
-
 <details><summary>Used legacy version before ?</summary><br>
 
 Please delete `{{ live2d() }}` or `<%- live2d() %>` before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
 
 </details>
 
-### Webpack
+### Others, including webpack
 
-<details><summary>Only when you want to do some further developement or advanced useage.</summary><br>
-
-Install module:
-
-```
-npm install --save hexo-helper-live2d
-```
-
-Import module:
-
-```
-import loadlive2d from 'hexo-helper-live2d';
-
-// TBD.
-```
-
-</details>
-
+See [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js)
 
 ## Config
 
@@ -92,10 +69,10 @@ live2d:
   enable: true
   jsPath: local # 'local'||'jsdelivr'||'unpkg'||{Your own path, String}
   model:
-    use: live2d-widget-model-miku
+    use: live2d-widget-model-miku # {npm-module name}||{folder name in live2d_models/}||{Your own path, String}
 ```
 
-> To use settings in Chinese, please have a look at [Chinese document](./README.zh-CN.md).
+> To see Chinese explainations, please have a look at [Chinese document](./README.zh-CN.md).
 
 <details><summary>Current supported models:</summary><br>
 
@@ -125,6 +102,7 @@ live2d:
 
 ## Custom model
 
+### a. live2d_models folder
 1. Create a `live2d_models` folder at your blog's root directory.
 
 2. Create a folder by the name of your model.
@@ -145,7 +123,9 @@ Up to now, there should be `mymiku.model.json` in the directory of `/live2d_mode
 
 </details>
 
-<br>~The problem was once releated to [(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22).~
+### b. npm modules
+
+Release your package named like `live2d-widget-model-xxx`, and type it into `model.use` in `_config.yml`
 
 <br>
 
@@ -266,6 +246,8 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 ## Releated projects
 
+- [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js)
+
 - [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
 
 - [pixi-live2d](https://github.com/avgjs/pixi-live2d)
@@ -277,9 +259,16 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 [![Author][author]][author-url]
 
-[![QQ][qq]][qq-url]
+[![Author QQ][author-qq]][author-qq-url]
 
-[![Email][email]][email-url]
+[![Author Email][author-email]][author-email-url]
+
+
+[![Collaborator 0][collaborator0]][collaborator0-url]
+
+[![Collaborator 0 QQ][collaborator0-qq]][collaborator0-qq-url]
+
+[![Collaborator 0 Email][collaborator0-email]][collaborator0-email-url]
 
 
 ## Imported
@@ -326,11 +315,20 @@ Open sourced under the GPL v2.0 license.
 [author]: https://img.shields.io/badge/author-cneyhn-green.svg
 [author-url]: https://delusion.coding.me/
 
-[qq]: https://img.shields.io/badge/QQ-1106996185-blue.svg
-[qq-url]: http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes
+[author-qq]: https://img.shields.io/badge/QQ-1106996185-blue.svg
+[author-qq-url]: tencent://message/?uin=1106996185&Site=Senlon.Net&Menu=yes
 
-[email]: https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg
-[email-url]: mailto:cneyhn@gmail.com
+[author-email]: https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg
+[author-email-url]: mailto:cneyhn@gmail.com
+
+[collaborator0]: https://img.shields.io/badge/collaborator-xiazeyu-green.svg
+[collaborator0-url]: https://xiazeyu.coding.me/
+
+[collaborator0-qq]: https://img.shields.io/badge/QQ-2320732807-blue.svg
+[collaborator0-qq-url]: tencent://message/?uin=2320732807&Site=Senlon.Net&Menu=yes
+
+[collaborator0-email]: https://img.shields.io/badge/Emali%20me-xiazeyu_2011@126.com-green.svg
+[collaborator0-email-url]: mailto:xiazeyu_2011@126.com
 
 [current-device]: https://img.shields.io/npm/v/current-device.svg?label=current-device
 [current-device-url]: https://github.com/matthewhudson/current-device
