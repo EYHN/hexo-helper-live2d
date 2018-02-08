@@ -89,38 +89,13 @@ live2d:
 # Live2D
 ## https://github.com/EYHN/hexo-helper-live2d
 live2d:
-  model: z16 # The model that you are willing to show. default: z16
-  width: 150 # The width of your model. default: 150
-  height: 300 # The height of your model. default: 300
-  scaling: 1 # The scaling of the resolution. default: 2
-  opacityDefault: 0.7 # The default opacity. default: 0.7
-  opacityHover: 1 # The opacity when hover. default: 1
-  mobileShow: true # Whether to show on mobile devices. default: true
-  mobileScaling: 0.5 # The scaling on mobile. default: 0.5
-  position: right # Which side the model is shown at. default: right
-  horizontalOffset: 0 # The horizontal offset. default: 0
-  verticalOffset: -20 # The offset of the bottom. default: -20
-  id: live2dcanvas # The ID of the live2d element. default: live2dcanvas
-  deviceJsSource: local # The source of the current-device script. default: local
+  enable: true
+  jsPath: local # 'local'||'jsdelivr'||'unpkg'||{Your own path, String}
+  model:
+    use: live2d-widget-model-miku
 ```
 
 > To use settings in Chinese, please have a look at [Chinese document](./README.zh-CN.md).
-
-|OPTION|default value|Optional value|description|
-|:-----|:-----------:|:------------:|:----------|
-|model|`z16`|*limited string* See below|The model that you are willing to show.|
-|width|`150`|*real*|The width of your model.|
-|height|`300`|*real*|The height of your model.|
-|scaling|`2`|*real 1 = 100%*|The scaling of the resolution. The greater the value is setted, less mosaic it will be. **Now have bug, see #32, not until the bug is solved, please set this value to 1.**|
-|opacityDefault|`0.7`|*real 0 - 1*|The default opacity. *(Beta)*|
-|opacityHover|`1`|*real 0 - 1*|The opacity when hover. *(Beta)*|
-|mobileShow|`true`|*`true` / `false`*|Whether to show on mobile devices.|
-|mobileScaling|`0.5`|*real 1 = 100%*|The scaling on mobile.|
-|position|`right`|*`left` / `right`*|`left` or `right` side the model is shown at.|
-|horizontalOffset|`0`|*real*|The horizontal offset. <br>Change this variable to adjust the position of model.|
-|verticalOffset|`-20`|*real*|The offset of the bottom. <br>Change this variable to adjust the position of model.|
-|id|`live2dcanvas`|*string*|The ID of the `<canvas>` element.|
-|deviceJsSource|`local`|*`local` / `official` / `string`*|The source of the current-device script.<br>We have three options to choose:<br>`local`: **Default, highly recommended.** Use the local version of script. Compressed using webpack.<br>`official`: Use the official link. [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)<br>`(your CDN url path)`: put your own CDN path here, must contain `.js`.|
 
 <details><summary>Current supported models:</summary><br>
 
