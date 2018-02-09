@@ -1,6 +1,6 @@
 {
   "name": "hexo-helper-live2d",
-  "version": "2.1.5",
+  "version": "3.0.0-0",
   "description": "Add the Sseexxyyy live2d to your hexo!",
   "main": "./index.js",
   "devDependencies": {
