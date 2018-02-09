@@ -12,7 +12,8 @@
     "hexo-fs": "^0.2.2",
     "live2d-widget": "3.x",
     "lodash": "^4.17.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "uglify-js": "^3.3.10"
   },
   "scripts": {
     "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",

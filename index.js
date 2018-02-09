@@ -9,6 +9,7 @@ const fs = require('hexo-fs'),
       path = require('path'),
       url = require('url'),
       _ = require('lodash'),
+      UglifyJS = require("uglify-js"),
       onSiteRootPath = '/live2dw/'
       onSiteJsPath = onSiteRootPath + 'lib/',
       onSiteModelPath = onSiteRootPath + 'assets/',
@@ -154,8 +155,10 @@ hexo.extend.helper.register('live2d', function(){
 // injector borrowed form here:
 // https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
 hexo.extend.filter.register('after_render:html', function(htmlContent){
-  let launcherScript = `L2Dwidget.init(${JSON.stringify(config)});`;
-  let injectExtraScript = `<script src="${getJsPath()}"></script><script>${launcherScript}</script>`
+  let launcherScript =`
+L2Dwidget.init(${JSON.stringify(config)});
+`;
+  let injectExtraScript = `<script src="${getJsPath()}"></script><script>${UglifyJS.minify(launcherScript)}</script>`
   if(/<\/body>/gi.test(htmlContent)){
     let lastIndex = htmlContent.lastIndexOf('</body>');
     htmlContent = htmlContent.substring(0, lastIndex) + injectExtraScript + htmlContent.substring(lastIndex, htmlContent.length);
