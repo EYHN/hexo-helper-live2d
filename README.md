@@ -67,9 +67,9 @@ live2d:
 ## https://github.com/EYHN/hexo-helper-live2d
 live2d:
   enable: true
-  jsPath: local # 'local'||'jsdelivr'||'unpkg'||{Your own path, String}
+  jsPath: local # 'local'(1)||'jsdelivr'(2)||'unpkg'(3)||{Your own path, String}(4)
   model:
-    use: live2d-widget-model-miku # {npm-module name}||{folder name in live2d_models/}||{Your own path, String}
+    use: live2d-widget-model-miku # {npm-module name}(1)||{folder name in live2d_models/}(2)||{Your own path, String}(3)
 ```
 
 > To see Chinese explainations, please have a look at [Chinese document](./README.zh-CN.md).

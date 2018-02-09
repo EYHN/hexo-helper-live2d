@@ -9,52 +9,18 @@ const fs = require('hexo-fs'),
       path = require('path'),
       url = require('url'),
       _ = require('lodash'),
-      localJsPath = '/live2dw/lib/',
-      localModelPath = '/live2dw/assets/',
+      onSiteRootPath = '/live2dw/'
+      onSiteJsPath = onSiteRootPath + 'lib/',
+      onSiteModelPath = onSiteRootPath + 'assets/',
+      pkgInfo = require('./package'),
+      coreJsName = 'L2Dwidget.min.js',
       coreJsList = require('live2d-widget/lib/manifest'),
-      coreJsDepPath = require('live2d-widget/lib'),
+      coreJsPath = path.dirname(require.resolve('live2d-widget/lib/manifest')),
+      coreJsDepVer = pkgInfo.dependencies['live2d-widget'],
       defaultConfig = require('live2d-widget/src/config/defaultConfig');
 
 let fileArr = new Array(),
-    modelPath,
-    jsPath,
-    coreJsNameLength,
-    modelJsonPath,
     config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
-
-function getCoreJs(where){
-  let fileName = path.parse(where).name;
-  if((fileName.length < coreJsNameLength) || (coreJsNameLength === undefined)){
-    jsPath = where;
-    coreJsNameLength = fileName.length;
-  }
-}
-
-function getModelJson(where){
-  let fileName = path.parse(where).name.split('.');
-  if(fileName[1] === 'model'){
-      modelJsonPath = where;
-  }
-}
-
-function addFile(destPath, sourceFile){
-  fileArr.push({
-    path: destPath,
-    data: () => fs.createReadStream(sourceFile),
-  });
-}
-
-function addDir(destPath, sourceDir, func) {
-  let lsDir = fs.readdirSync(sourceDir)
-  lsDir.forEach(function (file) {
-    if (fs.statSync(path.resolve(sourceDir, file)).isDirectory()) {
-      addDir(path.resolve(destPath, file), path.resolve(sourceDir, file), func)
-    } else {
-      addFile(path.resolve(destPath, file), path.resolve(sourceDir, file));
-      if(func !== undefined) func(path.resolve(destPath, file));
-    }
-  }, this);
-}
 
 // Check if enabled
 if(_.hasIn(config, 'enable')){
@@ -64,83 +30,111 @@ if(_.hasIn(config, 'enable')){
   _.unset(config, 'enable');
 }
 
-// Preprocess jsPath for injecting and file copying
-// Copy file and apply real_jsPath only if jsPath === jsOnLocalPath
-if(_.hasIn(config, 'jsPath')){
-  switch(config.jsPath){
-    case 'local':
-      jsPath = localJsPath;
-      break;
-    case 'jsdelivr':
-      jsPath = 'https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/clL2D.min.js';
-      break;
-    case 'unpkg':
-      jsPath = 'https://unpkg.com/live2d-widget@3.x/lib/clL2D.min.js';
-      break;
-    default:
-      jsPath = config.jsPath;
+function addFile(destPath, sourceFile){
+  fileArr.push({
+    path: destPath,
+    data: () => fs.createReadStream(sourceFile),
+  });
+}
+/**
+function addFile(destPath, sourceFile){
+  console.log({
+    "dest": destPath,
+    "sour": sourceFile,
+  });
+}
+**/
+
+function process_modelFileIsOnLocal(where, from = onSiteModelPath) {
+  if(fs.statSync(where).isDirectory()){
+    let lsDir = fs.readdirSync(where),
+        modelJsonName;
+    for(let item of lsDir){
+        modelJsonName = modelJsonName || process_modelFileIsOnLocal(path.resolve(where, item), url.resolve(from, item + (fs.statSync(where).isDirectory() ? '/' : '')));
+    }
+    return modelJsonName;
+  }else{
+    addFile(url.resolve(from, path.basename(where)), where);
+    let fileName = path.basename(where);
+    if(fileName.split('.')[1] === 'model'){
+      return fileName;
+    }
   }
-  _.unset(config, 'jsPath');
-}else{
-  jsPath = jsOnLocalPath;
 }
 
-// Preprocess modelPath for injecting and file copying
-// 1. Unset model.jsonPath
-if(_.hasIn(config, 'model.jsonPath')){
-  _.unset(config, 'model.jsonPath');
-}
-// 2. Process config.model.use
-// Set modelPath and config.model.use in some case
-// Copy file and apply config.model.jsonPath only if !_.hasIn(config, 'model.jsonPath')
-if(_.hasIn(config, 'model.use')){
-  try{
-    // 2.a is a npm-module
-    modelPath = path.resolve(path.dirname(require.resolve(config.model.use + '/package')), './assets/');
-  }catch(e){
-    // 2.b is in live2d_models/ folder
-    let tryPath = path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model.use));
-    fs.exists(tryPath, function(exists){
-      if(exists){
-        // 2.b founded in live2d_models/
-        // 3.b Apply config.model.jsonPath
-        modelPath = tryPath;
-      }else{
-        // 2.c maybe an url or something, let it go~
-        // 3.c Apply config.model.jsonPath
-        config.model.jsonPath = config.model.use;
-      }
-    })
-  }
-  _.unset(config, 'model.use');
-}else{
-  // 2.d doesn't have config.model.use use default
-  // 3.d Apply config.model.jsonPath
-  config.model.jsonPath = defaultConfig.model.jsonPath;
-}
-
-// Process config.model.jsonPath
-// and copy files
-if(!_.hasIn(config, 'model.jsonPath')){
-  addDir(localModelPath, modelPath, getModelJson);
-  config.model.jsonPath = modelJsonPath;
-  console.log(config.model.jsonPath)
-}
-
-
-// Process jsPath with jsPath(processed)
-// and copy files
-if(jsPath === localJsPath){
-  // a. is local
-  // copy coreJs
+function process_jsPathIsLocal(){
   for(let f of Object.keys(coreJsList)){
-    addFile(localJsPath + f, path.resolve(coreJsDepPath, coreJsList[f]));
-    getCoreJs(localJsPath + f);
+    addFile(url.resolve(onSiteJsPath, coreJsList[f]), path.resolve(coreJsPath, coreJsList[f]));
   }
-}else{
-  // b. is a url or something, let it go ~
+  return url.resolve(onSiteJsPath, coreJsName);
 }
 
+function getJsPath(){
+  if(_.hasIn(config, 'jsPath')){
+    // a. have user modified config.jsPath
+    switch(config.jsPath){
+      case 'local':
+        // a.1 is local
+        // use local(1)
+        return process_jsPathIsLocal();
+      case 'jsdelivr':
+        // a.2 is jsdelivr online CDN
+        // use jsdelivr(2)
+        return `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreJsName}`;
+      case 'unpkg':
+        // a.3 is unpkg online CDN
+        // use unpkg(3)
+        return `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreJsName}`;
+      default:
+        // a.4 is custom url or path, etc.
+        // use custom(4), let it go~
+        return config.jsPath;
+    }
+    _.unset(config, 'jsPath');
+  }else{
+    // b. don't have user modified config.jsPath
+    // use local(1)
+    return process_jsPathIsLocal();
+  }
+}
+
+function getModelJsonPath(){
+  // Unset model.jsonPath
+  if(_.hasIn(config, 'model.jsonPath')){
+    _.unset(config, 'model.jsonPath');
+  }
+
+  // Process config.model.use
+  if(_.hasIn(config, 'model.use')){
+    // a. have user modified config.model.use
+    try{
+      // a.1 is a npm-module(1)
+      let tryModulePath = path.dirname(require.resolve(config.model.use + '/package'));
+      let modelPath = path.resolve(tryModulePath, './assets/');
+      return process_modelFileIsOnLocal(modelPath);
+    }catch(e){
+      let tryFolderPath = path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model.use));
+      fs.exists(tryFolderPath, function(exists){
+        if(exists){
+          // a.2 founded in live2d_models/
+          let modelPath = path.resolve(tryFolderPath, './assets/');
+          return process_modelFileIsOnLocal(modelPath);
+        }else{
+          // a.3 is custom url or path, etc.
+          // use custom(3), let it go~
+          return config.model.use;
+        }
+      })
+    }
+    _.unset(config, 'model.use');
+  }else{
+    // b. don't have user modified config.model.use
+    // use default
+    return defaultConfig.model.jsonPath;
+  }
+}
+
+config.model.jsonPath = getModelJsonPath();
 
 /**
  * Deprecated version support
@@ -156,7 +150,7 @@ hexo.extend.helper.register('live2d', function(){
 // https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
 hexo.extend.filter.register('after_render:html', function(htmlContent){
   let launcherScript = `L2Dwidget.init(${JSON.stringify(config)});`;
-  let injectExtraScript = `<script src="${jsPath}"></script><script>${launcherScript}</script>`
+  let injectExtraScript = `<script src="${getJsPath()}"></script><script>${launcherScript}</script>`
   if(/<\/body>/gi.test(htmlContent)){
     let lastIndex = htmlContent.lastIndexOf('</body>');
     htmlContent = htmlContent.substring(0, lastIndex) + injectExtraScript + htmlContent.substring(lastIndex, htmlContent.length);
