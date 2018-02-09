@@ -68,6 +68,7 @@ live2d:
 live2d:
   enable: true
   jsPath: local # 'local'(1)||'jsdelivr'(2)||'unpkg'(3)||{Your own path, String}(4)
+  hashLevel: soft # 'soft'(1)||'dep'(2)||'none'(3)
   model:
     use: live2d-widget-model-miku # {npm-module name}(1)||{folder name in live2d_models/}(2)||{Your own path, String}(3)
 ```

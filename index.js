@@ -9,6 +9,7 @@ const fs = require('hexo-fs'),
       path = require('path'),
       url = require('url'),
       _ = require('lodash'),
+      crypto = require('crypto'),
       UglifyJS = require("uglify-js"),
       onSiteRootPath = '/live2dw/'
       onSiteJsPath = onSiteRootPath + 'lib/',
@@ -16,7 +17,7 @@ const fs = require('hexo-fs'),
       pkgInfo = require('./package'),
       coreJsName = 'L2Dwidget.min.js',
       coreJsList = require('live2d-widget/lib/manifest'),
-      coreJsPath = path.dirname(require.resolve('live2d-widget/lib/manifest')),
+      coreJssPath = path.dirname(require.resolve('live2d-widget/lib/manifest')),
       coreJsDepVer = pkgInfo.dependencies['live2d-widget'],
       defaultConfig = require('live2d-widget/src/config/defaultConfig');
 
@@ -76,37 +77,62 @@ function localModelProcessor(localFolder, siteDir = onSiteModelPath){
 
 function localJsProcessor(){
   for(let f of Object.keys(coreJsList)){
-    addFile(url.resolve(onSiteJsPath, coreJsList[f]), path.resolve(coreJsPath, coreJsList[f]));
+    addFile(url.resolve(onSiteJsPath, coreJsList[f]), path.resolve(coreJssPath, coreJsList[f]));
   }
   return url.resolve(onSiteJsPath, coreJsName);
 }
 
+function getCoreJsMD5(){
+  const coreJs = path.resolve(coreJssPath, coreJsName),
+        rs = fs.readFileSync(coreJs),
+        hash = crypto.createHash('md5');
+  return (hash.update(rs).digest('hex'));
+}
+
 function getJsPath(){
+  let useHash;
+  if(_.hasIn(config, 'hashLevel')){
+    switch(config.hashLevel){
+      case 'soft':
+        useHash = `?${getCoreJsMD5()}`;
+        break;
+      case 'dep':
+        useHash = `?${coreJsDepVer}`;
+        break;
+      case 'none':
+        useHash = '';
+        break;
+      default:
+        useHash = `?${getCoreJsMD5()}`;
+    }
+  }else{
+    useHash = `?${getCoreJsMD5()}`;
+  }
   if(_.hasIn(config, 'jsPath')){
     // a. have user modified config.jsPath
     switch(config.jsPath){
       case 'local':
         // a.1 is local
         // use local(1)
-        return localJsProcessor();
+        return localJsProcessor() + useHash;
       case 'jsdelivr':
         // a.2 is jsdelivr online CDN
         // use jsdelivr(2)
-        return `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreJsName}`;
+        return `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreJsName}${useHash}`;
       case 'unpkg':
         // a.3 is unpkg online CDN
         // use unpkg(3)
-        return `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreJsName}`;
+        return `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreJsName}${useHash}`;
       default:
         // a.4 is custom url or path, etc.
         // use custom(4), let it go~
-        return config.jsPath;
+        return config.jsPath + useHash;
     }
     _.unset(config, 'jsPath');
   }else{
     // b. don't have user modified config.jsPath
     // use local(1)
-    return localJsProcessor();
+    return localJsProcessor() + useHash;
   }
 }
 
