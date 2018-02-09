@@ -11,7 +11,7 @@ const fs = require('hexo-fs'),
       _ = require('lodash'),
       crypto = require('crypto'),
       UglifyJS = require("uglify-js"),
-      onSiteRootPath = '/live2dw/'
+      onSiteRootPath = '/live2dw/',
       onSiteJsPath = onSiteRootPath + 'lib/',
       onSiteModelPath = onSiteRootPath + 'assets/',
       pkgInfo = require('./package'),
@@ -64,10 +64,11 @@ function localModelProcessor(localFolder, siteDir = onSiteModelPath){
   for(let item of lsDir){
     let currLocal = path.resolve(localFolder, item);
     if(fs.statSync(currLocal).isDirectory()){
-      modelJsonName = modelJsonName || process_modelFileIsOnLocal(currLocal, url.resolve(siteDir, item + '/'));
+      const m = localModelProcessor(currLocal, url.resolve(siteDir, item + '/'));
+      modelJsonName = modelJsonName || m;
     }else{
       addFile(url.resolve(siteDir, item), currLocal);
-      if(item.split('.')[1] === 'model'){
+      if(item.endsWith('.model.json')){
         modelJsonName = url.resolve(siteDir, item);
       }
     }
@@ -75,11 +76,12 @@ function localModelProcessor(localFolder, siteDir = onSiteModelPath){
   return modelJsonName;
 }
 
+
 function localJsProcessor(){
   for(let f of Object.keys(coreJsList)){
-    addFile(url.resolve(onSiteJsPath, coreJsList[f]), path.resolve(coreJssPath, coreJsList[f]));
+    addFile(url.resolve(onSiteJsPath, f), path.resolve(coreJssPath, coreJsList[f]));
   }
-  return url.resolve(onSiteJsPath, coreJsName);
+  return url.resolve(onSiteJsPath, 'main.js');
 }
 
 function getCoreJsMD5(){
@@ -184,7 +186,7 @@ hexo.extend.filter.register('after_render:html', function(htmlContent){
   let launcherScript =`
 L2Dwidget.init(${JSON.stringify(config)});
 `;
-  let injectExtraScript = `<script src="${getJsPath()}"></script><script>${UglifyJS.minify(launcherScript)}</script>`
+  let injectExtraScript = `<script src="${getJsPath()}"></script><script>${UglifyJS.minify(launcherScript).code}</script>`
   if(/<\/body>/gi.test(htmlContent)){
     let lastIndex = htmlContent.lastIndexOf('</body>');
     htmlContent = htmlContent.substring(0, lastIndex) + injectExtraScript + htmlContent.substring(lastIndex, htmlContent.length);
