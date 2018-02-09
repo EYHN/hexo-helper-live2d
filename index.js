@@ -30,39 +30,50 @@ if(_.hasIn(config, 'enable')){
   _.unset(config, 'enable');
 }
 
-function addFile(destPath, sourceFile){
+function addFile(sitePath, localPath){
   fileArr.push({
-    path: destPath,
-    data: () => fs.createReadStream(sourceFile),
+    path: sitePath,
+    data: () => fs.createReadStream(localPath),
   });
 }
-/**
-function addFile(destPath, sourceFile){
-  console.log({
-    "dest": destPath,
-    "sour": sourceFile,
-  });
-}
-**/
 
-function process_modelFileIsOnLocal(where, from = onSiteModelPath) {
-  if(fs.statSync(where).isDirectory()){
-    let lsDir = fs.readdirSync(where),
-        modelJsonName;
-    for(let item of lsDir){
-        modelJsonName = modelJsonName || process_modelFileIsOnLocal(path.resolve(where, item), url.resolve(from, item + (fs.statSync(where).isDirectory() ? '/' : '')));
-    }
-    return modelJsonName;
-  }else{
-    addFile(url.resolve(from, path.basename(where)), where);
-    let fileName = path.basename(where);
-    if(fileName.split('.')[1] === 'model'){
-      return fileName;
+/**
+// Test:
+1.
+consts
+2.
+function addFile(sitePath, localPath){
+  console.log({
+    "site": sitePath,
+    "local": localPath,
+  });
+}
+3.
+localModelProcessor
+4.
+let tryModulePath = path.dirname(require.resolve('live2d-widget-model-wanko' + '/package'));
+let modelPath = path.resolve(tryModulePath, './assets/');
+console.log(modelPath);
+console.log(localModelProcessor(modelPath));
+**/
+function localModelProcessor(localFolder, siteDir = onSiteModelPath){
+  let lsDir = fs.readdirSync(localFolder),
+      modelJsonName;
+  for(let item of lsDir){
+    let currLocal = path.resolve(localFolder, item);
+    if(fs.statSync(currLocal).isDirectory()){
+      modelJsonName = modelJsonName || process_modelFileIsOnLocal(currLocal, url.resolve(siteDir, item + '/'));
+    }else{
+      addFile(url.resolve(siteDir, item), currLocal);
+      if(item.split('.')[1] === 'model'){
+        modelJsonName = url.resolve(siteDir, item);
+      }
     }
   }
+  return modelJsonName;
 }
 
-function process_jsPathIsLocal(){
+function localJsProcessor(){
   for(let f of Object.keys(coreJsList)){
     addFile(url.resolve(onSiteJsPath, coreJsList[f]), path.resolve(coreJsPath, coreJsList[f]));
   }
@@ -76,7 +87,7 @@ function getJsPath(){
       case 'local':
         // a.1 is local
         // use local(1)
-        return process_jsPathIsLocal();
+        return localJsProcessor();
       case 'jsdelivr':
         // a.2 is jsdelivr online CDN
         // use jsdelivr(2)
@@ -94,31 +105,25 @@ function getJsPath(){
   }else{
     // b. don't have user modified config.jsPath
     // use local(1)
-    return process_jsPathIsLocal();
+    return localJsProcessor();
   }
 }
 
 function getModelJsonPath(){
-  // Unset model.jsonPath
-  if(_.hasIn(config, 'model.jsonPath')){
-    _.unset(config, 'model.jsonPath');
-  }
-
-  // Process config.model.use
   if(_.hasIn(config, 'model.use')){
     // a. have user modified config.model.use
     try{
       // a.1 is a npm-module(1)
       let tryModulePath = path.dirname(require.resolve(config.model.use + '/package'));
       let modelPath = path.resolve(tryModulePath, './assets/');
-      return process_modelFileIsOnLocal(modelPath);
+      return localModelProcessor(modelPath);
     }catch(e){
       let tryFolderPath = path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model.use));
       fs.exists(tryFolderPath, function(exists){
         if(exists){
           // a.2 founded in live2d_models/
           let modelPath = path.resolve(tryFolderPath, './assets/');
-          return process_modelFileIsOnLocal(modelPath);
+          return localModelProcessor(modelPath);
         }else{
           // a.3 is custom url or path, etc.
           // use custom(3), let it go~
