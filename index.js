@@ -5,18 +5,18 @@
 
 'use strict'
 
-const fs = require('hexo-fs'),
-      path = require('path'),
-      url = require('url'),
+const crypto = require('crypto'),
+      fs = require('hexo-fs'),
       _ = require('lodash'),
-      crypto = require('crypto'),
+      path = require('path'),
       UglifyJS = require("uglify-js"),
-      onSiteRootPath = '/live2dw/',
-      onSiteJsPath = onSiteRootPath + 'lib/',
-      onSiteModelPath = onSiteRootPath + 'assets/',
+      url = require('url'),
       pkgInfo = require('./package'),
-      coreJsName = 'L2Dwidget.min.js',
+      onSiteRootPath = '/live2dw/',
+      onSiteJsPath = `${onSiteRootPath}lib/`,
+      onSiteModelPath = `${onSiteRootPath}assets/`,
       coreJsList = require('live2d-widget/lib/manifest'),
+      coreJsName = coreJsList['main.js'],
       coreJssPath = path.dirname(require.resolve('live2d-widget/lib/manifest')),
       coreJsDepVer = pkgInfo.dependencies['live2d-widget'],
       defaultConfig = require('live2d-widget/src/config/defaultConfig');
@@ -32,43 +32,24 @@ if(_.hasIn(config, 'enable')){
   _.unset(config, 'enable');
 }
 
-function addFile(sitePath, localPath){
+function addFile(sourcePath, distPath, fileArr){
   fileArr.push({
-    path: sitePath,
-    data: () => fs.createReadStream(localPath),
+    path: distPath,
+    data: () => fs.createReadStream(sourcePath),
   });
 }
 
-/**
-// Test:
-1.
-consts
-2.
-function addFile(sitePath, localPath){
-  console.log({
-    "site": sitePath,
-    "local": localPath,
-  });
-}
-3.
-localModelProcessor
-4.
-let tryModulePath = path.dirname(require.resolve('live2d-widget-model-wanko' + '/package'));
-let modelPath = path.resolve(tryModulePath, './assets/');
-console.log(modelPath);
-console.log(localModelProcessor(modelPath));
-**/
 function localModelProcessor(localFolder, siteDir = onSiteModelPath){
   let lsDir = fs.readdirSync(localFolder),
       modelJsonName;
   for(let item of lsDir){
     let currLocal = path.resolve(localFolder, item);
     if(fs.statSync(currLocal).isDirectory()){
-      modelJsonName = modelJsonName || localModelProcessor(currLocal, url.resolve(siteDir, item + '/'));
+      modelJsonName = modelJsonName || localModelProcessor(currLocal, url.resolve(siteDir, `${item}/`));
       // Cannot be modelJsonName || localModelProcessor,
       // because localModelProcessor must be excuted.
     }else{
-      addFile(url.resolve(siteDir, item), currLocal);
+      addFile(currLocal, url.resolve(siteDir, item), fileArr);
       if(item.endsWith('.model.json')){
         modelJsonName = url.resolve(siteDir, item);
       }
@@ -80,14 +61,13 @@ function localModelProcessor(localFolder, siteDir = onSiteModelPath){
 
 function localJsProcessor(){
   for(let f of Object.keys(coreJsList)){
-    addFile(url.resolve(onSiteJsPath, coreJsPath[f]), path.resolve(coreJssPath, coreJsList[f]));
+    addFile(path.resolve(coreJssPath, coreJsList[f]), url.resolve(onSiteJsPath, coreJsPath[f]), fileArr);
   }
   return url.resolve(onSiteJsPath, coreJsName);
 }
 
-function getCoreJsMD5(){
-  const coreJs = path.resolve(coreJssPath, coreJsName),
-        rs = fs.readFileSync(coreJs),
+function getFileMD5(filePath){
+  const rs = fs.readFileSync(filePath),
         hash = crypto.createHash('md5');
   return (hash.update(rs).digest('hex'));
 }
@@ -97,7 +77,7 @@ function getJsPath(){
   if(_.hasIn(config, 'hashLevel')){
     switch(config.hashLevel){
       case 'soft':
-        useHash = `?${getCoreJsMD5()}`;
+        useHash = `?${getFileMD5(path.resolve(coreJssPath, coreJsName))}`;
         break;
       case 'dep':
         useHash = `?${coreJsDepVer}`;
@@ -106,10 +86,10 @@ function getJsPath(){
         useHash = '';
         break;
       default:
-        useHash = `?${getCoreJsMD5()}`;
+        useHash = `?${getFileMD5(path.resolve(coreJssPath, coreJsName))}`;
     }
   }else{
-    useHash = `?${getCoreJsMD5()}`;
+    useHash = `?${getFileMD5(path.resolve(coreJssPath, coreJsName))}`;
   }
   if(_.hasIn(config, 'jsPath')){
     // a. have user modified config.jsPath
@@ -117,7 +97,7 @@ function getJsPath(){
       case 'local':
         // a.1 is local
         // use local(1)
-        return localJsProcessor() + useHash;
+        return `${localJsProcessor()}${useHash}`;
       case 'jsdelivr':
         // a.2 is jsdelivr online CDN
         // use jsdelivr(2)
@@ -129,13 +109,13 @@ function getJsPath(){
       default:
         // a.4 is custom url or path, etc.
         // use custom(4), let it go~
-        return config.jsPath + useHash;
+        return `${config.jsPath}${useHash}`;
     }
     _.unset(config, 'jsPath');
   }else{
     // b. don't have user modified config.jsPath
     // use local(1)
-    return localJsProcessor() + useHash;
+    return `${localJsProcessor()}${useHash}`;
   }
 }
 
@@ -144,7 +124,7 @@ function getModelJsonPath(){
     // a. have user modified config.model.use
     try{
       // a.1 is a npm-module(1)
-      let tryModulePath = path.dirname(require.resolve(config.model.use + '/package'));
+      let tryModulePath = path.dirname(require.resolve(`${config.model.use}/package`));
       let modelPath = path.resolve(tryModulePath, './assets/');
       return localModelProcessor(modelPath);
     }catch(e){
@@ -184,13 +164,13 @@ hexo.extend.helper.register('live2d', function(){
 // injector borrowed form here:
 // https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
 hexo.extend.filter.register('after_render:html', function(htmlContent){
-  let launcherScript =`
+  let scriptToInject =`
 L2Dwidget.init(${JSON.stringify(config)});
 `;
-  let injectExtraScript = `<script src="${getJsPath()}"></script><script>${UglifyJS.minify(launcherScript).code}</script>`
+  let contentToInject = `<script src="${getJsPath()}"></script><script>${UglifyJS.minify(scriptToInject).code}</script>`
   if(/<\/body>/gi.test(htmlContent)){
     let lastIndex = htmlContent.lastIndexOf('</body>');
-    htmlContent = htmlContent.substring(0, lastIndex) + injectExtraScript + htmlContent.substring(lastIndex, htmlContent.length);
+    htmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
   }
   return htmlContent;
 });
