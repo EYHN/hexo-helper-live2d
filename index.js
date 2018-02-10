@@ -64,8 +64,9 @@ function localModelProcessor(localFolder, siteDir = onSiteModelPath){
   for(let item of lsDir){
     let currLocal = path.resolve(localFolder, item);
     if(fs.statSync(currLocal).isDirectory()){
-      const m = localModelProcessor(currLocal, url.resolve(siteDir, item + '/'));
-      modelJsonName = modelJsonName || m;
+      modelJsonName = modelJsonName || localModelProcessor(currLocal, url.resolve(siteDir, item + '/'));
+      // Cannot be modelJsonName || localModelProcessor,
+      // because localModelProcessor must be excuted.
     }else{
       addFile(url.resolve(siteDir, item), currLocal);
       if(item.endsWith('.model.json')){
@@ -79,9 +80,9 @@ function localModelProcessor(localFolder, siteDir = onSiteModelPath){
 
 function localJsProcessor(){
   for(let f of Object.keys(coreJsList)){
-    addFile(url.resolve(onSiteJsPath, f), path.resolve(coreJssPath, coreJsList[f]));
+    addFile(url.resolve(onSiteJsPath, coreJsPath[f]), path.resolve(coreJssPath, coreJsList[f]));
   }
-  return url.resolve(onSiteJsPath, 'main.js');
+  return url.resolve(onSiteJsPath, coreJsName);
 }
 
 function getCoreJsMD5(){
