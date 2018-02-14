@@ -1,25 +1,52 @@
 <a name="Unreleased"></a>
-# Unreleased (2017-12-24)
+# Unreleased (2018-02-14)
 
+* refactor:  refactor script ([9e1df84](https://github.com/EYHN/hexo-helper-live2d/commit/9e1df84))
+* style: style wroks ([0e25c80](https://github.com/EYHN/hexo-helper-live2d/commit/0e25c80))
+* fix: program bugs ([73f7680](https://github.com/EYHN/hexo-helper-live2d/commit/73f7680))
+* fix: program errors ([04583d4](https://github.com/EYHN/hexo-helper-live2d/commit/04583d4))
+
+
+
+<a name="3.0.0-0"></a>
+# 3.0.0-0 (2018-02-09)
+
+* 3.0.0-0 ([7d9adc7](https://github.com/EYHN/hexo-helper-live2d/commit/7d9adc7))
+* fix(local js copy): ([47a8aad](https://github.com/EYHN/hexo-helper-live2d/commit/47a8aad))
+* feat: add enable option ([09e39e1](https://github.com/EYHN/hexo-helper-live2d/commit/09e39e1)), closes [#57](https://github.com/EYHN/hexo-helper-live2d/issues/57)
+* feat: add hash module ([e8d24c5](https://github.com/EYHN/hexo-helper-live2d/commit/e8d24c5)), closes [#83](https://github.com/EYHN/hexo-helper-live2d/issues/83)
+* feat: add jsPath(CDN Support), auto modify html ([557653a](https://github.com/EYHN/hexo-helper-live2d/commit/557653a)), closes [#66](https://github.com/EYHN/hexo-helper-live2d/issues/66) [#36](https://github.com/EYHN/hexo-helper-live2d/issues/36)
+* feat: add UglifyJS ([80d348b](https://github.com/EYHN/hexo-helper-live2d/commit/80d348b))
+* feat: build the framework of copying files ([67447a7](https://github.com/EYHN/hexo-helper-live2d/commit/67447a7)), closes [#75](https://github.com/EYHN/hexo-helper-live2d/issues/75)
+* feat: new AI for file copy ([f77edf8](https://github.com/EYHN/hexo-helper-live2d/commit/f77edf8))
+* feat: New generated js name, webbranch ([cfe08bb](https://github.com/EYHN/hexo-helper-live2d/commit/cfe08bb)), closes [#51](https://github.com/EYHN/hexo-helper-live2d/issues/51)
+* feat: rewrite helper framework ([fc6ec6b](https://github.com/EYHN/hexo-helper-live2d/commit/fc6ec6b))
+* feat: Warn users of obsolete versions ([04a637c](https://github.com/EYHN/hexo-helper-live2d/commit/04a637c)), closes [#54](https://github.com/EYHN/hexo-helper-live2d/issues/54)
+* style: arrange path structure, add notes ([903bf6f](https://github.com/EYHN/hexo-helper-live2d/commit/903bf6f))
+* style: live2d.min.js has better style now ([e17287a](https://github.com/EYHN/hexo-helper-live2d/commit/e17287a))
+* style: reduce exposed varible, function! ([120386b](https://github.com/EYHN/hexo-helper-live2d/commit/120386b))
+* fix: program error ([e123d6a](https://github.com/EYHN/hexo-helper-live2d/commit/e123d6a))
+* fix: update dependices ([ffc980a](https://github.com/EYHN/hexo-helper-live2d/commit/ffc980a))
+* fix: Webbranch Problem ([22853ef](https://github.com/EYHN/hexo-helper-live2d/commit/22853ef))
+* fix: webbranch url issue ([1796b8c](https://github.com/EYHN/hexo-helper-live2d/commit/1796b8c))
 * docs: added comments ([c91c71f](https://github.com/EYHN/hexo-helper-live2d/commit/c91c71f)), closes [#60](https://github.com/EYHN/hexo-helper-live2d/issues/60)
 * docs: fix wrong link ([bd9b94f](https://github.com/EYHN/hexo-helper-live2d/commit/bd9b94f))
 * docs: Fold model list ([6fd7d95](https://github.com/EYHN/hexo-helper-live2d/commit/6fd7d95))
 * docs: update CHANGELOG ([784c19a](https://github.com/EYHN/hexo-helper-live2d/commit/784c19a))
+* docs: update README ([b9b5f50](https://github.com/EYHN/hexo-helper-live2d/commit/b9b5f50))
 * docs: Update README ([4066b1f](https://github.com/EYHN/hexo-helper-live2d/commit/4066b1f))
 * docs: Update workflow and instructions. ([6ebbdad](https://github.com/EYHN/hexo-helper-live2d/commit/6ebbdad))
-* style: arrange path structure, add notes ([903bf6f](https://github.com/EYHN/hexo-helper-live2d/commit/903bf6f))
-* style: live2d.min.js has better style now ([e17287a](https://github.com/EYHN/hexo-helper-live2d/commit/e17287a))
+* chore(file path): remove models and clientJs to live2d-widget.js and live2d-widget-models ([8867107](https://github.com/EYHN/hexo-helper-live2d/commit/8867107))
 * refactor: add README broken instructions, main.js modified ([f3d2fce](https://github.com/EYHN/hexo-helper-live2d/commit/f3d2fce))
 * build: UNFINISHED! new build logic ([6b437ac](https://github.com/EYHN/hexo-helper-live2d/commit/6b437ac))
-* fix: Webbranch Problem ([22853ef](https://github.com/EYHN/hexo-helper-live2d/commit/22853ef))
-* fix: webbranch url issue ([1796b8c](https://github.com/EYHN/hexo-helper-live2d/commit/1796b8c))
-* feat: New generated js name, webbranch ([cfe08bb](https://github.com/EYHN/hexo-helper-live2d/commit/cfe08bb)), closes [#51](https://github.com/EYHN/hexo-helper-live2d/issues/51)
 * doc: create CODE OF CONDUCT. ([973f1b9](https://github.com/EYHN/hexo-helper-live2d/commit/973f1b9))
 
 
 ### BREAKING CHANGE
 
+* DON'T manually modify your site template.
 * Don't need to modify the theme template, rename the bundle.js to cLive2d.min.js
+* No sooner need to use built-in clientJs
 
 
 <a name="2.1.5"></a>
