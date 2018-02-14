@@ -69,7 +69,7 @@ module.exports = {
     'no-magic-numbers': [
       'warn',
       {
-        'ignore': [0, 1, 2, 3, 4],
+        'ignore': [0],
       },
     ],
     'no-multi-spaces': [

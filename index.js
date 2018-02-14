@@ -39,76 +39,75 @@ let config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, de
 function getScriptURL (scriptFrom) {
   switch (scriptFrom) {
   case 'local': {
-    // Is local
-    // Use local(1)
+    // Is local(1)
+    // Use local
     const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), onSiteJsPath);
     const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
     generators.push(...scriptGenerators);
     return `${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
   }
   case 'jsdelivr':
-    // Is jsdelivr online CDN
-    // Use jsdelivr(2)
+    // Is jsdelivr online CDN(2)
+    // Use jsdelivr
     return `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
   case 'unpkg':
-    // Is unpkg online CDN
-    // Use unpkg(3)
+    // Is unpkg online CDN(3)
+    // Use unpkg
     return `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
   default:
-    // Is custom
-    // Use custom(4)
+    // Is custom(4)
+    // Use custom
     return scriptFrom;
   }
 }
 
 if (config.enable) {
   _.unset(config, 'enable');
-  if (config.model.use) {
-    let modelPath;
-    let type;
-    const modelInHexoBaseDir = [
-      path.resolve(hexo.base_dir, './live2d_models/', config.model.use),
-      path.resolve(hexo.base_dir, config.model.use),
-    ]
-      .reduce((p, value, index) => {
-        if (!p && fs.existsSync(value)) {
-          type = index + 2;
-          return value;
-        }
-        return p;
-      }, undefined);
-    if(type === undefined) {
-      if(getNodeModulePath(config.model.use) !== '') {
-        type = 1;
-        modelPath = getNodeModulePath(config.model.use);
-      }else{
-        type = 4;
-        modelPath = config.model.use;
-      }
+  if(config.model.use) {
+    let modelJsonUrl;
+    let tryPath = path.resolve(hexo.base_dir, './live2d_models/', config.model.use);
+    if(fs.existsSync(tryPath)) {
+      // Is in live2d_models(2)
+      // LoadModelFrom
+      const {
+        modelGenerators,
+        modelJsonUrl: pkgModelJsonUrl,
+      } = loadModelFrom(tryPath, onSiteModelPath);
+      modelJsonUrl = pkgModelJsonUrl;
+      generators.push(...modelGenerators);
+      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from live2d_models folder(2), '${url.pathname(modelJsonUrl)}' from '${tryPath}'`);
     }else{
-      modelPath = modelInHexoBaseDir;
-    }
-    const {
-      modelGenerators,
-      modelJsonUrl,
-      packageJsonObj,
-    } = loadModelFrom(modelPath, onSiteModelPath, type);
-    generators.push(...modelGenerators);
-    config = _.set(config, 'model.jsonPath', modelJsonUrl);
-    switch(type) {
-    case 1:
-      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${modelPath}'`);
-      break;
-    case 2:
-      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from live2d_models folder(2), '${url.pathname(modelJsonUrl)}' from '${modelPath}'`);
-      break;
-    case 3:
-      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from hexo base folder(3), '${url.pathname(modelJsonUrl)}' from '${modelPath}'`);
-      break;
-    case 4:
-      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded Model from online(4), at '${modelJsonUrl}'`);
-      break;
-    // No default
+      tryPath = path.resolve(hexo.base_dir, config.model.use);
+      if(fs.existsSync(tryPath)) {
+        // Is in hexo base releated path(3)
+        // LoadModelFrom
+        const {
+          modelGenerators,
+          modelJsonUrl: pkgModelJsonUrl,
+        } = loadModelFrom(tryPath, onSiteModelPath);
+        modelJsonUrl = pkgModelJsonUrl;
+        generators.push(...modelGenerators);
+        console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from hexo base releated path(3), '${url.pathname(modelJsonUrl)}' from '${tryPath}'`);
+      }else if(getNodeModulePath(config.model.use) !== '') {
+        // Is npm-module(1)
+        // Convert path to assets folder
+        // LoadModelFrom
+        const packageJsonPath = path.resolve(getNodeModulePath(config.model.use), 'package.json');
+        const packageJsonObj = require(packageJsonPath); // eslint-disable-line global-require
+        const assetsDir = path.resolve(packageJsonPath, './assets/');
+        const {
+          modelGenerators,
+          modelJsonUrl: pkgModelJsonUrl,
+        } = loadModelFrom(assetsDir, onSiteModelPath);
+        modelJsonUrl = pkgModelJsonUrl;
+        generators.push(...modelGenerators);
+        console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
+      }else{
+        // Is custom(4)
+        // Use custom
+        modelJsonUrl = config.model.use;
+        console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded Model from custom(4), at '${modelJsonUrl}'`);
+      }
     }
   }
 
@@ -126,7 +125,7 @@ if (config.enable) {
   // https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
   hexo.extend.filter.register('after_render:html', function HTMLInjector (htmlContent) {
     const scriptFrom = config.scriptFrom;
-    _.unset(config, 'scriptFrom');
+    config = _.unset(config, 'scriptFrom');
     const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
     const contentToInject = `<script src="${getScriptURL(scriptFrom)}"></script><script>${scriptToInject}</script>`;
     if (/<\/body>/gi.test(htmlContent)) {
