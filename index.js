@@ -5,11 +5,11 @@
 
 'use strict'
 
-const fs = require('hexo-fs');
 const _ = require('lodash');
+const colors = require('colors');
+const fs = require('hexo-fs');
 const path = require('path');
 const url = require('url');
-const colors = require('colors');
 
 const buildGeneratorsFromManifest = require('./lib/buildGeneratorsFromManifest');
 const getFileMD5 = require('./lib/getFileMD5');
@@ -18,12 +18,12 @@ const loadModelFrom = require('./lib/loadModelFrom');
 
 const defaultConfig = _.merge({},
   {
-    enable: false,
+    enable: true,
     scriptFrom: 'local'
   })
 
-// using default options
-let config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
+// apply options with default
+const config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
 
 // Check if enabled
 if (!config.enable) {
@@ -35,8 +35,8 @@ const generators = [];
 const manifest = require('live2d-widget/lib/manifest');
 const mainfestPath = require.resolve('live2d-widget/lib/manifest');
 const coreScriptName = manifest['main.js'];
-const pkgInfo = require('./package');
-const coreJsDepVer = pkgInfo.dependencies['live2d-widget'];
+const thisPkgInfo = require('./package');
+const coreJsDepVer = thisPkgInfo.dependencies['live2d-widget'];
 
 const onSiteRootPath = '/live2dw/';
 const onSiteJsPath = `${onSiteRootPath}lib/`;
@@ -48,7 +48,7 @@ switch (config.scriptFrom) {
   case 'local':
     // a.1 is local
     // use local(1)
-    const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), onSiteJsPath)
+    const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), onSiteJsPath);
     const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
     generators.push(...scriptGenerators);
     scriptURL = `${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
@@ -64,28 +64,37 @@ switch (config.scriptFrom) {
     scriptURL = `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
     break;
   default:
+    // a.4 is custom
+    // use custom(4)
     scriptURL = config.scriptFrom;
     break;
 }
 
 if (config.model.use) {
-  // try './live2d_models/%config.model.use%' or './%config.model.use%'
   const modelInHexoBaseDir = [
       path.resolve(hexo.base_dir, './live2d_models/', config.model.use),
       path.resolve(hexo.base_dir, config.model.use),
     ]
     .reduce((p, path) => {
       if (!p && fs.existsSync(path))
-          return path;
+        return path;
       else
         return p;
     }, undefined);
-  const modelPath = modelInHexoBaseDir || getNodeModulePath(config.model.use);
-  const { generators: modelGenerators, jsonUrl: modelJsonUrl, packageInfo } = loadModelFrom(modelPath, onSiteModelPath);
+  const modelPaths = modelInHexoBaseDir || getNodeModulePath(config.model.use) || config.model.use; // Search paths
+  const { modelGenerators, modelJsonUrl, packageJsonObj, type } = loadModelFrom(modelPaths, onSiteModelPath);
   generators.push(...modelGenerators);
   config = _.set(config, 'model.jsonPath', modelJsonUrl);
-  if (packageInfo) {
-    console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Load model ${packageInfo.name || config.model.use}${`@${packageInfo.version}` || ''} at '${modelPath}'`);
+  switch(type){
+    case 1:
+      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${modelPaths}'`);
+      break;
+    case 2.5:
+      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from folder(2/3), '${url.pathname(modelJsonUrl)}' from '${modelPaths}'`);
+      break;
+    case 4:
+      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded Model from online(4), at '${modelJsonUrl}'`);
+      break;
   }
 }
 
@@ -96,7 +105,7 @@ if (config.model.use) {
  */
 
 hexo.extend.helper.register('live2d', function () {
-  console.warn(`${colors.green('hexo-helper-live2d'.toUpperCase())}  live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.`);
+  console.warn(`${colors.green('hexo-helper-live2d'.toUpperCase())}: live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.`);
 });
 
 // injector borrowed form here:
