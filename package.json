@@ -6,6 +6,7 @@
   "devDependencies": {
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^4.17.0",
     "live2d-widget-model-wanko": "^1.0.5"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
     "inst:dev": "npm install -g commitizen&npm install",
     "commit": "git pull&git-cz",
+    "lint": "eslint --ext .js ./",
     "v:major": "npm version major",
     "v:pmajor": "npm version premajor",
     "v:minor": "npm version minor",

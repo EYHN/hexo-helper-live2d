@@ -1,9 +1,9 @@
 /**
  * @description The live2d-widget generator for hexo
  */
+/*global hexo*/
 
-
-'use strict'
+'use strict';
 
 const _ = require('lodash');
 const colors = require('colors');
@@ -15,20 +15,6 @@ const buildGeneratorsFromManifest = require('./lib/buildGeneratorsFromManifest')
 const getFileMD5 = require('./lib/getFileMD5');
 const getNodeModulePath = require('./lib/getNodeModulePath');
 const loadModelFrom = require('./lib/loadModelFrom');
-
-const defaultConfig = _.merge({},
-  {
-    enable: true,
-    scriptFrom: 'local'
-  })
-
-// apply options with default
-const config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
-
-// Check if enabled
-if (!config.enable) {
-  return;
-}
 
 const generators = [];
 
@@ -42,50 +28,59 @@ const onSiteRootPath = '/live2dw/';
 const onSiteJsPath = `${onSiteRootPath}lib/`;
 const onSiteModelPath = `${onSiteRootPath}assets/`;
 
-let scriptURL;
+const defaultConfig = _.merge({},
+  {
+    enable: true,
+    scriptFrom: 'local',
+  });
 
-switch (config.scriptFrom) {
-  case 'local':
+// apply options with default
+let config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
+
+
+function getScriptURL(scriptFrom) {
+  switch (scriptFrom) {
+  case 'local':{
     // a.1 is local
     // use local(1)
     const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), onSiteJsPath);
     const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
     generators.push(...scriptGenerators);
-    scriptURL = `${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
-    break;
+    return `${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
+  }
   case 'jsdelivr':
     // a.2 is jsdelivr online CDN
     // use jsdelivr(2)
-    scriptURL = `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
-    break;
+    return `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
   case 'unpkg':
     // a.3 is unpkg online CDN
     // use unpkg(3)
-    scriptURL = `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
-    break;
+    return `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
   default:
     // a.4 is custom
     // use custom(4)
-    scriptURL = config.scriptFrom;
-    break;
+    return scriptFrom;
+  }
 }
 
-if (config.model.use) {
-  const modelInHexoBaseDir = [
+if (config.enable) {
+  _.unset(config, 'enable');
+  if (config.model.use) {
+    const modelInHexoBaseDir = [
       path.resolve(hexo.base_dir, './live2d_models/', config.model.use),
       path.resolve(hexo.base_dir, config.model.use),
     ]
-    .reduce((p, path) => {
-      if (!p && fs.existsSync(path))
-        return path;
-      else
-        return p;
-    }, undefined);
-  const modelPaths = modelInHexoBaseDir || getNodeModulePath(config.model.use) || config.model.use; // Search paths
-  const { modelGenerators, modelJsonUrl, packageJsonObj, type } = loadModelFrom(modelPaths, onSiteModelPath);
-  generators.push(...modelGenerators);
-  config = _.set(config, 'model.jsonPath', modelJsonUrl);
-  switch(type){
+      .reduce((p, path) => {
+        if (!p && fs.existsSync(path))
+          return path;
+        else
+          return p;
+      }, undefined);
+    const modelPaths = modelInHexoBaseDir || getNodeModulePath(config.model.use) || config.model.use; // Search paths
+    const { modelGenerators, modelJsonUrl, packageJsonObj, type } = loadModelFrom(modelPaths, onSiteModelPath);
+    generators.push(...modelGenerators);
+    config = _.set(config, 'model.jsonPath', modelJsonUrl);
+    switch(type){
     case 1:
       console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${modelPaths}'`);
       break;
@@ -95,31 +90,34 @@ if (config.model.use) {
     case 4:
       console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded Model from online(4), at '${modelJsonUrl}'`);
       break;
+    }
   }
+
+  /**
+   * Deprecated version support
+   * since 3.0
+   * Don't manually add live2d tag into your site template
+   */
+
+  hexo.extend.helper.register('live2d', function () {
+    console.warn(`${colors.green('hexo-helper-live2d'.toUpperCase())}: live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.`);
+  });
+
+  // injector borrowed form here:
+  // https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
+  hexo.extend.filter.register('after_render:html', function (htmlContent) {
+    const scriptFrom = config.scriptFrom;
+    _.unset(config, 'scriptFrom');
+    const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
+    const contentToInject = `<script src="${getScriptURL(scriptFrom)}"></script><script>${scriptToInject}</script>`;
+    if (/<\/body>/gi.test(htmlContent)) {
+      let lastIndex = htmlContent.lastIndexOf('</body>');
+      htmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
+    }
+    return htmlContent;
+  });
+
+  hexo.extend.generator.register('live2d', function () {
+    return generators;
+  });
 }
-
-/**
- * Deprecated version support
- * since 3.0
- * Don't manually add live2d tag into your site template
- */
-
-hexo.extend.helper.register('live2d', function () {
-  console.warn(`${colors.green('hexo-helper-live2d'.toUpperCase())}: live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.`);
-});
-
-// injector borrowed form here:
-// https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
-hexo.extend.filter.register('after_render:html', function (htmlContent) {
-  const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
-  const contentToInject = `<script src="${scriptURL}"></script><script>${scriptToInject}</script>`;
-  if (/<\/body>/gi.test(htmlContent)) {
-    let lastIndex = htmlContent.lastIndexOf('</body>');
-    htmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
-  }
-  return htmlContent;
-});
-
-hexo.extend.generator.register('live2d', function (locals) {
-  return generators;
-});
