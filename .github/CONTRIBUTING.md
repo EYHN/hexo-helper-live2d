@@ -7,9 +7,9 @@
 
 - **Search on the internet** and **among closed issues** in advance would do a great help for us.
 
-- Please **keep focus on the topic** of any issue, and use **English** as far as possible so that everyone will understand you.
+- ~~Please **keep focus on the topic** of any issue, and use **English** as far as possible so that everyone will understand you.~~
 
-- **If you have discovered a bug or have a feature suggestion, feel free to create an issue on Github.**
+- **If you have discovered a bug or have a feature suggestion, feel free to create an issue or pull request on Github.**
 
 
 ## Contributing directly to the source code
@@ -29,13 +29,14 @@ your pull request should be accepted quickly.
 Some things that will increase the chance that your pull request is accepted:
 
 - Follow the existing coding style
+- run `npm run lint` before you commit it.
 - Write a good commit message use `npm run commit`
 - Make sure that your code can work properly.
 
 
 ## Documentation
 
-live2d-widget.js's feature is now becoming richer and richer, and documentation is a huge time sink.
+hexo-helper-live2d's feature is now becoming richer and richer, and documentation is a huge time sink.
 We greatly appreciate any time spent fixing typos or clarifying sections in the
 documentation.
 
@@ -52,41 +53,40 @@ work is not in vain.
 
 - Please use the latest version of Node.js to work with.
 
+### 0. Fork at first
+
 ### 1. Install environments
 
-- Use `npm run inst:dev` to install all the environments.
+- Use `npm run inst:dev` to **install all the environments**.
 
 ### 2. Make changes
 
-- Modify files in `/src/`
-
-- Use `npm run build:dev` to build client js files **with debug files and watchdog.**.
+- Modify files in the root directory or `/lib`
 
 ### 3. Debug until you make sure that your code works properly.
 
 ### 4. Commit those changes
 
-- **Use `npm run build:prod` to build final client js.**
-**Important!!! The step must be done before commit!!!**
+- Use `npm run lint` to check your code first.
 
 - Use `git add *`, or choose the file you want to commit.
 
-- Use `npm run commit` to commit, **Never use `git commit`!!!**
+- We recommend `npm run commit` to commit, **please follow the Angular style**
 
 ### 5. Push the changes
 
 - Use `git push` to push the changes to the github server.
-
-### 6. Push to the webbranch
-
-- Use `push-gh-pages.bat` or `push-gh-pages.sh`
 
 
 ## Workflow(author): Release a new version
 
 *Let the Collaborator or author do it.*
 
-### 1. Bump the version
+### 1. Refresh changelog
+
+- run `npm run changelog`
+
+### 2. Bump the version
 
 - bump the version in `package.json`
 
@@ -94,18 +94,16 @@ work is not in vain.
 
 - run `npm install` to generate new `package-lock.json`
 
-### 2. Commit package.json and package-lock.json
+### 3. Commit files
 
-- Use `npm run commit` to commit, **Never use `git commit`!!!**
-
-### 3. Tag and release a new version
+### 4. Tag and release a new version
 
 - In the Github page.
 
-### 4. Update changelog
+### 5. Update changelog again
 
-- Use `npm run changelog`
+- Use `npm run changelog`, and commit it.
 
-### 5. Publish the package to npm.
+### 6. Publish the package to npm.
 
 - Use `npm publish` to publish it.

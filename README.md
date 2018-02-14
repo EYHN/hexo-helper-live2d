@@ -69,7 +69,7 @@ live2d:
   enable: true
   scriptFrom: local # 'local'(1)||'jsdelivr'(2)||'unpkg'(3)||{Your own path, String}(4)
   model:
-    use: live2d-widget-model-miku # {npm-module name}(1)||{folder name in hexo.base_dir/live2d_models/}(2/2.5)||{folder name related to hexo.base_dir}(3/2.5)||{your own path of model.json, String}(4)
+    use: live2d-widget-model-miku # {npm-module name}(1)||{folder name in hexo.base_dir/live2d_models/}(2)||{folder name related to hexo.base_dir}(3)||{your own path of model.json, String}(4)
 ```
 
 > To see Chinese explainations, please have a look at [Chinese document](./README.zh-CN.md).
