@@ -71,8 +71,9 @@ switch (config.scriptFrom) {
 if (config.model.use) {
   // try './live2d_models/%config.model.use%' or './%config.model.use%'
   const modelInHexoBaseDir = [
-    path.resolve(hexo.base_dir, './live2d_models/', config.model.use),
-    path.resolve(hexo.base_dir, config.model.use)]
+      path.resolve(hexo.base_dir, './live2d_models/', config.model.use),
+      path.resolve(hexo.base_dir, config.model.use),
+    ]
     .reduce((p, path) => {
       if (!p && fs.existsSync(path))
           return path;
@@ -84,7 +85,7 @@ if (config.model.use) {
   generators.push(...modelGenerators);
   config = _.set(config, 'model.jsonPath', modelJsonUrl);
   if (packageInfo) {
-    console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}  Load model ${packageInfo.name || config.model.use}@${packageInfo.version || 'unknown'} at '${modelPath}'`);
+    console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Load model ${packageInfo.name || config.model.use}${`@${packageInfo.version}` || ''} at '${modelPath}'`);
   }
 }
 
@@ -101,11 +102,10 @@ hexo.extend.helper.register('live2d', function () {
 // injector borrowed form here:
 // https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
 hexo.extend.filter.register('after_render:html', function (htmlContent) {
-  let scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
-  let contentToInject = `<script src="${scriptURL}"></script><script>${scriptToInject}</script>`
+  const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
+  const contentToInject = `<script src="${scriptURL}"></script><script>${scriptToInject}</script>`;
   if (/<\/body>/gi.test(htmlContent)) {
     let lastIndex = htmlContent.lastIndexOf('</body>');
-    _.sp
     htmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
   }
   return htmlContent;
