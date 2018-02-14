@@ -17,15 +17,15 @@
 
 # hexo-helper-live2d
 
-[简体中文文档](./README.zh-CN.md)
+Read this in other languages: [English](README.md), [简体中文](README.zh-CN.md).
 
 <br>
 
 Add the Sseexxyyy live2d to your hexo!
 
-Demo: [https://eyhn.in/hexo-helper-live2d/](https://xiazeyu.github.io/live2d-widget.js-doc/dev.html)
+Demo: [https://l2dwidget.js.org/dev.html](https://l2dwidget.js.org/dev.html)
 
-Author's Blog: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+Author's original Blog: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
 
 ## Installation
@@ -38,78 +38,111 @@ Install module:
 npm install --save hexo-helper-live2d
 ```
 
-<details><summary>Used legacy version before ?</summary><br>
+<details><summary>Still using legacy version?</summary><br>
 
 Please delete `{{ live2d() }}` or `<%- live2d() %>` before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
 
+We recommend you to use `npm install --save hexo-helper-live2d@3.x` to force install the latest version.
+
 </details>
 
-### Others, including webpack
+### Others, for jekyll, wordpress, etc.
 
-See [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js)
+See [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js) WIP.
 
 ## Config
 
-Add configuration in hexo's `_config.yml` file.
+Add configuration in hexo's `_config.yml` file or theme's `_config.yml`.
 
 An Example:
 
 ``` yml
 live2d:
-  model: nipsilon
+  enable: true
+  scriptFrom: local
+  model:
+    use: live2d-widget-model-wanko
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
 ```
 
 
-## Settings
+## Detail settings
+
+Settings is divided into helper-specific ones and general ones,
+You can merge these two into your `_config.yml` file.
+
+### Helper-specific
 
 ``` yml
 # Live2D
 ## https://github.com/EYHN/hexo-helper-live2d
 live2d:
   enable: true
-  scriptFrom: local # 'local'(1)||'jsdelivr'(2)||'unpkg'(3)||{Your own path, String}(4)
+  # enable: false
+  scriptFrom: local # Default
+  # scriptFrom: jsdelivr # jsdelivr CDN
+  # scriptFrom: unpkg # unpkg CDN
+  # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # Your custom url
   model:
-    use: live2d-widget-model-miku # {npm-module name}(1)||{folder name in hexo.base_dir/live2d_models/}(2)||{folder name related to hexo.base_dir}(3)||{your own path of model.json, String}(4)
+    use: live2d-widget-model-wanko # npm-module package name
+    # use: wanko # folder name in (hexo base dir)/live2d_models/
+    # use: ./wives/wanko # folder path relative to hexo base dir
+    # use: https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json # Your custom url
 ```
 
-> To see Chinese explainations, please have a look at [Chinese document](./README.zh-CN.md).
+> To see Chinese explainations, please have a look at [Chinese document](README.zh-CN.md).
 
-<details><summary>Current supported models:</summary><br>
+### General Settings
 
-  - `chitose`
-  - `Epsilon2.1`
-  - `Gantzert_Felixander`
-  - `haru01`
-  - `haru02`
-  - `haruto`
-  - `hibiki`
-  - `hijiki`
-  - `izumi`
-  - `koharu`
-  - `miku`
-  - `nico`
-  - `ni-j`
-  - `nipsilon`
-  - `nito`
-  - `shizuku`
-  - `tororo`
-  - `tsumiki`
-  - `Unitychan`
-  - `wanko`
-  - `z16`
+Recentlly may changes quickly, but don't worry, it won't make huge changes.
 
-</details>
+See [live2d-widget.js API](https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init)
 
-## Custom model
+An example:
 
-### a. live2d_models folder
+```yml
+# Live2D
+## https://github.com/xiazeyu/live2d-widget.js
+## https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init
+live2d:
+  model:
+    scale: 1
+    hHeadPos: 0.5
+    vHeadPos: 0.618
+  display:
+    superSample: 2
+    width: 150
+    height: 300
+    position: right
+    hOffset: 0
+    vOffset: -20
+  mobile:
+    show: true
+    scale: 0.5
+  react:
+    opacityDefault: 0.7
+    opacityOnHover: 0.2
+```
+
+
+## Models
+
+There are many ways to use different models:
+
+### a. live2d_models's subfolder name
+
 1. Create a `live2d_models` folder at your blog's root directory.
 
 2. Create a folder by the name of your model.
 
 3. Copy your model to this folder.
 
-**Attention! The path of the model's json must be  `/live2d_models/{name}/{name}.model.json`**
+4. Type the folder name into `model.use` in `_config.yml`.
 
 <details><summary>An Example:</summary><br>
 
@@ -119,128 +152,97 @@ Then, create a folder at  `/` (Which should exists `_config.yml` 、`sources` �
 
 Copy your model to `/live2d_models/mymiku/`.
 
-Up to now, there should be `mymiku.model.json` in the directory of `/live2d_models/mymiku/`.
+Up to now, there should be an `.model.json` file (for example, `mymiku.model.json`)
+
+in the directory of `/live2d_models/mymiku/`.
+
+Type `mymiku` into `model.use` in `_config.yml`.
 
 </details>
 
-### b. npm modules
 
-Release your package named like `live2d-widget-model-xxx`, and type it into `model.use` in `_config.yml`
+### b. custom path relative to hexo base dir
+
+You can just type your model folder's path which is **relative to hexo base dir**.
+
+An example: `./wives/wanko`
+
+### c. npm module's name
+
+#### use exist ones
+
+We alreday have tons of models, [check this out](https://github.com/xiazeyu/live2d-widget-models)
+
+<details><summary>Click me if you are lazy</summary><br>
+
+- `live2d-widget-model-chitose`
+- `live2d-widget-model-epsilon2_1`
+- `live2d-widget-model-gf`
+- `live2d-widget-model-haru/01` (use `npm install --save live2d-widget-model-haru`)
+- `live2d-widget-model-haru/02` (use `npm install --save live2d-widget-model-haru`)
+- `live2d-widget-model-haruto`
+- `live2d-widget-model-hibiki`
+- `live2d-widget-model-hijiki`
+- `live2d-widget-model-izumi`
+- `live2d-widget-model-koharu`
+- `live2d-widget-model-miku`
+- `live2d-widget-model-ni-j`
+- `live2d-widget-model-nico`
+- `live2d-widget-model-nietzsche`
+- `live2d-widget-model-nipsilon`
+- `live2d-widget-model-nito`
+- `live2d-widget-model-shizuku`
+- `live2d-widget-model-tororo`
+- `live2d-widget-model-tsumiki`
+- `live2d-widget-model-unitychan`
+- `live2d-widget-model-wanko`
+- `live2d-widget-model-z16`
+
+</details>
+
+You can use `npm install {your model's package name}` to install,
+
+and type it into `model.use` in `_config.yml` to use it.
+
+#### make your own ones
+
+1. Create an folder, use your node environment run `npm init`, we recommend you to name it like
+
+`live2d-widget-model-xxx`.
+
+2. Create an `assets` folder in the folder you just created, copy your model files into it.
+
+Here's an example:
+
+[live2d-widget-model-wanko](https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko)
+
+3. Use `npm publish` to publish it.
+
+4. Then use `npm install --save live2d-widget-model-xxx`,
+
+and you can just type your package name(`live2d-widget-model-wanko`) into `model.use`
+
+### d. Your own CDN
+
+If you are disappointed without CDN, you can just type your own `.model.json` url into `model.use`.
 
 <br>
 
 Enjoy!:beer:
 
+Cheer for the 3.0 version and the new year!~
+
 > This is my first hexo plugin, star :star: and watch :eyeglasses:, pull request is also welcomed.
-
-Github: [https://github.com/EYHN/hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d)
-
-issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/EYHN/hexo-helper-live2d/issues)
-
 
 ## Screenshots
 
-**Attention! The name above the shown screenshoot may not be the true name of the model. Please go to the "Settings" to find the true value of "model"**
-
-<details><summary>Epsilon2.1</summary><br>
-
-![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
-
-</details>
-<details><summary>Gantzert_Felixander</summary><br>
-
-![](https://huaji8.top/img/live2d/Gantzert_Felixander.gif)
-
-</details>
-<details><summary>haru</summary><br>
-
-![](https://huaji8.top/img/live2d/haru.gif)
-
-</details>
-<details><summary>miku</summary><br>
-
-![](https://huaji8.top/img/live2d/miku.gif)
-
-</details>
-<details><summary>ni-j</summary><br>
-
-![](https://huaji8.top/img/live2d/ni-j.gif)
-
-</details>
-<details><summary>nico</summary><br>
-
-![](https://huaji8.top/img/live2d/nico.gif)
-
-</details>
-<details><summary>nietzche</summary><br>
-
-![](https://huaji8.top/img/live2d/nietzche.gif)
-
-</details>
-<details><summary>nipsilon</summary><br>
-
-![](https://huaji8.top/img/live2d/nipsilon.gif)
-
-</details>
-<details><summary>nito</summary><br>
-
-![](https://huaji8.top/img/live2d/nito.gif)
-
-</details>
-<details><summary>shizuku</summary><br>
-
-![](https://huaji8.top/img/live2d/shizuku.gif)
-
-</details>
-<details><summary>tsumiki</summary><br>
-
-![](https://huaji8.top/img/live2d/tsumiki.gif)
-
-</details>
-<details><summary>wanko</summary><br>
-
-![](https://huaji8.top/img/live2d/wanko.gif)
-
-</details>
-<details><summary>z16</summary><br>
-
-![](https://huaji8.top/img/live2d/z16.gif)
-
-</details>
-<details><summary>hibiki</summary><br>
-
-![](https://huaji8.top/img/live2d/hibiki.gif)
-
-</details>
-<details><summary>koharu</summary><br>
-
-![](https://huaji8.top/img/live2d/koharu.gif)
-
-</details>
-<details><summary>haruto</summary><br>
-
-![](https://huaji8.top/img/live2d/haruto.gif)
-
-</details>
-<details><summary>Unitychan</summary><br>
-
-![](https://huaji8.top/img/live2d/Unitychan.gif)
-
-</details>
-<details><summary>tororo</summary><br>
-
-![](https://huaji8.top/img/live2d/tororo.gif)
-
-</details>
-<details><summary>hijiki</summary><br>
-
-![](https://huaji8.top/img/live2d/hijiki.gif)
-
-</details>
+[TBD.](https://huaji8.top/post/live2d-plugin-2.0/)
 
 ## Contribute
 
 **Please pay enough attention to this document if you want to commit your changes or submit issues.**
+
+This may help you a lot. All kinds of contributions are welcome.
 
 [CONTRIBUTING](./CONTRIBUTING.md)
 
@@ -248,11 +250,9 @@ issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/E
 
 - [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js)
 
+- [live2d-widget-models](https://github.com/xiazeyu/live2d-widget-models)
+
 - [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
-
-- [pixi-live2d](https://github.com/avgjs/pixi-live2d)
-
-- [CubismJsComponents](https://github.com/Live2D/CubismJsComponents)
 
 
 ## About me
