@@ -4,7 +4,6 @@
 /* global hexo */
 
 const _ = require('lodash');
-const colors = require('colors');
 const fs = require('hexo-fs');
 const path = require('path');
 const url = require('url');
@@ -13,6 +12,7 @@ const buildGeneratorsFromManifest = require('./lib/buildGeneratorsFromManifest')
 const getFileMD5 = require('./lib/getFileMD5');
 const getNodeModulePath = require('./lib/getNodeModulePath');
 const loadModelFrom = require('./lib/loadModelFrom');
+const print = require('./lib/print');
 
 const generators = [];
 
@@ -86,7 +86,7 @@ if (config.enable) {
   _.unset(config, 'enable');
   if (_.hasIn(config, 'model.use')) {
 
-    let modelJsonUrl;
+    let modelJsonUrl = null;
     let tryPath = path.resolve(hexo.base_dir, './live2d_models/', config.model.use);
     if (fs.existsSync(tryPath)) {
 
@@ -100,7 +100,7 @@ if (config.enable) {
       } = loadModelFrom(tryPath, onSiteModelPath);
       modelJsonUrl = pkgModelJsonUrl;
       generators.push(...modelGenerators);
-      console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+      print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
 
     } else {
 
@@ -117,16 +117,16 @@ if (config.enable) {
         } = loadModelFrom(tryPath, onSiteModelPath);
         modelJsonUrl = pkgModelJsonUrl;
         generators.push(...modelGenerators);
-        console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+        print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
 
-      } else if (getNodeModulePath(config.model.use) === '') {
+      } else if (getNodeModulePath(config.model.use) === null) {
 
         /*
          * Is custom(4)
          * Use custom
          */
         modelJsonUrl = config.model.use;
-        console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded Model from custom(4), at '${modelJsonUrl}'`);
+        print.log(`Loaded Model from custom(4), at '${modelJsonUrl}'`);
 
       } else {
 
@@ -144,9 +144,14 @@ if (config.enable) {
         } = loadModelFrom(assetsDir, onSiteModelPath);
         modelJsonUrl = pkgModelJsonUrl;
         generators.push(...modelGenerators);
-        console.log(`${colors.green('hexo-helper-live2d'.toUpperCase())}: Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
+        print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
 
       }
+
+    }
+    if (modelJsonUrl === null) {
+
+      print.error('Did not found model json');
 
     }
     _.unset(config, 'model.use');
@@ -162,7 +167,7 @@ if (config.enable) {
 
   hexo.extend.helper.register('live2d', () => {
 
-    console.warn(`${colors.green('hexo-helper-live2d'.toUpperCase())}: live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.`);
+    print.warn('live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.');
 
   });
 
