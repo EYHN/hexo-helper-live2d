@@ -1,9 +1,10 @@
 <a name="3.0.0-beta.3"></a>
 # 3.0.0-beta.3 (2018-02-15)
 
+* chore: bump version ([50bc2f9](https://github.com/EYHN/hexo-helper-live2d/commit/50bc2f9))
+* chore: bump version ([9840335](https://github.com/EYHN/hexo-helper-live2d/commit/9840335))
 * style: crazy lint ([c348707](https://github.com/EYHN/hexo-helper-live2d/commit/c348707))
 * style: move print into new function, fix null of undefined ([6431600](https://github.com/EYHN/hexo-helper-live2d/commit/6431600))
-* chore: bump version ([9840335](https://github.com/EYHN/hexo-helper-live2d/commit/9840335))
 * fix: fix bugs ([1423cae](https://github.com/EYHN/hexo-helper-live2d/commit/1423cae))
 
 
