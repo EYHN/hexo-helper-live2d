@@ -1,6 +1,9 @@
-<a name="3.0.0-beta.2"></a>
-# 3.0.0-beta.2 (2018-02-14)
+<a name="3.0.0-beta.3"></a>
+# 3.0.0-beta.3 (2018-02-15)
 
+* style: crazy lint ([c348707](https://github.com/EYHN/hexo-helper-live2d/commit/c348707))
+* style: move print into new function, fix null of undefined ([6431600](https://github.com/EYHN/hexo-helper-live2d/commit/6431600))
+* chore: bump version ([9840335](https://github.com/EYHN/hexo-helper-live2d/commit/9840335))
 * fix: fix bugs ([1423cae](https://github.com/EYHN/hexo-helper-live2d/commit/1423cae))
 
 
@@ -65,8 +68,8 @@
 * No sooner need to use built-in clientJs
 
 
-<a name="2.1.5"></a>
-## 2.1.5 (2017-11-26)
+<a name="3.0.0-beta.2"></a>
+# 3.0.0-beta.2 (2017-11-26)
 
 * chore: Compress codes. ([146b5d9](https://github.com/EYHN/hexo-helper-live2d/commit/146b5d9))
 * chore: Use new device.js ([7562ab0](https://github.com/EYHN/hexo-helper-live2d/commit/7562ab0)), closes [#46](https://github.com/EYHN/hexo-helper-live2d/issues/46)
