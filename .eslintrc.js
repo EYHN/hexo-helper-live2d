@@ -3,6 +3,7 @@ module.exports = {
     'es6': true,
     'node': true,
   },
+  // 'extends': 'eslint:all',
   'extends': 'eslint:recommended',
   'parserOptions': {
     'sourceType': 'module',
@@ -187,6 +188,22 @@ module.exports = {
     ],
     'space-unary-ops': [
       'error',
+    ],
+    'spaced-comment': [
+      'error',
+    ],
+    'quote-props': [
+      'error',
+    ],
+    'require-jsdoc': [
+      'error',
+    ],
+    'func-style': [
+      'warn',
+      'declaration',
+    ],
+    'padded-blocks': [
+      'warn',
     ],
   },
 };

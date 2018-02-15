@@ -1,6 +1,15 @@
+<a name="3.0.0-beta.2"></a>
+# 3.0.0-beta.2 (2018-02-14)
+
+* fix: fix bugs ([1423cae](https://github.com/EYHN/hexo-helper-live2d/commit/1423cae))
+
+
+
 <a name="3.0.0-beta.1"></a>
 # 3.0.0-beta.1 (2018-02-14)
 
+* chore: bump version ([1894542](https://github.com/EYHN/hexo-helper-live2d/commit/1894542))
+* chore: update dependcies ([2f9a8b7](https://github.com/EYHN/hexo-helper-live2d/commit/2f9a8b7))
 * docs: add comments ([3072c93](https://github.com/EYHN/hexo-helper-live2d/commit/3072c93))
 * docs: move changelog ([1001703](https://github.com/EYHN/hexo-helper-live2d/commit/1001703))
 * docs: update document ([9cb1914](https://github.com/EYHN/hexo-helper-live2d/commit/9cb1914))
@@ -11,7 +20,6 @@
 * fix: fix model.use does'nt achieve 4 ([537403d](https://github.com/EYHN/hexo-helper-live2d/commit/537403d))
 * fix: program bugs ([73f7680](https://github.com/EYHN/hexo-helper-live2d/commit/73f7680))
 * fix: program errors ([04583d4](https://github.com/EYHN/hexo-helper-live2d/commit/04583d4))
-* chore: update dependcies ([2f9a8b7](https://github.com/EYHN/hexo-helper-live2d/commit/2f9a8b7))
 * refactor:  refactor script ([9e1df84](https://github.com/EYHN/hexo-helper-live2d/commit/9e1df84))
 
 
