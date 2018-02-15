@@ -1,3 +1,10 @@
+<a name="3.0.0"></a>
+# 3.0.0 (2018-02-15)
+
+* fix: fix bugs in npm script, new changelog command ([a1ee477](https://github.com/EYHN/hexo-helper-live2d/commit/a1ee477))
+
+
+
 <a name="3.0.0-beta.3"></a>
 # 3.0.0-beta.3 (2018-02-15)
 
