@@ -1,9 +1,107 @@
-<a name="Unreleased"></a>
-# Unreleased (2017-11-16)
+<a name="3.0.0-beta.3"></a>
+# 3.0.0-beta.3 (2018-02-15)
+
+* chore: bump version ([50bc2f9](https://github.com/EYHN/hexo-helper-live2d/commit/50bc2f9))
+* chore: bump version ([9840335](https://github.com/EYHN/hexo-helper-live2d/commit/9840335))
+* style: crazy lint ([c348707](https://github.com/EYHN/hexo-helper-live2d/commit/c348707))
+* style: move print into new function, fix null of undefined ([6431600](https://github.com/EYHN/hexo-helper-live2d/commit/6431600))
+* fix: fix bugs ([1423cae](https://github.com/EYHN/hexo-helper-live2d/commit/1423cae))
+
+
+
+<a name="3.0.0-beta.1"></a>
+# 3.0.0-beta.1 (2018-02-14)
+
+* chore: bump version ([1894542](https://github.com/EYHN/hexo-helper-live2d/commit/1894542))
+* chore: update dependcies ([2f9a8b7](https://github.com/EYHN/hexo-helper-live2d/commit/2f9a8b7))
+* docs: add comments ([3072c93](https://github.com/EYHN/hexo-helper-live2d/commit/3072c93))
+* docs: move changelog ([1001703](https://github.com/EYHN/hexo-helper-live2d/commit/1001703))
+* docs: update document ([9cb1914](https://github.com/EYHN/hexo-helper-live2d/commit/9cb1914))
+* style: add eslint ([ba87f0c](https://github.com/EYHN/hexo-helper-live2d/commit/ba87f0c))
+* style: remove magic numbers ([5e39c6a](https://github.com/EYHN/hexo-helper-live2d/commit/5e39c6a))
+* style: style works ([6668cd4](https://github.com/EYHN/hexo-helper-live2d/commit/6668cd4))
+* style: style wroks ([0e25c80](https://github.com/EYHN/hexo-helper-live2d/commit/0e25c80))
+* fix: fix model.use does'nt achieve 4 ([537403d](https://github.com/EYHN/hexo-helper-live2d/commit/537403d))
+* fix: program bugs ([73f7680](https://github.com/EYHN/hexo-helper-live2d/commit/73f7680))
+* fix: program errors ([04583d4](https://github.com/EYHN/hexo-helper-live2d/commit/04583d4))
+* refactor:  refactor script ([9e1df84](https://github.com/EYHN/hexo-helper-live2d/commit/9e1df84))
+
+
+
+<a name="3.0.0-0"></a>
+# 3.0.0-0 (2018-02-09)
+
+* 3.0.0-0 ([7d9adc7](https://github.com/EYHN/hexo-helper-live2d/commit/7d9adc7))
+* fix(local js copy): ([47a8aad](https://github.com/EYHN/hexo-helper-live2d/commit/47a8aad))
+* feat: add enable option ([09e39e1](https://github.com/EYHN/hexo-helper-live2d/commit/09e39e1)), closes [#57](https://github.com/EYHN/hexo-helper-live2d/issues/57)
+* feat: add hash module ([e8d24c5](https://github.com/EYHN/hexo-helper-live2d/commit/e8d24c5)), closes [#83](https://github.com/EYHN/hexo-helper-live2d/issues/83)
+* feat: add jsPath(CDN Support), auto modify html ([557653a](https://github.com/EYHN/hexo-helper-live2d/commit/557653a)), closes [#66](https://github.com/EYHN/hexo-helper-live2d/issues/66) [#36](https://github.com/EYHN/hexo-helper-live2d/issues/36)
+* feat: add UglifyJS ([80d348b](https://github.com/EYHN/hexo-helper-live2d/commit/80d348b))
+* feat: build the framework of copying files ([67447a7](https://github.com/EYHN/hexo-helper-live2d/commit/67447a7)), closes [#75](https://github.com/EYHN/hexo-helper-live2d/issues/75)
+* feat: new AI for file copy ([f77edf8](https://github.com/EYHN/hexo-helper-live2d/commit/f77edf8))
+* feat: New generated js name, webbranch ([cfe08bb](https://github.com/EYHN/hexo-helper-live2d/commit/cfe08bb)), closes [#51](https://github.com/EYHN/hexo-helper-live2d/issues/51)
+* feat: rewrite helper framework ([fc6ec6b](https://github.com/EYHN/hexo-helper-live2d/commit/fc6ec6b))
+* feat: Warn users of obsolete versions ([04a637c](https://github.com/EYHN/hexo-helper-live2d/commit/04a637c)), closes [#54](https://github.com/EYHN/hexo-helper-live2d/issues/54)
+* style: arrange path structure, add notes ([903bf6f](https://github.com/EYHN/hexo-helper-live2d/commit/903bf6f))
+* style: live2d.min.js has better style now ([e17287a](https://github.com/EYHN/hexo-helper-live2d/commit/e17287a))
+* style: reduce exposed varible, function! ([120386b](https://github.com/EYHN/hexo-helper-live2d/commit/120386b))
+* fix: program error ([e123d6a](https://github.com/EYHN/hexo-helper-live2d/commit/e123d6a))
+* fix: update dependices ([ffc980a](https://github.com/EYHN/hexo-helper-live2d/commit/ffc980a))
+* fix: Webbranch Problem ([22853ef](https://github.com/EYHN/hexo-helper-live2d/commit/22853ef))
+* fix: webbranch url issue ([1796b8c](https://github.com/EYHN/hexo-helper-live2d/commit/1796b8c))
+* docs: added comments ([c91c71f](https://github.com/EYHN/hexo-helper-live2d/commit/c91c71f)), closes [#60](https://github.com/EYHN/hexo-helper-live2d/issues/60)
+* docs: fix wrong link ([bd9b94f](https://github.com/EYHN/hexo-helper-live2d/commit/bd9b94f))
+* docs: Fold model list ([6fd7d95](https://github.com/EYHN/hexo-helper-live2d/commit/6fd7d95))
+* docs: update CHANGELOG ([784c19a](https://github.com/EYHN/hexo-helper-live2d/commit/784c19a))
+* docs: update README ([b9b5f50](https://github.com/EYHN/hexo-helper-live2d/commit/b9b5f50))
+* docs: Update README ([4066b1f](https://github.com/EYHN/hexo-helper-live2d/commit/4066b1f))
+* docs: Update workflow and instructions. ([6ebbdad](https://github.com/EYHN/hexo-helper-live2d/commit/6ebbdad))
+* chore(file path): remove models and clientJs to live2d-widget.js and live2d-widget-models ([8867107](https://github.com/EYHN/hexo-helper-live2d/commit/8867107))
+* refactor: add README broken instructions, main.js modified ([f3d2fce](https://github.com/EYHN/hexo-helper-live2d/commit/f3d2fce))
+* build: UNFINISHED! new build logic ([6b437ac](https://github.com/EYHN/hexo-helper-live2d/commit/6b437ac))
+* doc: create CODE OF CONDUCT. ([973f1b9](https://github.com/EYHN/hexo-helper-live2d/commit/973f1b9))
+
+
+### BREAKING CHANGE
+
+* DON'T manually modify your site template.
+* Don't need to modify the theme template, rename the bundle.js to cLive2d.min.js
+* No sooner need to use built-in clientJs
+
+
+<a name="3.0.0-beta.2"></a>
+# 3.0.0-beta.2 (2017-11-26)
+
+* chore: Compress codes. ([146b5d9](https://github.com/EYHN/hexo-helper-live2d/commit/146b5d9))
+* chore: Use new device.js ([7562ab0](https://github.com/EYHN/hexo-helper-live2d/commit/7562ab0)), closes [#46](https://github.com/EYHN/hexo-helper-live2d/issues/46)
+* chore: v2.1.5 ([425de96](https://github.com/EYHN/hexo-helper-live2d/commit/425de96))
+* style: Fix tab and space issue ([1b447aa](https://github.com/EYHN/hexo-helper-live2d/commit/1b447aa))
+* style: improve coding style ([e57f16a](https://github.com/EYHN/hexo-helper-live2d/commit/e57f16a))
+* style: Linux line break(LF) ([8cb4ca7](https://github.com/EYHN/hexo-helper-live2d/commit/8cb4ca7))
+* style: Linux line break(LF) and added .editorconfig ([9e8e878](https://github.com/EYHN/hexo-helper-live2d/commit/9e8e878)), closes [#47](https://github.com/EYHN/hexo-helper-live2d/issues/47)
+* style(clientJs): path optimized ([54ffae1](https://github.com/EYHN/hexo-helper-live2d/commit/54ffae1))
+* refactor: Improve code quality ([e1cdad1](https://github.com/EYHN/hexo-helper-live2d/commit/e1cdad1))
+* refactor: noted unused function, variable according some to UgilyJs ([0cf2c63](https://github.com/EYHN/hexo-helper-live2d/commit/0cf2c63)), closes [#42](https://github.com/EYHN/hexo-helper-live2d/issues/42)
+* refactor: rename variable, add variables, style ([f684d23](https://github.com/EYHN/hexo-helper-live2d/commit/f684d23))
+* perf: remove unused variable, always true condition ([e2357a6](https://github.com/EYHN/hexo-helper-live2d/commit/e2357a6))
+* fix: device.js now will grab off from the global. ([e93460a](https://github.com/EYHN/hexo-helper-live2d/commit/e93460a)), closes [#46](https://github.com/EYHN/hexo-helper-live2d/issues/46)
+* fix: release problem ([d9c45f9](https://github.com/EYHN/hexo-helper-live2d/commit/d9c45f9))
+* fix: Restore pointer-events: none; ([bc922af](https://github.com/EYHN/hexo-helper-live2d/commit/bc922af))
+* feat: CDN and better loading for current-device ([fab0744](https://github.com/EYHN/hexo-helper-live2d/commit/fab0744)), closes [#46](https://github.com/EYHN/hexo-helper-live2d/issues/46)
+* feat(assets): Add new models ([c7ae026](https://github.com/EYHN/hexo-helper-live2d/commit/c7ae026))
+* feat(clientJs): Add mouse click event and remove style pointer-events: none ([2c8f27b](https://github.com/EYHN/hexo-helper-live2d/commit/2c8f27b))
+* feat(dev page): A whole new useful dev page!!! Cheer!!! ([b686c41](https://github.com/EYHN/hexo-helper-live2d/commit/b686c41))
+* Update main.js ([421e2ef](https://github.com/EYHN/hexo-helper-live2d/commit/421e2ef))
+
+
+
+<a name="2.0.0"></a>
+# 2.0.0 (2017-11-16)
 
 * docs: add workflow of publish new version ([932502a](https://github.com/EYHN/hexo-helper-live2d/commit/932502a))
 * docs: fix ambiguity of modify the source code ([f9d2596](https://github.com/EYHN/hexo-helper-live2d/commit/f9d2596))
 * docs: update changelog ([c62fcf2](https://github.com/EYHN/hexo-helper-live2d/commit/c62fcf2))
+* docs: update CHANGELOG ([504cf99](https://github.com/EYHN/hexo-helper-live2d/commit/504cf99))
 * docs: update CHANGELOG ([4b1fe03](https://github.com/EYHN/hexo-helper-live2d/commit/4b1fe03))
 * docs: update CHANGELOG ([e815980](https://github.com/EYHN/hexo-helper-live2d/commit/e815980))
 * docs: update CHANGELOG ([7c26e97](https://github.com/EYHN/hexo-helper-live2d/commit/7c26e97))
@@ -21,7 +119,7 @@
 * style(device.js): optimize the way of including the device.js ([c0c09e3](https://github.com/EYHN/hexo-helper-live2d/commit/c0c09e3)), closes [#35](https://github.com/EYHN/hexo-helper-live2d/issues/35)
 * doc: Set READMEs to Capital ([dc945b9](https://github.com/EYHN/hexo-helper-live2d/commit/dc945b9))
 * build(Commit system and build flow): Commit system and build flow ([9997c22](https://github.com/EYHN/hexo-helper-live2d/commit/9997c22))
-* build(webpack): update clientJs workflow, seperate dev env and production env ([29c7eca](https://github.com/EYHN/hexo-helper-live2d/commit/29c7eca)), closes [#20](https://github.com/EYHN/hexo-helper-live2d/issues/20) [#36](https://github.com/EYHN/hexo-helper-live2d/issues/36)
+* build(webpack): update clientJs workflow, seperate dev env and production env ([29c7eca](https://github.com/EYHN/hexo-helper-live2d/commit/29c7eca)), closes [#36](https://github.com/EYHN/hexo-helper-live2d/issues/36) [#20](https://github.com/EYHN/hexo-helper-live2d/issues/20) [#36](https://github.com/EYHN/hexo-helper-live2d/issues/36)
 * build(Workflow and README): New workflow and README updated ([4e6760f](https://github.com/EYHN/hexo-helper-live2d/commit/4e6760f)), closes [#39](https://github.com/EYHN/hexo-helper-live2d/issues/39)
 * docs: add CHANGELOG YEAH~~~~~ ([76f70bf](https://github.com/EYHN/hexo-helper-live2d/commit/76f70bf))
 * docs: fix changelog bugs ([95b75a3](https://github.com/EYHN/hexo-helper-live2d/commit/95b75a3))
@@ -45,7 +143,7 @@
 <a name="2.1.2"></a>
 ## 2.1.2 (2017-11-03)
 
-* compress jsons & pngs(#24) ([680b441](https://github.com/EYHN/hexo-helper-live2d/commit/680b441))
+* compress jsons & pngs(#24) ([680b441](https://github.com/EYHN/hexo-helper-live2d/commit/680b441)), closes [#24](https://github.com/EYHN/hexo-helper-live2d/issues/24)
 * Improve codes & fix bug ([88decdd](https://github.com/EYHN/hexo-helper-live2d/commit/88decdd))
 * Update version to 2.1.2 ([9201848](https://github.com/EYHN/hexo-helper-live2d/commit/9201848))
 
@@ -75,8 +173,8 @@
 * Update READMEs ([d5a6c9b](https://github.com/EYHN/hexo-helper-live2d/commit/d5a6c9b))
 * update version ([97ad909](https://github.com/EYHN/hexo-helper-live2d/commit/97ad909))
 * Write new README ([4a79abe](https://github.com/EYHN/hexo-helper-live2d/commit/4a79abe))
-* 仅生成选择的模型(#14) 模型列表移除(#14) 请注意README中的路径要求！ ([58453ec](https://github.com/EYHN/hexo-helper-live2d/commit/58453ec))
-* 增加模型左右设置(#10)(#19)(#21)(#23) 增加移动端模型更多功能(#12) ([b3041f3](https://github.com/EYHN/hexo-helper-live2d/commit/b3041f3))
+* 仅生成选择的模型(#14) 模型列表移除(#14) 请注意README中的路径要求！ ([58453ec](https://github.com/EYHN/hexo-helper-live2d/commit/58453ec)), closes [#14](https://github.com/EYHN/hexo-helper-live2d/issues/14) [#14](https://github.com/EYHN/hexo-helper-live2d/issues/14)
+* 增加模型左右设置(#10)(#19)(#21)(#23) 增加移动端模型更多功能(#12) ([b3041f3](https://github.com/EYHN/hexo-helper-live2d/commit/b3041f3)), closes [#10](https://github.com/EYHN/hexo-helper-live2d/issues/10) [#19](https://github.com/EYHN/hexo-helper-live2d/issues/19) [#21](https://github.com/EYHN/hexo-helper-live2d/issues/21) [#23](https://github.com/EYHN/hexo-helper-live2d/issues/23) [#12](https://github.com/EYHN/hexo-helper-live2d/issues/12)
 
 
 
@@ -84,7 +182,7 @@
 ## 2.0.8 (2017-08-30)
 
 * 2.0.8 ([a189e38](https://github.com/EYHN/hexo-helper-live2d/commit/a189e38))
-* 更新依赖版本 (Issue #17 #18) ([e622811](https://github.com/EYHN/hexo-helper-live2d/commit/e622811))
+* 更新依赖版本 (Issue #17 #18) ([e622811](https://github.com/EYHN/hexo-helper-live2d/commit/e622811)), closes [#17](https://github.com/EYHN/hexo-helper-live2d/issues/17) [#18](https://github.com/EYHN/hexo-helper-live2d/issues/18)
 * fix: follow pointer not works ([6dd0689](https://github.com/EYHN/hexo-helper-live2d/commit/6dd0689))
 * fix: tap point position ([8e8540e](https://github.com/EYHN/hexo-helper-live2d/commit/8e8540e))
 
@@ -97,7 +195,7 @@
 * add english version readme ([50d8629](https://github.com/EYHN/hexo-helper-live2d/commit/50d8629))
 * readme ([334cf4f](https://github.com/EYHN/hexo-helper-live2d/commit/334cf4f))
 * Reduce the size of the  texture ([ae5cf70](https://github.com/EYHN/hexo-helper-live2d/commit/ae5cf70))
-* fix: #16 ([4816b54](https://github.com/EYHN/hexo-helper-live2d/commit/4816b54))
+* fix: #16 ([4816b54](https://github.com/EYHN/hexo-helper-live2d/commit/4816b54)), closes [#16](https://github.com/EYHN/hexo-helper-live2d/issues/16)
 * docs: update readme ([ff7792a](https://github.com/EYHN/hexo-helper-live2d/commit/ff7792a))
 * docs: update readme ([e1e53bb](https://github.com/EYHN/hexo-helper-live2d/commit/e1e53bb))
 

@@ -1,49 +1,42 @@
 {
   "name": "hexo-helper-live2d",
-  "version": "2.1.5",
-  "description": "为你的hexo添加色气满满的live2d吧！",
+  "version": "3.0.0-beta.3",
+  "description": "Add the Sseexxyyy live2d to your hexo!",
   "main": "./index.js",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
     "commitizen": "^2.9.6",
-    "current-device": "^0.6.3",
     "cz-conventional-changelog": "^2.1.0",
-    "html-webpack-plugin": "^2.30.1",
-    "source-map-loader": "^0.2.3",
-    "uglify-js": "^3.1.10",
-    "webpack": "^3.8.1"
+    "eslint": "^4.17.0",
+    "live2d-widget-model-wanko": "^1.0.5"
   },
   "dependencies": {
+    "colors": "^1.1.2",
     "hexo-fs": "^0.2.2",
+    "live2d-widget": "3.x",
+    "lodash": "^4.17.5",
     "path": "^0.12.7"
   },
   "scripts": {
-    "devenv": "npm install -g commitizen&&npm install -g cz-conventional-changelog&&npm install -g webpack&&npm install -g conventional-changelog-cli&&npm install",
-    "dev": "webpack --config webpack.config.dev.js",
-    "devw": "webpack --config webpack.config.dev.js -w",
-    "rel": "webpack --config webpack.config.device.js&&webpack",
-    "commit": "git-cz",
-    "changelog": "git pull&&conventional-changelog -i CHANGELOG.md -r 0 -s -u&&git add CHANGELOG.md&&git commit -m \"docs: update CHANGELOG\"&&git push&&git status",
-    "test": "echo \"Nothing here, but someday there will be something here. xD\" && exit 1"
+    "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
+    "inst:dev": "npm install -g commitizen&&npm install -g conventional-changelog-cli&&npm install",
+    "commit": "git pull&&git-cz",
+    "lint": "eslint --ext .js ./",
+    "v:major": "npm version major",
+    "v:pmajor": "npm version premajor",
+    "v:minor": "npm version minor",
+    "v:pminor": "npm version preminor",
+    "v:patch": "npm version patch",
+    "v:ppatch": "npm version prepatch",
+    "changelog": "git pull&&conventional-changelog --outfile CHANGELOG.md --release-count 0&&git add CHANGELOG.md&&git status"
   },
-  "author": {
-    "name": "EYHN",
-    "email": "cneyhn@gmail.com"
-  },
+  "author": "EYHN <cneyhn@gmail.com>",
   "contributors": [
-    {
-      "name": "xiazeyu",
-      "email": "xiazeyu_2011@126.com"
-    }
+    "xiazeyu <xiazeyu_2011@126.com>",
+    "EYHN <cneyhn@gmail.com>"
   ],
   "maintainers": [
-    {
-      "name": "xiazeyu",
-      "email": "xiazeyu_2011@126.com"
-    }
+    "xiazeyu <xiazeyu_2011@126.com>",
+    "EYHN <cneyhn@gmail.com>"
   ],
   "license": "GPL-2.0",
   "repository": {

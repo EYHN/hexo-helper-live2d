@@ -1,1 +1,0 @@
-{"type":"Live2D Physics","physics_hair":[{"label":"ACC","setup":{"length":0.2,"regist":0.4,"mass":0.2},"src":[{"id":"PARAM_ANGLE_Z","ptype":"angle","scale":0.03,"weight":1}],"targets":[{"id":"PARAM_ACC","ptype":"angle","scale":0.2,"weight":1}]}]}
