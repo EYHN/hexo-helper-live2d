@@ -18,8 +18,8 @@
   },
   "scripts": {
     "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
-    "inst:dev": "npm install -g commitizen&npm install",
-    "commit": "git pull&git-cz",
+    "inst:dev": "npm install -g commitizen&&npm install -g conventional-changelog-cli&&npm install",
+    "commit": "git pull&&git-cz",
     "lint": "eslint --ext .js ./",
     "v:major": "npm version major",
     "v:pmajor": "npm version premajor",
@@ -27,7 +27,7 @@
     "v:pminor": "npm version preminor",
     "v:patch": "npm version patch",
     "v:ppatch": "npm version prepatch",
-    "changelog": "git pull&conventional-changelog -i CHANGELOG.md -r 0 -s -u&git add CHANGELOG.md&git status"
+    "changelog": "git pull&&conventional-changelog --outfile CHANGELOG.md --release-count 0&&git add CHANGELOG.md&&git status"
   },
   "author": "EYHN <cneyhn@gmail.com>",
   "contributors": [
