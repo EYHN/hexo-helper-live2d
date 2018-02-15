@@ -17,264 +17,271 @@
 
 # hexo-helper-live2d
 
-> 3.0即将来临！
-
-[English README](./readme.md) by [@gwzz](https://github.com/gwzz) & [@xiazeyu](https://github.com/xiazeyu)
+阅读本文档的其他语言版本: [English](README.md), [简体中文](README.zh-CN.md).
 
 <br>
 
-为你的hexo添加色气满满的live2d吧！
+向你的Hexo里放上一只萌萌哒二次元看板娘!
 
-示例: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
+演示: [https://l2dwidget.js.org/dev.html](https://l2dwidget.js.org/dev.html)
+
+原作大大的博客: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
 
-## Installation 食用方法
+## 安装
 
-安装模块: 
+### Hexo
+
+安装模块:
 
 ```
 npm install --save hexo-helper-live2d
 ```
 
-> Tips: 遇到npm的相关错误，试试 `npm cache verify` 或 `npm cache clean` 呗~
+<details><summary>仍在使用老版本?</summary><br>
 
-并将下面的代码加入主题。
+请从 `layout/layout.ejs` 或 `layout/_layout.swig` 中删掉 `</body>` 前的 `{{ live2d() }}` 或 `<%- live2d() %>`.
 
-通常添加在 `layout/layout.ejs` 或 `layout/_layout.swig` 中的 `</body>` 之前
+我们推荐您使用 `npm install --save hexo-helper-live2d@3.x` 来强制安装最新版本.
 
-ejs: 
+</details>
 
-``` ejs
-<%- live2d() %>
-```
+### 其他的, for jekyll, wordpress, etc.
 
-swig (next主题): 
+参阅 [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js) 仍在编写中.
 
-``` swig
-{{ live2d() }}
-```
+## 配置
 
+请向Hexo的 `_config.yml` 文件或主题的 `_config.yml` 文件中添加配置.
 
-## Config 配置
-
-有2种方法
-
-#### Method 1 第一种
-
-在 hexo 的 `_config.yml` 中添加参数: 
+示例:
 
 ``` yml
 live2d:
-  model: nipsilon
+  enable: true
+  scriptFrom: local
+  model:
+    use: live2d-widget-model-wanko
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
 ```
 
-#### Method 2 第二种
 
-在 hexo 主题 的 `_config.yml` 中添加参数: 
+## 详细的设置
 
-``` yml
-live2d:
-  model: nipsilon
-```
+设置分为helper特有的和公共的, 你需要把他们合并放到 `_config.yml` 中.
 
-> 第二种配置会覆盖第一种
-
-
-## Settings 配置项
+### helper特有
 
 ``` yml
 # Live2D
 ## https://github.com/EYHN/hexo-helper-live2d
 live2d:
-  model: z16 # 模型名称 默认值: z16
-  width: 150 # 宽度 默认值: 150
-  height: 300 # 高度 默认值: 300
-  scaling: 1 # 分辨率缩放倍率 默认值: 2
-  opacityDefault: 0.7 # 初始的透明度 默认值: 0.7
-  opacityHover: 1 # 鼠标悬浮时的透明度 默认值: 1
-  mobileShow: true # 是否在移动设备上显示 默认值: true
-  mobileScaling: 0.5 # 移动设备缩放倍率 默认值: 0.5
-  position: right # 模型左右侧放置位置 默认值: right
-  horizontalOffset: 0 # 元素的水平偏移 默认值: 0
-  verticalOffset: -20 # 元素的底部偏移 默认值: -20
-  id: live2dcanvas # 元素的id 默认值: live2dcanvas
-  deviceJsSource: local # current-device 脚本的来源 默认值: local
+  enable: true
+  # enable: false
+  scriptFrom: local # 默认
+  # scriptFrom: jsdelivr # jsdelivr CDN
+  # scriptFrom: unpkg # unpkg CDN
+  # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # 你的自定义 url
+  model:
+    use: live2d-widget-model-wanko # npm-module package name
+    # use: wanko # 博客根目录/live2d_models/ 下的目录名
+    # use: ./wives/wanko # 相对于博客根目录的路径
+    # use: https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json # 你的自定义 url
+```
+
+### General Settings
+
+最近由于正在积极开发, 可能会有所变动. 不过安啦, 不会有太太太大幅度的修改.
+
+参阅 [live2d-widget.js API](https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init)
+
+示例:
+
+```yml
+# Live2D
+## https://github.com/xiazeyu/live2d-widget.js
+## https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init
+live2d:
+  model:
+    scale: 1
+    hHeadPos: 0.5
+    vHeadPos: 0.618
+  display:
+    superSample: 2
+    width: 150
+    height: 300
+    position: right
+    hOffset: 0
+    vOffset: -20
+  mobile:
+    show: true
+    scale: 0.5
+  react:
+    opacityDefault: 0.7
+    opacityOnHover: 0.2
 ```
 
 
-- `model`: 模型名称 默认值: z16
-  - chitose
-  - Epsilon2.1
-  - Gantzert_Felixander
-  - haru01
-  - haru02
-  - haruto
-  - hibiki
-  - hijiki
-  - izumi
-  - koharu
-  - miku
-  - nico
-  - ni-j
-  - nipsilon
-  - nito
-  - shizuku
-  - tororo
-  - tsumiki
-  - Unitychan
-  - wanko
-  - z16
+## 模型
 
-- `width`: 宽度  *( 实数 ) 默认值: 150*
-- `height`: 高度  *( 实数 ) 默认值: 300*
-- `scaling`: 分辨率缩放倍率 越大马赛克效应越小 **目前存在BUG，详细参考#32 在BUG解决前，请将数值设置为1**  *( 1 = 100% ) 默认值: 2*
-- `opacityDefault`: 初始的透明度 *(Beta)*  *( 0 - 1 ) 默认值: 0.7*
-- `opacityHover`: 鼠标悬浮时透明度 *(Beta)*  *( 0 - 1 ) 默认值: 1*
-- `mobileShow`: 是否在移动设备上显示  *( true / false ) 默认值: true*
-- `mobileScaling`: 移动设备缩放倍率  *( 1 = 100% ) 默认值: 0.5*
-- `position`: 模型左右侧放置位置 `left` 左 或 `right` 右  *( left / right ) 默认值: right*
-- `horizontalOffset`: `<canvas>` 元素的水平方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: 0*
-- `verticalOffset`: `<canvas>` 元素的竖直方向偏移 如果嫌模型位置不正确 可以调整这个参数  *( 实数 ) 默认值: -20*
-- `id`: `<canvas>` 元素的id  *( 字符串 ) 默认值:live2dcanvas*
-- `deviceJsSource`: current-device 脚本的来源.  *( local / official / 字符串 ) 默认值: local*
-  - 你可以选择以下三种方式:
-  - `local`: **默认 推荐** 使用本地来源，已使用webpack压缩。
-  - `official`: 使用官方来源。 [https://unpkg.com/current-device/umd/current-device.min.js](https://unpkg.com/current-device/umd/current-device.min.js)
-  - `(your CDN url path)`: 输入你的CDN地址。尾部需要包含 `.js`。
+有许多方法来使用不同的模型:
+
+### a. live2d_models子目录名称
+
+1. 在您博客根目录下创建一个 `live2d_models` 文件夹.
+
+2. 在此文件夹内新建一个子文件夹.
+
+3. 将你的 Live2D 模型复制到这个子文件夹中.
+
+4. 将子文件夹的名称输入 `_config.yml` 的 `model.use` 中.
+
+<details><summary>示例</summary><br>
+
+你的模型叫 `mymiku`.
+
+在博客根目录 (应当有 `_config.yml` 、`sources` 、 `themes` ) 新建名为 `mymiku` 的子文件夹.
+
+将模型复制到 `/live2d_models/mymiku/` 中.
+
+现在, 在这里应当有一个 `.model.json` 文件 (例如 `mymiku.model.json`)
+
+在 `/live2d_models/mymiku/` 中.
+
+将 `mymiku` 输入到位于 `_config.yml` 的 `model.use` 中.
+
+</details>
 
 
-## Custom model 增加自己喜欢的模型
+### b. 相对于博客根目录的自定义路径
 
-1. 在博客的根目录下新建 `live2d_models` 文件夹
+您可直接输入**相对于博客根目录**的自定义路径到 `model.use` 中.
 
-2. 在此文件夹中以自定义模型的名称新建一个模型
+示例: `./wives/wanko`
 
-3. 将你的模型复制到该文件夹下
+### c. npm 模块名
 
-**注意！模型json路径必须为  `/live2d_models/{name}/{name}.model.json`**
+#### 使用现有的
 
-示例：
+我们有许多现有的模型, [来看看](https://github.com/xiazeyu/live2d-widget-models)
 
-你的模型为 `mymiku`
+<details><summary>点我如果你不想跳转</summary><br>
 
-那么在 `/` 目录下(即博客的安装目录，该目录下应存在 `_config.yml` 、`sources` 、 `themes` 等内容) 新建名为 `mymiku` 的文件夹
+- `live2d-widget-model-chitose`
+- `live2d-widget-model-epsilon2_1`
+- `live2d-widget-model-gf`
+- `live2d-widget-model-haru/01` (use `npm install --save live2d-widget-model-haru`)
+- `live2d-widget-model-haru/02` (use `npm install --save live2d-widget-model-haru`)
+- `live2d-widget-model-haruto`
+- `live2d-widget-model-hibiki`
+- `live2d-widget-model-hijiki`
+- `live2d-widget-model-izumi`
+- `live2d-widget-model-koharu`
+- `live2d-widget-model-miku`
+- `live2d-widget-model-ni-j`
+- `live2d-widget-model-nico`
+- `live2d-widget-model-nietzsche`
+- `live2d-widget-model-nipsilon`
+- `live2d-widget-model-nito`
+- `live2d-widget-model-shizuku`
+- `live2d-widget-model-tororo`
+- `live2d-widget-model-tsumiki`
+- `live2d-widget-model-unitychan`
+- `live2d-widget-model-wanko`
+- `live2d-widget-model-z16`
 
-将你的模型复制到 `/live2d_models/mymiku/` 下
+</details>
 
-此时在 `/live2d_models/mymiku/` 下应存在 `mymiku.model.json` 文件
+你需要先使用 `npm install 模型的包名` 来安装,
 
+然后将包名输入位于 `_config.yml` 的 `model.use` 中.
 
-~~请参见[(#22)](https://github.com/EYHN/hexo-helper-live2d/issues/22)~~
+#### 发布你自己的模型包
 
+1. 新建一个目录, 用你的Node环境执行 `npm init`, 我们推荐您使用 `live2d-widget-model-xxx` 的包名.
+
+2. 在刚刚创建的目录下创建 `assets` 子目录, 把你的模型放进去.
+
+示例:
+
+[live2d-widget-model-wanko](https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko)
+
+3. 使用 `npm publish` 来发布.
+
+4. 然后使用 `npm install --save live2d-widget-model-xxx` 来安装,
+
+然后你就可以通过向 `model.use` 键入包名 (`live2d-widget-model-wanko`) 来使用了.
+
+### d. 你的CDN
+
+如果你是没有CDN会死星人,直接将 `.model.json` 的url地址输入 `model.use`.
 
 <br>
 
-Enjoy!:beer:
+干杯!:beer:
 
-> 我第一个hexo插件,点个star,点个watch吧,尽情地交pr吧。
+3.0 版终于来啦~祝大家新年快乐~
 
-Github: [https://github.com/EYHN/hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d)
+> 这是我的第一个Hexo插件, star :star: and watch :eyeglasses:, pull request 欢迎各位的 contribution.
 
-issues: [https://github.com/EYHN/hexo-helper-live2d/issues](https://github.com/EYHN/hexo-helper-live2d/issues)
+## 截图
 
+[TBD.](https://huaji8.top/post/live2d-plugin-2.0/)
 
-## Screenshots 截图:
+## 贡献
 
-**注意！截图上方的名称可能非实际模型名，请进入“设置项”查看"model"的真实值**
+**请在提交Issue, 特别是PR前仔细阅读**
 
-#### Epsilon2.1
-![](https://huaji8.top/img/live2d/Epsilon2.1.gif)
-
-#### Gantzert_Felixander
-![](https://huaji8.top/img/live2d/Gantzert_Felixander.gif)
-
-#### haru
-![](https://huaji8.top/img/live2d/haru.gif)
-
-#### miku
-![](https://huaji8.top/img/live2d/miku.gif)
-
-#### ni-j
-![](https://huaji8.top/img/live2d/ni-j.gif)
-
-#### nico
-![](https://huaji8.top/img/live2d/nico.gif)
-
-#### nietzche
-![](https://huaji8.top/img/live2d/nietzche.gif)
-
-#### nipsilon
-![](https://huaji8.top/img/live2d/nipsilon.gif)
-
-#### nito
-![](https://huaji8.top/img/live2d/nito.gif)
-
-#### shizuku
-![](https://huaji8.top/img/live2d/shizuku.gif)
-
-#### tsumiki
-![](https://huaji8.top/img/live2d/tsumiki.gif)
-
-#### wanko
-![](https://huaji8.top/img/live2d/wanko.gif)
-
-#### z16
-![](https://huaji8.top/img/live2d/z16.gif)
-
-#### hibiki
-![](https://huaji8.top/img/live2d/hibiki.gif)
-
-#### koharu
-![](https://huaji8.top/img/live2d/koharu.gif)
-
-#### haruto
-![](https://huaji8.top/img/live2d/haruto.gif)
-
-#### Unitychan
-![](https://huaji8.top/img/live2d/Unitychan.gif)
-
-#### tororo
-![](https://huaji8.top/img/live2d/tororo.gif)
-
-#### hijiki
-![](https://huaji8.top/img/live2d/hijiki.gif)
-
-
-## Contribute 贡献
-
-如果你想提交代码，请务必仔细阅读。
+这份文档可能会帮到你很多.
 
 [CONTRIBUTING](./CONTRIBUTING.md)
 
+## 相关项目
 
-## About me 关于我
+- [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js)
 
-[![Author](https://img.shields.io/badge/author-cneyhn-green.svg?style=flat-square)](https://delusion.coding.me/)
+- [live2d-widget-models](https://github.com/xiazeyu/live2d-widget-models)
 
-[![QQ](https://img.shields.io/badge/QQ-1106996185-blue.svg?style=flat-square)](http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes)
+- [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
 
-[![Email](https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg?style=flat-square)]()
 
-## Imported 引入
+## 关于我
 
-[current-device](https://github.com/matthewhudson/current-device)
+[![Author][author]][author-url]
 
+[![Author QQ][author-qq]][author-qq-url]
+
+[![Author Email][author-email]][author-email-url]
+
+
+[![Collaborator 0][collaborator0]][collaborator0-url]
+
+[![Collaborator 0 QQ][collaborator0-qq]][collaborator0-qq-url]
+
+[![Collaborator 0 Email][collaborator0-email]][collaborator0-email-url]
+
+
+## 依赖
+
+[![current-device][current-device]][current-device-url]
 
 <br>
 
-Open sourced under the GPL v2.0 license.
+在 GPL v2.0 license 下开源.
 
-根据 GPL V2.0 许可证开源。
-
-
-[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg
+[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg?label=hexo-helper-live2d
 [npm-url]: https://www.npmjs.com/package/hexo-helper-live2d
 
 [deps]: https://img.shields.io/david/EYHN/hexo-helper-live2d.svg
-[deps-url]: #
+[deps-url]: javascript:void(0);
 
 [devdeps]:  https://img.shields.io/david/dev/EYHN/hexo-helper-live2d.svg
-[devdeps-url]: #
+[devdeps-url]: javascript:void(0);
 
 [license]: https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg
 [license-url]: https://github.com/EYHN/hexo-helper-live2d/blob/master/LICENSE
@@ -299,3 +306,24 @@ Open sourced under the GPL v2.0 license.
 
 [GitHub issues]: https://img.shields.io/github/issues/EYHN/hexo-helper-live2d.svg
 [GitHub issues-url]: https://github.com/EYHN/hexo-helper-live2d/issues
+
+[author]: https://img.shields.io/badge/author-cneyhn-green.svg
+[author-url]: https://delusion.coding.me/
+
+[author-qq]: https://img.shields.io/badge/QQ-1106996185-blue.svg
+[author-qq-url]: tencent://message/?uin=1106996185&Site=Senlon.Net&Menu=yes
+
+[author-email]: https://img.shields.io/badge/Emali%20me-cneyhn@gmail.com-green.svg
+[author-email-url]: mailto:cneyhn@gmail.com
+
+[collaborator0]: https://img.shields.io/badge/collaborator-xiazeyu-green.svg
+[collaborator0-url]: https://xiazeyu.coding.me/
+
+[collaborator0-qq]: https://img.shields.io/badge/QQ-2320732807-blue.svg
+[collaborator0-qq-url]: tencent://message/?uin=2320732807&Site=Senlon.Net&Menu=yes
+
+[collaborator0-email]: https://img.shields.io/badge/Emali%20me-xiazeyu_2011@126.com-green.svg
+[collaborator0-email-url]: mailto:xiazeyu_2011@126.com
+
+[current-device]: https://img.shields.io/npm/v/current-device.svg?label=current-device
+[current-device-url]: https://github.com/matthewhudson/current-device

@@ -1,1 +1,0 @@
-{"version":"Live2DViewerEX Config 1.0","model":"moc/z16.moc","textures":["moc/z16.1024/texture_00.png"],"layout":{"center_x":0,"center_y":0,"width":2},"motions":{"idle":[{"file":"mtn/idle.mtn"}]},"expressions":[{"name":"f00.exp.json","file":"exp/f00.exp.json"}],"physics":"z16.physics.json"}

@@ -1,109 +1,198 @@
-var fs = require('hexo-fs');
-var path = require('path');
-var url = require("url");
+/**
+ * @description The live2d-widget generator for hexo
+ */
+/* global hexo */
 
-// 将文件加入复制队列
-function registerFile(pathname, file) {
-  generators.push( {
-    path: pathname,
-    data: function () {
-      return fs.createReadStream(file)
+const _ = require('lodash');
+const fs = require('hexo-fs');
+const path = require('path');
+const url = require('url');
+
+const buildGeneratorsFromManifest = require('./lib/buildGeneratorsFromManifest');
+const getFileMD5 = require('./lib/getFileMD5');
+const getNodeModulePath = require('./lib/getNodeModulePath');
+const loadModelFrom = require('./lib/loadModelFrom');
+const print = require('./lib/print');
+
+const generators = [];
+
+const manifest = require('live2d-widget/lib/manifest');
+const mainfestPath = require.resolve('live2d-widget/lib/manifest');
+const coreScriptName = manifest['main.js'];
+const thisPkgInfo = require('./package');
+const coreJsDepVer = thisPkgInfo.dependencies['live2d-widget'];
+
+const onSiteRootPath = '/live2dw/';
+const onSiteJsPath = `${onSiteRootPath}lib/`;
+const onSiteModelPath = `${onSiteRootPath}assets/`;
+
+const defaultConfig = {
+  'enable': true,
+  'scriptFrom': 'local',
+};
+
+// Apply options with default
+let config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
+
+/**
+ * Get entry point script URL according to type of source
+ * @param  {String} scriptFrom The type of source
+ * @return {String}            URL of entry point
+ */
+function getScriptURL (scriptFrom) {
+
+  switch (scriptFrom) {
+
+  case 'local': {
+
+    /*
+     * Is local(1)
+     * Use local
+     */
+    const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), onSiteJsPath);
+    const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
+    generators.push(...scriptGenerators);
+    return `${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
+
+  }
+  case 'jsdelivr':
+
+    /*
+     * Is jsdelivr online CDN(2)
+     * Use jsdelivr
+     */
+    return `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
+  case 'unpkg':
+
+    /*
+     * Is unpkg online CDN(3)
+     * Use unpkg
+     */
+    return `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
+  default:
+
+    /*
+     * Is custom(4)
+     * Use custom
+     */
+    return scriptFrom;
+
+  }
+
+}
+
+if (config.enable) {
+
+  _.unset(config, 'enable');
+  if (_.hasIn(config, 'model.use')) {
+
+    let modelJsonUrl = null;
+    let tryPath = path.resolve(hexo.base_dir, './live2d_models/', config.model.use);
+    if (fs.existsSync(tryPath)) {
+
+      /*
+       * Is in live2d_models(2)
+       * LoadModelFrom
+       */
+      const {
+        modelGenerators,
+        'modelJsonUrl': pkgModelJsonUrl,
+      } = loadModelFrom(tryPath, onSiteModelPath);
+      modelJsonUrl = pkgModelJsonUrl;
+      generators.push(...modelGenerators);
+      print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+
+    } else {
+
+      tryPath = path.resolve(hexo.base_dir, config.model.use);
+      if (fs.existsSync(tryPath)) {
+
+        /*
+         * Is in hexo base releated path(3)
+         * LoadModelFrom
+         */
+        const {
+          modelGenerators,
+          'modelJsonUrl': pkgModelJsonUrl,
+        } = loadModelFrom(tryPath, onSiteModelPath);
+        modelJsonUrl = pkgModelJsonUrl;
+        generators.push(...modelGenerators);
+        print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+
+      } else if (getNodeModulePath(config.model.use) === null) {
+
+        /*
+         * Is custom(4)
+         * Use custom
+         */
+        modelJsonUrl = config.model.use;
+        print.log(`Loaded Model from custom(4), at '${modelJsonUrl}'`);
+
+      } else {
+
+        /*
+         * Is npm-module(1)
+         * Convert path to assets folder
+         * LoadModelFrom
+         */
+        const packageJsonPath = path.resolve(getNodeModulePath(config.model.use), 'package.json');
+        const packageJsonObj = require(packageJsonPath); // eslint-disable-line global-require
+        const assetsDir = path.resolve(getNodeModulePath(config.model.use), './assets/');
+        const {
+          modelGenerators,
+          'modelJsonUrl': pkgModelJsonUrl,
+        } = loadModelFrom(assetsDir, onSiteModelPath);
+        modelJsonUrl = pkgModelJsonUrl;
+        generators.push(...modelGenerators);
+        print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
+
+      }
+
     }
+    if (modelJsonUrl === null) {
+
+      print.error('Did not found model json');
+
+    }
+    _.unset(config, 'model.use');
+    config = _.set(config, 'model.jsonPath', modelJsonUrl);
+
+  }
+
+  /**
+   * Deprecated version support
+   * since 3.0
+   * Don't manually add live2d tag into your site template
+   */
+
+  hexo.extend.helper.register('live2d', () => {
+
+    print.warn('live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.');
+
   });
-}
 
-// 使用DFS将目录中的所有文件加入队列
-// 目前仍使用同步
-function registerDir(pathname, dir) {
-  var lsDir = fs.listDirSync(dir)
-  lsDir.forEach(function (file) {
-    registerFile(pathname + file, path.resolve(dir, file));
-  }, this);
-}
+  const scriptUrlToInject = getScriptURL(config.scriptFrom);
+  _.unset(config, 'scriptFrom');
 
+  /*
+   * Injector borrowed form here:
+   * https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
+   */
+  hexo.extend.filter.register('after_render:html', (htmlContent) => {
 
-var generators = new Array();
-var config = Object.assign( {
-    model: "z16",
-    width: 150,
-    height: 300,
-    scaling: 1,
-    opacityDefault: 0.7,
-    opacityHover: 1,
-    mobileShow: "true",
-    mobileScaling: 0.5,
-    position: "right",
-    horizontalOffset: 0,
-    verticalOffset: -20,
-    id: "live2dcanvas",
-    deviceJsSource: "local"
-  },
-  hexo.config.live2d,
-  hexo.theme.config.live2d
-);
-// 将替换模板中 live2d 的网页代码
-hexo.extend.helper.register('live2d', function() {
-  return `
-<div id="hexo-helper-live2d">
-  <canvas id="${config.id}" width="${config.width * config.scaling}" height="${config.height * config.scaling}"></canvas>
-</div>
-<style>
-  #${config.id}{
-    position: fixed;
-    width: ${config.width}px;
-    height: ${config.height}px;
-    opacity:${config.opacityDefault};
-    ${config.position}: ${config.horizontalOffset}px;
-    z-index: 999;
-    pointer-events: none;
-    bottom: ${config.verticalOffset}px;
-  }
-</style>
-<script type="text/javascript" src="${config.deviceJsSource == "local" ? `/live2d/device.min.js`: (config.deviceJsSource == "official" ? `https://unpkg.com/current-device/umd/current-device.min.js` : config.deviceJsSource)}"></script>
-<script type="text/javascript">
-const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
-(function(){
-  if((typeof(device) != 'undefined') && (device.mobile())){
-    ${config.mobileShow ?
-   `document.getElementById("${config.id}").style.width = '${config.width * config.mobileScaling}px';
-    document.getElementById("${config.id}").style.height = '${config.height * config.mobileScaling}px';`
-   :
-   `var trElement = document.getElementById('hexo-helper-live2d');
-    trElement.parentNode.removeChild(trElement);
-    return;`}
-  }else
-    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d(${JSON.stringify(config.id)}, ${JSON.stringify(url.resolve("/live2d/assets/", config.model + ".model.json"))}, 0.5);});
-})();
-</script>
-`
-});
+    const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
+    const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
+    let newHtmlContent = htmlContent;
+    if (/<\/body>/gi.test(htmlContent)) {
 
-// 复制live2d模型文件
-// 先在 博客目录/live2d_models/ 目录下寻找
-fs.exists(path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)), function(exists){
-  if(exists){
-    registerDir("live2d/assets/", path.resolve(hexo.base_dir, path.join('./live2d_models/', config.model)));
-  }else{ // 若未找到，在 插件目录/assets/ 下继续寻找
-    registerDir('live2d/assets/', path.resolve(__dirname, path.join('./assets/', config.model)));
-  }
-});
+      const lastIndex = htmlContent.lastIndexOf('</body>');
+      newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
 
-// 复制 live2d客户端 脚本
-registerFile('live2d/script.js', path.resolve(__dirname, './dist/bundle.js'));
+    }
+    return newHtmlContent;
 
-// 复制 device.js 脚本
-if(config.deviceJsSource == "local"){
-  fs.exists(path.resolve(__dirname, './dist/device.min.js'), function(exists){
-  if(exists){
-    registerFile('live2d/device.min.js', path.resolve(__dirname, './dist/device.min.js'));
-  }else{// 若未找到，则报错
-    console.log("Live2d serverJs: can't find device.js, contant the author for support.");
-    return ;
-  }
   });
-}
 
-hexo.extend.generator.register('live2d', function (locals) {
-  return generators;
-});
+  hexo.extend.generator.register('live2d', () => generators);
+
+}
