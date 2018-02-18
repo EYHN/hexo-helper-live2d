@@ -1,3 +1,5 @@
+# hexo-helper-live2d
+
 [![npm package][npm-package]][npm-package-url]
 [![dependencies][dependencies]][dependencies-url]
 [![devDependencies][devDependencies]][devDependencies-url]
@@ -12,10 +14,6 @@
 [![commitizen][commitizen]][commitizen-url]
 [![PRs][PRs]][PRs-url]
 [![license][license]][license-url]
-
-
-
-# hexo-helper-live2d
 
 Read this in other languages: [English](README.md), [简体中文](README.zh-CN.md).
 
