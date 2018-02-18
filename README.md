@@ -244,7 +244,7 @@ Cheer for the 3.0 version and the new year!~
 
 This may help you a lot. All kinds of contributions are welcome.
 
-[CONTRIBUTING](./CONTRIBUTING.md)
+[CONTRIBUTING](.github/CONTRIBUTING.md)
 
 ## Releated projects
 

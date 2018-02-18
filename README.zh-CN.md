@@ -239,7 +239,7 @@ live2d:
 
 这份文档可能会帮到你很多.
 
-[CONTRIBUTING](./CONTRIBUTING.md)
+[CONTRIBUTING](.github/CONTRIBUTING.md)
 
 ## 相关项目
 
