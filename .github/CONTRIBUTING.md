@@ -7,7 +7,7 @@
 
 - **Search on the internet** and **among closed issues** in advance would do a great help for us.
 
-- ~~Please **keep focus on the topic** of any issue, and use **English** as far as possible so that everyone will understand you.~~
+- Please **keep focus on the topic** of any issue~~, and use **English** as far as possible so that everyone will understand you.~~
 
 - **If you have discovered a bug or have a feature suggestion, feel free to create an issue or pull request on Github.**
 
@@ -69,7 +69,7 @@ work is not in vain.
 
 - Use `npm run lint` to check your code first.
 
-- Use `git add *`, or choose the file you want to commit.
+- Use `git add --all`, or choose the file you want to commit.
 
 - We recommend `npm run commit` to commit, **please follow the Angular style**
 
