@@ -1,16 +1,16 @@
-[![npm][npm]][npm-url]
-[![deps][deps]][deps-url]
-[![devdeps][devdeps]][devdeps-url]
+[![npm package][npm-package]][npm-package-url]
+[![dependencies][dependencies]][dependencies-url]
+[![devDependencies][devDependencies]][devDependencies-url]
 
-[![downloads][downloads]][downloads-url]
+[![downloads-total][downloads-total]][downloads-total-url]
 [![downloads-month][downloads-month]][downloads-month-url]
 
-[![GitHub stars][GitHub stars]][GitHub stars-url]
-[![GitHub forks][GitHub forks]][GitHub forks-url]
-[![GitHub issues][GitHub issues]][GitHub issues-url]
+[![stars][stars]][stars-url]
+[![forks][forks]][forks-url]
+[![issues][issues]][issues-url]
 
-[![Commitizen friendly][Commitizen friendly]][Commitizen friendly-url]
-[![PRs Welcome][PRs Welcome]][PRs Welcome-url]
+[![commitizen][commitizen]][commitizen-url]
+[![PRs][PRs]][PRs-url]
 [![license][license]][license-url]
 
 
@@ -252,18 +252,14 @@ live2d:
 
 ## 关于我
 
-[![Author][author]][author-url]
-
-[![Author QQ][author-qq]][author-qq-url]
-
-[![Author Email][author-email]][author-email-url]
+[![author][author]][author-url]
+[![author QQ][author-qq]][author-qq-url]
+[![author email][author-email]][author-email-url]
 
 
-[![Collaborator 0][collaborator0]][collaborator0-url]
-
-[![Collaborator 0 QQ][collaborator0-qq]][collaborator0-qq-url]
-
-[![Collaborator 0 Email][collaborator0-email]][collaborator0-email-url]
+[![collaborator0][collaborator0]][collaborator0-url]
+[![collaborator0 QQ][collaborator0-qq]][collaborator0-qq-url]
+[![collaborator0 email][collaborator0-email]][collaborator0-email-url]
 
 
 ## 依赖
@@ -274,38 +270,38 @@ live2d:
 
 在 GPL v2.0 license 下开源.
 
-[npm]: https://badge.fury.io/js/hexo-helper-live2d.svg?label=hexo-helper-live2d
-[npm-url]: https://www.npmjs.com/package/hexo-helper-live2d
+[npm-package]: https://badge.fury.io/js/hexo-helper-live2d.svg?label=hexo-helper-live2d
+[npm-package-url]: https://www.npmjs.com/package/hexo-helper-live2d
 
-[deps]: https://img.shields.io/david/EYHN/hexo-helper-live2d.svg
-[deps-url]: javascript:void(0);
+[dependencies]: https://img.shields.io/david/EYHN/hexo-helper-live2d.svg
+[dependencies-url]: javascript:void(0);
 
-[devdeps]:  https://img.shields.io/david/dev/EYHN/hexo-helper-live2d.svg
-[devdeps-url]: javascript:void(0);
+[devDependencies]:  https://img.shields.io/david/dev/EYHN/hexo-helper-live2d.svg
+[devDependencies-url]: javascript:void(0);
 
-[license]: https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg
-[license-url]: https://github.com/EYHN/hexo-helper-live2d/blob/master/LICENSE
-
-[PRs Welcome]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[PRs Welcome-url]: http://makeapullrequest.com
-
-[downloads]:  https://img.shields.io/npm/dt/hexo-helper-live2d.svg
-[downloads-url]: https://www.npmjs.com/package/hexo-helper-live2d
+[downloads-total]:  https://img.shields.io/npm/dt/hexo-helper-live2d.svg
+[downloads-total-url]: https://www.npmjs.com/package/hexo-helper-live2d
 
 [downloads-month]: https://img.shields.io/npm/dm/hexo-helper-live2d.svg
 [downloads-month-url]: https://www.npmjs.com/package/hexo-helper-live2d
 
-[Commitizen friendly]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
-[Commitizen friendly-url]: http://commitizen.github.io/cz-cli/
+[stars]: https://img.shields.io/github/stars/EYHN/hexo-helper-live2d.svg
+[stars-url]: https://github.com/EYHN/hexo-helper-live2d/stargazers
 
-[GitHub stars]: https://img.shields.io/github/stars/EYHN/hexo-helper-live2d.svg
-[GitHub stars-url]: https://github.com/EYHN/hexo-helper-live2d/stargazers
+[forks]: https://img.shields.io/github/forks/EYHN/hexo-helper-live2d.svg
+[forks-url]: https://github.com/EYHN/hexo-helper-live2d/network
 
-[GitHub forks]: https://img.shields.io/github/forks/EYHN/hexo-helper-live2d.svg
-[GitHub forks-url]: https://github.com/EYHN/hexo-helper-live2d/network
+[issues]: https://img.shields.io/github/issues/EYHN/hexo-helper-live2d.svg
+[issues-url]: https://github.com/EYHN/hexo-helper-live2d/issues
 
-[GitHub issues]: https://img.shields.io/github/issues/EYHN/hexo-helper-live2d.svg
-[GitHub issues-url]: https://github.com/EYHN/hexo-helper-live2d/issues
+[commitizen]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+[commitizen-url]: http://commitizen.github.io/cz-cli/
+
+[PRs]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[PRs-url]: http://makeapullrequest.com
+
+[license]: https://img.shields.io/github/license/EYHN/hexo-helper-live2d.svg
+[license-url]: https://github.com/EYHN/hexo-helper-live2d/blob/master/LICENSE
 
 [author]: https://img.shields.io/badge/author-cneyhn-green.svg
 [author-url]: https://delusion.coding.me/
