@@ -82,6 +82,10 @@ work is not in vain.
 
 *Let the Collaborator or author do it.*
 
+### 0. Test and lint
+
+- run `npm run lint`
+
 ### 1. Refresh changelog
 
 - run `npm run changelog`
