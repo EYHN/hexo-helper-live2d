@@ -6,7 +6,7 @@ module.exports = {
   // 'extends': 'eslint:all',
   'extends': 'eslint:recommended',
   'parserOptions': {
-    'sourceType': 'module',
+    'sourceType': 'script',
   },
   'rules': {
     'indent': [

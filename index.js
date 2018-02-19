@@ -22,7 +22,8 @@ const coreScriptName = manifest['main.js'];
 const thisPkgInfo = require('./package');
 const coreJsDepVer = thisPkgInfo.dependencies['live2d-widget'];
 
-const onSiteRootPath = '/live2dw/';
+const blogRoot = hexo.config.root || '/';
+const onSiteRootPath = `live2dw/`;
 const onSiteJsPath = `${onSiteRootPath}lib/`;
 const onSiteModelPath = `${onSiteRootPath}assets/`;
 
@@ -52,7 +53,7 @@ function getScriptURL (scriptFrom) {
     const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), onSiteJsPath);
     const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
     generators.push(...scriptGenerators);
-    return `${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
+    return `${blogRoot}${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
 
   }
   case 'jsdelivr':
@@ -98,7 +99,7 @@ if (config.enable) {
         modelGenerators,
         'modelJsonUrl': pkgModelJsonUrl,
       } = loadModelFrom(tryPath, onSiteModelPath);
-      modelJsonUrl = pkgModelJsonUrl;
+      modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
       generators.push(...modelGenerators);
       print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
 
@@ -115,7 +116,7 @@ if (config.enable) {
           modelGenerators,
           'modelJsonUrl': pkgModelJsonUrl,
         } = loadModelFrom(tryPath, onSiteModelPath);
-        modelJsonUrl = pkgModelJsonUrl;
+        modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
         generators.push(...modelGenerators);
         print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
 
@@ -142,7 +143,7 @@ if (config.enable) {
           modelGenerators,
           'modelJsonUrl': pkgModelJsonUrl,
         } = loadModelFrom(assetsDir, onSiteModelPath);
-        modelJsonUrl = pkgModelJsonUrl;
+        modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
         generators.push(...modelGenerators);
         print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
 
