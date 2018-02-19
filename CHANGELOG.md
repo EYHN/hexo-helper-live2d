@@ -1,6 +1,7 @@
 <a name="3.0.1"></a>
 ## <small>3.0.1 (2018-02-19)</small>
 
+* chore: bump version: 3.0.1 ([6feb906](https://github.com/EYHN/hexo-helper-live2d/commit/6feb906))
 * feat: add hexo.config.root support ([25ad2fe](https://github.com/EYHN/hexo-helper-live2d/commit/25ad2fe))
 * style: move title to the front ([9b7a456](https://github.com/EYHN/hexo-helper-live2d/commit/9b7a456))
 * docs: fix links ([477a269](https://github.com/EYHN/hexo-helper-live2d/commit/477a269))
