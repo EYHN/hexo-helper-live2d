@@ -3,6 +3,8 @@
  */
 /* global hexo */
 
+'use strict';
+
 const _ = require('lodash');
 const fs = require('hexo-fs');
 const path = require('path');
@@ -23,7 +25,7 @@ const thisPkgInfo = require('./package');
 const coreJsDepVer = thisPkgInfo.dependencies['live2d-widget'];
 
 const blogRoot = hexo.config.root || '/';
-const onSiteRootPath = `live2dw/`;
+const onSiteRootPath = 'live2dw/';
 const onSiteJsPath = `${onSiteRootPath}lib/`;
 const onSiteModelPath = `${onSiteRootPath}assets/`;
 
