@@ -1,3 +1,14 @@
+<a name="3.0.1-beta.0"></a>
+## <small>3.0.1-beta.0 (2018-03-18)</small>
+
+* feat: use cheerio to prase HTML instead of using regExp ([05a8e47](https://github.com/EYHN/hexo-helper-live2d/commit/05a8e47))
+* chore: update dependcies ([e8f736c](https://github.com/EYHN/hexo-helper-live2d/commit/e8f736c))
+* docs: update changelog ([c7d2ac4](https://github.com/EYHN/hexo-helper-live2d/commit/c7d2ac4))
+* docs: update lint-related ([d5402f4](https://github.com/EYHN/hexo-helper-live2d/commit/d5402f4))
+* style: lint ([cb32e30](https://github.com/EYHN/hexo-helper-live2d/commit/cb32e30))
+
+
+
 <a name="3.0.1"></a>
 ## <small>3.0.1 (2018-02-19)</small>
 
