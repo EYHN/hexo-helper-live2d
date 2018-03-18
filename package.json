@@ -6,13 +6,13 @@
   "devDependencies": {
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^4.17.0",
+    "eslint": "^4.19.0",
     "live2d-widget-model-wanko": "^1.0.5"
   },
   "dependencies": {
-    "colors": "^1.1.2",
+    "colors": "^1.2.1",
     "hexo-fs": "^0.2.2",
-    "live2d-widget": "3.x",
+    "live2d-widget": "^3.0.5",
     "lodash": "^4.17.5",
     "path": "^0.12.7"
   },
