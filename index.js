@@ -6,6 +6,7 @@
 'use strict';
 
 const _ = require('lodash');
+const cheerio = require('cheerio');
 const fs = require('hexo-fs');
 const path = require('path');
 const url = require('url');
@@ -183,16 +184,11 @@ if (config.enable) {
    */
   hexo.extend.filter.register('after_render:html', (htmlContent) => {
 
+    const $ = cheerio.load(htmlContent);
     const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
     const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
-    let newHtmlContent = htmlContent;
-    if (/<\/body>/gi.test(htmlContent)) {
-
-      const lastIndex = htmlContent.lastIndexOf('</body>');
-      newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
-
-    }
-    return newHtmlContent;
+    $('body').append(contentToInject);
+    return $.html();
 
   });
 

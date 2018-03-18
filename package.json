@@ -10,6 +10,7 @@
     "live2d-widget-model-wanko": "^1.0.5"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "colors": "^1.2.1",
     "hexo-fs": "^0.2.2",
     "live2d-widget": "^3.0.5",
