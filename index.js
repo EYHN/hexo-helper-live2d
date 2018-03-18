@@ -180,6 +180,10 @@ if (config.enable) {
   /*
    * Injector borrowed form here:
    * https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
+   * TODO:
+   * use cheerio to modify DOM
+   *   failed in 2018.3.18
+   *   https://github.com/cheeriojs/cheerio/issues/1031
    */
   hexo.extend.filter.register('after_render:html', (htmlContent) => {
 
