@@ -25,7 +25,6 @@ Demo: [https://l2dwidget.js.org/dev.html](https://l2dwidget.js.org/dev.html)
 
 Author's original Blog: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
-
 ## Installation
 
 ### Hexo
@@ -38,13 +37,15 @@ npm install --save hexo-helper-live2d
 
 <details><summary>Still using legacy version?</summary><br>
 
-Please delete `{{ live2d() }}` or `<%- live2d() %>` before `</body>` in `layout/layout.ejs` or `layout/_layout.swig`.
+Please delete `{{ live2d() }}` or `<%- live2d() %>` before `</body>` in
+`layout/layout.ejs` or `layout/_layout.swig`.
 
-We recommend you to use `npm install --save hexo-helper-live2d@3.x` to force install the latest version.
+We recommend you to use `npm install --save hexo-helper-live2d@3.x` to force
+install the latest version.
 
 </details>
 
-### Others, for jekyll, wordpress, etc.
+### Others, for jekyll, wordpress, etc
 
 See [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js) WIP.
 
@@ -67,7 +68,6 @@ live2d:
   mobile:
     show: true
 ```
-
 
 ## Detail settings
 
@@ -127,7 +127,6 @@ live2d:
     opacityOnHover: 0.2
 ```
 
-
 ## Models
 
 There are many ways to use different models:
@@ -146,7 +145,8 @@ There are many ways to use different models:
 
 Your model is named `mymiku`.
 
-Then, create a folder at  `/` (Which should exists `_config.yml` 、`sources` 、 `themes` ) named `mymiku`.
+Then, create a folder at  `/` (Which should exists `_config.yml`, `sources`,
+ `themes` ) named `mymiku`.
 
 Copy your model to `/live2d_models/mymiku/`.
 
@@ -157,7 +157,6 @@ in the directory of `/live2d_models/mymiku/`.
 Type `mymiku` into `model.use` in `_config.yml`.
 
 </details>
-
 
 ### b. custom path relative to hexo base dir
 
@@ -204,11 +203,13 @@ and type it into `model.use` in `_config.yml` to use it.
 
 #### make your own ones
 
-1. Create an folder, use your node environment run `npm init`, we recommend you to name it like
+1. Create an folder, use your node environment run `npm init`, we recommend
+   you to name it like
 
 `live2d-widget-model-xxx`.
 
-2. Create an `assets` folder in the folder you just created, copy your model files into it.
+2. Create an `assets` folder in the folder you just created, copy your model
+   files into it.
 
 Here's an example:
 
@@ -222,7 +223,8 @@ and you can just type your package name(`live2d-widget-model-wanko`) into `model
 
 ### d. Your own CDN
 
-If you are disappointed without CDN, you can just type your own `.model.json` url into `model.use`.
+If you are disappointed without CDN, you can just type your own `.model.json`
+url into `model.use`.
 
 <br>
 
@@ -230,7 +232,8 @@ Enjoy!:beer:
 
 Cheer for the 3.0 version and the new year!~
 
-> This is my first hexo plugin, star :star: and watch :eyeglasses:, pull request is also welcomed.
+> This is my first hexo plugin, star :star: and watch :eyeglasses:,
+pull request is also welcomed.
 
 ## Screenshots
 
@@ -238,7 +241,7 @@ Cheer for the 3.0 version and the new year!~
 
 ## Contribute
 
-**Please pay enough attention to this document if you want to commit your changes or submit issues.**
+### Please pay enough attention to this document if you want to commit your changes or submit issues
 
 This may help you a lot. All kinds of contributions are welcome.
 
@@ -252,18 +255,15 @@ This may help you a lot. All kinds of contributions are welcome.
 
 - [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
 
-
 ## About me
 
 [![author][author]][author-url]
 [![author QQ][author-qq]][author-qq-url]
 [![author email][author-email]][author-email-url]
 
-
 [![collaborator0][collaborator0]][collaborator0-url]
 [![collaborator0 QQ][collaborator0-qq]][collaborator0-qq-url]
 [![collaborator0 email][collaborator0-email]][collaborator0-email-url]
-
 
 ## Imported
 

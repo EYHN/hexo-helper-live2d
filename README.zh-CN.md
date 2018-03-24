@@ -25,7 +25,6 @@
 
 原作大大的博客: [https://huaji8.top/post/live2d-plugin-2.0/](https://huaji8.top/post/live2d-plugin-2.0/)
 
-
 ## 安装
 
 ### Hexo
@@ -38,13 +37,14 @@ npm install --save hexo-helper-live2d
 
 <details><summary>仍在使用老版本?</summary><br>
 
-请从 `layout/layout.ejs` 或 `layout/_layout.swig` 中删掉 `</body>` 前的 `{{ live2d() }}` 或 `<%- live2d() %>`.
+请从 `layout/layout.ejs` 或 `layout/_layout.swig` 中删掉 `</body>` 前的
+`{{ live2d() }}` 或 `<%- live2d() %>`.
 
 我们推荐您使用 `npm install --save hexo-helper-live2d@3.x` 来强制安装最新版本.
 
 </details>
 
-### 其他的, for jekyll, wordpress, etc.
+### 其他的, for jekyll, wordpress, etc
 
 参阅 [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js) 仍在编写中.
 
@@ -67,7 +67,6 @@ live2d:
   mobile:
     show: true
 ```
-
 
 ## 详细的设置
 
@@ -124,7 +123,6 @@ live2d:
     opacityOnHover: 0.2
 ```
 
-
 ## 模型
 
 有许多方法来使用不同的模型:
@@ -154,7 +152,6 @@ live2d:
 将 `mymiku` 输入到位于 `_config.yml` 的 `model.use` 中.
 
 </details>
-
 
 ### b. 相对于博客根目录的自定义路径
 
@@ -233,7 +230,7 @@ live2d:
 
 ## 贡献
 
-**请在提交Issue, 特别是PR前仔细阅读**
+### 请在提交Issue, 特别是PR前仔细阅读
 
 这份文档可能会帮到你很多.
 
@@ -247,18 +244,15 @@ live2d:
 
 - [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
 
-
 ## 关于我
 
 [![author][author]][author-url]
 [![author QQ][author-qq]][author-qq-url]
 [![author email][author-email]][author-email-url]
 
-
 [![collaborator0][collaborator0]][collaborator0-url]
 [![collaborator0 QQ][collaborator0-qq]][collaborator0-qq-url]
 [![collaborator0 email][collaborator0-email]][collaborator0-email-url]
-
 
 ## 依赖
 
