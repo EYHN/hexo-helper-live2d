@@ -1,12 +1,13 @@
 <a name="3.0.2"></a>
 ## <small>3.0.2 (2018-03-30)</small>
 
-* docs: fix typo ([a0a1828](https://github.com/EYHN/hexo-helper-live2d/commit/a0a1828))
-* docs: update changelog ([c7d2ac4](https://github.com/EYHN/hexo-helper-live2d/commit/c7d2ac4))
-* docs: update lint-related ([d5402f4](https://github.com/EYHN/hexo-helper-live2d/commit/d5402f4))
+* chore: bump version ([c6bb4da](https://github.com/EYHN/hexo-helper-live2d/commit/c6bb4da))
 * chore: bump version for preRelease ([e64a3f5](https://github.com/EYHN/hexo-helper-live2d/commit/e64a3f5))
 * chore: update dependcies ([e8f736c](https://github.com/EYHN/hexo-helper-live2d/commit/e8f736c))
 * chore: use hexo-log to print log ([8e81a5b](https://github.com/EYHN/hexo-helper-live2d/commit/8e81a5b)), closes [#99](https://github.com/EYHN/hexo-helper-live2d/issues/99)
+* docs: fix typo ([a0a1828](https://github.com/EYHN/hexo-helper-live2d/commit/a0a1828))
+* docs: update changelog ([c7d2ac4](https://github.com/EYHN/hexo-helper-live2d/commit/c7d2ac4))
+* docs: update lint-related ([d5402f4](https://github.com/EYHN/hexo-helper-live2d/commit/d5402f4))
 * feat: add custom path support for js on path ([2089561](https://github.com/EYHN/hexo-helper-live2d/commit/2089561)), closes [#95](https://github.com/EYHN/hexo-helper-live2d/issues/95)
 * perf: better RegExp from hexo-inject ([7e25de7](https://github.com/EYHN/hexo-helper-live2d/commit/7e25de7)), closes [#96](https://github.com/EYHN/hexo-helper-live2d/issues/96)
 * style: lint ([cb32e30](https://github.com/EYHN/hexo-helper-live2d/commit/cb32e30))
