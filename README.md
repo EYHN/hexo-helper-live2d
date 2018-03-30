@@ -59,6 +59,9 @@ An Example:
 live2d:
   enable: true
   scriptFrom: local
+  onSiteRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
   model:
     use: live2d-widget-model-wanko
   display:
@@ -82,6 +85,9 @@ You can merge these two into your `_config.yml` file.
 live2d:
   enable: true
   # enable: false
+  onSiteRootPath: live2dw/ # Root path of plugin to be on the site (Relative)
+  pluginJsPath: lib/ # JavaScript path related to plugin's root (Relative)
+  pluginModelPath: assets/ # Relative model path related to plugin's root (Relative)
   scriptFrom: local # Default
   # scriptFrom: jsdelivr # jsdelivr CDN
   # scriptFrom: unpkg # unpkg CDN

@@ -25,12 +25,12 @@ const thisPkgInfo = require('./package');
 const coreJsDepVer = thisPkgInfo.dependencies['live2d-widget'];
 
 const blogRoot = hexo.config.root || '/';
-const onSiteRootPath = 'live2dw/';
-const onSiteJsPath = `${onSiteRootPath}lib/`;
-const onSiteModelPath = `${onSiteRootPath}assets/`;
 
 const defaultConfig = {
   'enable': true,
+  'pluginRootPath': 'live2dw/',
+  'pluginJsPath': 'lib/',
+  'pluginModelPath': 'assets/',
   'scriptFrom': 'local',
 };
 
@@ -52,10 +52,10 @@ function getScriptURL (scriptFrom) {
      * Is local(1)
      * Use local
      */
-    const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), onSiteJsPath);
+    const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), `${config.pluginRootPath}${config.pluginJsPath}`);
     const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
     generators.push(...scriptGenerators);
-    return `${blogRoot}${url.resolve(onSiteJsPath, coreScriptName)}?${useHash}`;
+    return `${blogRoot}${url.resolve(`${config.pluginRootPath}${config.pluginJsPath}`, coreScriptName)}?${useHash}`;
 
   }
   case 'jsdelivr':
@@ -100,7 +100,7 @@ if (config.enable) {
       const {
         modelGenerators,
         'modelJsonUrl': pkgModelJsonUrl,
-      } = loadModelFrom(tryPath, onSiteModelPath);
+      } = loadModelFrom(tryPath, `${config.pluginRootPath}${config.pluginModelPath}`);
       modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
       generators.push(...modelGenerators);
       print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
@@ -117,7 +117,7 @@ if (config.enable) {
         const {
           modelGenerators,
           'modelJsonUrl': pkgModelJsonUrl,
-        } = loadModelFrom(tryPath, onSiteModelPath);
+        } = loadModelFrom(tryPath, `${config.pluginRootPath}${config.pluginModelPath}`);
         modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
         generators.push(...modelGenerators);
         print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
@@ -144,7 +144,7 @@ if (config.enable) {
         const {
           modelGenerators,
           'modelJsonUrl': pkgModelJsonUrl,
-        } = loadModelFrom(assetsDir, onSiteModelPath);
+        } = loadModelFrom(assetsDir, `${config.pluginRootPath}${config.pluginModelPath}`);
         modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
         generators.push(...modelGenerators);
         print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
