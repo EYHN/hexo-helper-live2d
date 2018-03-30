@@ -180,17 +180,13 @@ if (config.enable) {
   /*
    * Injector borrowed form here:
    * https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
-   * TODO:
-   * use cheerio to modify DOM
-   *   failed in 2018.3.18
-   *   https://github.com/cheeriojs/cheerio/issues/1031
    */
   hexo.extend.filter.register('after_render:html', (htmlContent) => {
 
     const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
     const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
     let newHtmlContent = htmlContent;
-    if (/<\/body>/gi.test(htmlContent)) {
+    if (/([\n\r\s\t]*<\/body>)/i.test(htmlContent)) {
 
       const lastIndex = htmlContent.lastIndexOf('</body>');
       newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
