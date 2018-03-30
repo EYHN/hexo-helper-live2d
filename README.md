@@ -59,7 +59,7 @@ An Example:
 live2d:
   enable: true
   scriptFrom: local
-  onSiteRootPath: live2dw/
+  pluginRootPath: live2dw/
   pluginJsPath: lib/
   pluginModelPath: assets/
   model:
@@ -85,7 +85,7 @@ You can merge these two into your `_config.yml` file.
 live2d:
   enable: true
   # enable: false
-  onSiteRootPath: live2dw/ # Root path of plugin to be on the site (Relative)
+  pluginRootPath: live2dw/ # Root path of plugin to be on the site (Relative)
   pluginJsPath: lib/ # JavaScript path related to plugin's root (Relative)
   pluginModelPath: assets/ # Relative model path related to plugin's root (Relative)
   scriptFrom: local # Default

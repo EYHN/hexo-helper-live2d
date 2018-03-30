@@ -58,7 +58,7 @@ npm install --save hexo-helper-live2d
 live2d:
   enable: true
   scriptFrom: local
-  onSiteRootPath: live2dw/
+  pluginRootPath: live2dw/
   pluginJsPath: lib/
   pluginModelPath: assets/
   model:
@@ -84,7 +84,7 @@ live2d:
   enable: true
   # enable: false
   scriptFrom: local # 默认
-  onSiteRootPath: live2dw/ # 插件在站点上的根目录(相对路径)
+  pluginRootPath: live2dw/ # 插件在站点上的根目录(相对路径)
   pluginJsPath: lib/ # 脚本文件相对与插件根目录路径
   pluginModelPath: assets/ # 模型文件相对与插件根目录路径
   # scriptFrom: jsdelivr # jsdelivr CDN
