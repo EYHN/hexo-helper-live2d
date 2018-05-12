@@ -35,6 +35,9 @@ Install module:
 npm install --save hexo-helper-live2d
 ```
 
+> try `yarn add hexo-helper-live2d` for better installation experience.
+[Yarn](https://yarnpkg.com/en/)
+
 <details><summary>Still using legacy version?</summary><br>
 
 Please delete `{{ live2d() }}` or `<%- live2d() %>` before `</body>` in

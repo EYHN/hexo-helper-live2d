@@ -35,6 +35,9 @@
 npm install --save hexo-helper-live2d
 ```
 
+> 试试 `yarn add hexo-helper-live2d`, 据说高能的yarn会比垃圾npm少很多麻烦呢。
+[Yarn](https://yarn.bootcss.com/)
+
 <details><summary>仍在使用老版本?</summary><br>
 
 请从 `layout/layout.ejs` 或 `layout/_layout.swig` 中删掉 `</body>` 前的
