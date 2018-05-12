@@ -22,7 +22,8 @@ const manifest = require('live2d-widget/lib/manifest');
 const mainfestPath = require.resolve('live2d-widget/lib/manifest');
 const coreScriptName = manifest['main.js'];
 const thisPkgInfo = require('./package');
-const coreJsDepVer = thisPkgInfo.dependencies['live2d-widget'];
+const widgetVer = thisPkgInfo.dependencies['live2d-widget'];
+const localWidgetVer = require(path.resolve(require.resolve('live2d-widget'), '../../', 'package')).version;
 
 const blogRoot = hexo.config.root || '/';
 
@@ -44,6 +45,8 @@ let config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, de
  */
 function getScriptURL (scriptFrom) {
 
+  print.log(`hexo-helper-live2d@${thisPkgInfo.version}, using live2d-widget@${widgetVer}.`);
+
   switch (scriptFrom) {
 
   case 'local': {
@@ -52,6 +55,7 @@ function getScriptURL (scriptFrom) {
      * Is local(1)
      * Use local
      */
+    print.log(`use local live2d-widget@${localWidgetVer}`);
     const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), `${config.pluginRootPath}${config.pluginJsPath}`);
     const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
     generators.push(...scriptGenerators);
@@ -64,14 +68,14 @@ function getScriptURL (scriptFrom) {
      * Is jsdelivr online CDN(2)
      * Use jsdelivr
      */
-    return `https://cdn.jsdelivr.net/npm/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
+    return `https://cdn.jsdelivr.net/npm/live2d-widget@${widgetVer}/lib/${coreScriptName}`;
   case 'unpkg':
 
     /*
      * Is unpkg online CDN(3)
      * Use unpkg
      */
-    return `https://unpkg.com/live2d-widget@${coreJsDepVer}/lib/${coreScriptName}`;
+    return `https://unpkg.com/live2d-widget@${widgetVer}/lib/${coreScriptName}`;
   default:
 
     /*
