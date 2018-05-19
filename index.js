@@ -3,7 +3,6 @@
  */
 /* global hexo */
 
-'use strict';
 
 const _ = require('lodash');
 const fs = require('hexo-fs');
@@ -29,14 +28,15 @@ const blogRoot = hexo.config.root || '/';
 
 const defaultConfig = {
   'enable': true,
-  'pluginRootPath': 'live2dw/',
   'pluginJsPath': 'lib/',
   'pluginModelPath': 'assets/',
+  'pluginRootPath': 'live2dw/',
   'scriptFrom': 'local',
 };
 
 // Apply options with default
-let config = _.defaultsDeep({}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
+let config = _.defaultsDeep({
+}, hexo.config.live2d, hexo.theme.config.live2d, defaultConfig);
 
 /**
  * Get entry point script URL according to type of source
@@ -95,7 +95,7 @@ if (config.enable) {
 
     let modelJsonUrl = null;
     let tryPath = path.resolve(hexo.base_dir, './live2d_models/', config.model.use);
-    if (fs.existsSync(tryPath)) {
+    if (fs.existsSync(tryPath)) { // eslint-disable-line no-sync
 
       /*
        * Is in live2d_models(2)
@@ -112,7 +112,7 @@ if (config.enable) {
     } else {
 
       tryPath = path.resolve(hexo.base_dir, config.model.use);
-      if (fs.existsSync(tryPath)) {
+      if (fs.existsSync(tryPath)) { // eslint-disable-line no-sync
 
         /*
          * Is in hexo base releated path(3)
@@ -193,7 +193,7 @@ if (config.enable) {
     if (/([\n\r\s\t]*<\/body>)/i.test(htmlContent)) {
 
       const lastIndex = htmlContent.lastIndexOf('</body>');
-      newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`;
+      newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`; // eslint-disable-line no-magic-numbers
 
     }
     return newHtmlContent;
