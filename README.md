@@ -31,8 +31,10 @@ Author's original Blog: [https://huaji8.top/post/live2d-plugin-2.0/](https://hua
 
 Install module:
 
-```
+```bash
+
 npm install --save hexo-helper-live2d
+
 ```
 
 > try `yarn add hexo-helper-live2d` for better installation experience.
@@ -212,21 +214,21 @@ and type it into `model.use` in `_config.yml` to use it.
 
 #### make your own ones
 
-1. Create an folder, use your node environment run `npm init`, we recommend
+- Create an folder, use your node environment run `npm init`, we recommend
    you to name it like
 
 `live2d-widget-model-xxx`.
 
-2. Create an `assets` folder in the folder you just created, copy your model
+- Create an `assets` folder in the folder you just created, copy your model
    files into it.
 
 Here's an example:
 
 [live2d-widget-model-wanko](https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko)
 
-3. Use `npm publish` to publish it.
+- Use `npm publish` to publish it.
 
-4. Then use `npm install --save live2d-widget-model-xxx`,
+- Then use `npm install --save live2d-widget-model-xxx`,
 
 and you can just type your package name(`live2d-widget-model-wanko`) into `model.use`
 

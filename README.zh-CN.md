@@ -31,8 +31,10 @@
 
 安装模块:
 
-```
+```bash
+
 npm install --save hexo-helper-live2d
+
 ```
 
 > 试试 `yarn add hexo-helper-live2d`, 据说高能的yarn会比垃圾npm少很多麻烦呢。
@@ -207,17 +209,17 @@ live2d:
 
 #### 发布你自己的模型包
 
-1. 新建一个目录, 用你的Node环境执行 `npm init`, 我们推荐您使用 `live2d-widget-model-xxx` 的包名.
+- 新建一个目录, 用你的Node环境执行 `npm init`, 我们推荐您使用 `live2d-widget-model-xxx` 的包名.
 
-2. 在刚刚创建的目录下创建 `assets` 子目录, 把你的模型放进去.
+- 在刚刚创建的目录下创建 `assets` 子目录, 把你的模型放进去.
 
 示例:
 
 [live2d-widget-model-wanko](https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko)
 
-3. 使用 `npm publish` 来发布.
+- 使用 `npm publish` 来发布.
 
-4. 然后使用 `npm install --save live2d-widget-model-xxx` 来安装,
+- 然后使用 `npm install --save live2d-widget-model-xxx` 来安装,
 
 然后你就可以通过向 `model.use` 键入包名 (`live2d-widget-model-wanko`) 来使用了.
 
