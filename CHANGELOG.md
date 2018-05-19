@@ -1,3 +1,16 @@
+<a name="3.0.3"></a>
+## <small>3.0.3 (2018-05-19)</small>
+
+* chore: bump version ([e6a2800](https://github.com/EYHN/hexo-helper-live2d/commit/e6a2800))
+* chore: lint codes ([af50135](https://github.com/EYHN/hexo-helper-live2d/commit/af50135))
+* chore: update changelog ([7dea4f6](https://github.com/EYHN/hexo-helper-live2d/commit/7dea4f6))
+* chore: update dependcies ([e3ce5aa](https://github.com/EYHN/hexo-helper-live2d/commit/e3ce5aa))
+* docs: add tips of using yarn ([d352d53](https://github.com/EYHN/hexo-helper-live2d/commit/d352d53)), closes [#109](https://github.com/EYHN/hexo-helper-live2d/issues/109) [#105](https://github.com/EYHN/hexo-helper-live2d/issues/105)
+* docs: update docs ([a9d0e2d](https://github.com/EYHN/hexo-helper-live2d/commit/a9d0e2d))
+* add detailed version ([b10cd0f](https://github.com/EYHN/hexo-helper-live2d/commit/b10cd0f)), closes [#104](https://github.com/EYHN/hexo-helper-live2d/issues/104)
+
+
+
 <a name="3.0.2"></a>
 ## <small>3.0.2 (2018-03-30)</small>
 
