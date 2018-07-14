@@ -32,6 +32,7 @@ const defaultConfig = {
   'pluginModelPath': 'assets/',
   'pluginRootPath': 'live2dw/',
   'scriptFrom': 'local',
+  'tagMode': false,
 };
 
 // Apply options with default
@@ -166,39 +167,51 @@ if (config.enable) {
 
   }
 
-  /**
-   * Deprecated version support
-   * since 3.0
-   * Don't manually add live2d tag into your site template
-   */
-
-  hexo.extend.helper.register('live2d', () => {
-
-    print.warn('live2d tag was deprecated since 3.0. See #36. PLEASE REMOVE live2d TAG IN YOUR TEMPLATE FILE.');
-
-  });
-
   const scriptUrlToInject = getScriptURL(config.scriptFrom);
   _.unset(config, 'scriptFrom');
+
+  if (config.tagMode) {
+
+    hexo.extend.helper.register('live2d', () => {
+
+      const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
+      const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
+      return contentToInject;
+
+    });
+
+  } else {
+
+    hexo.extend.helper.register('live2d', () => {
+
+      print.warn('live2d tag was detected, but won\'t be use. Make sure \'tagMode\' config is expected. See #36, #122.');
+
+    });
+
+  }
 
   /*
    * Injector borrowed form here:
    * https://github.com/Troy-Yang/hexo-lazyload-image/blob/master/lib/addscripts.js
    */
-  hexo.extend.filter.register('after_render:html', (htmlContent) => {
+  if (!config.tagMode) {
 
-    const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
-    const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
-    let newHtmlContent = htmlContent;
-    if (/([\n\r\s\t]*<\/body>)/i.test(htmlContent)) {
+    hexo.extend.filter.register('after_render:html', (htmlContent) => {
 
-      const lastIndex = htmlContent.lastIndexOf('</body>');
-      newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`; // eslint-disable-line no-magic-numbers
+      const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
+      const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
+      let newHtmlContent = htmlContent;
+      if (/([\n\r\s\t]*<\/body>)/i.test(htmlContent)) {
 
-    }
-    return newHtmlContent;
+        const lastIndex = htmlContent.lastIndexOf('</body>');
+        newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`; // eslint-disable-line no-magic-numbers
 
-  });
+      }
+      return newHtmlContent;
+
+    });
+
+  }
 
   hexo.extend.generator.register('live2d', () => generators);
 

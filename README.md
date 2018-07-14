@@ -42,11 +42,23 @@ npm install --save hexo-helper-live2d
 
 <details><summary>Still using legacy version?</summary><br>
 
+- If you want to use new injector, which will inject to all pages:
+
 Please delete `{{ live2d() }}` or `<%- live2d() %>` before `</body>` in
 `layout/layout.ejs` or `layout/_layout.swig`.
 
+- If you want to use the old replace mode, which only replace `live2d` tag:
+
+Keep `{{ live2d() }}` or `<%- live2d() %>`, and turn the `tagMode` config to `true`.
+
 We recommend you to use `npm install --save hexo-helper-live2d@3.x` to force
 install the latest version.
+
+</details>
+
+<details><summary>Tag mode</summary><br>
+
+Please insert `{{ live2d() }}`(swig) or `<%- live2d() %>`(ejs) before `</body>` in whichever pages you want to insert. And turn `tagMode` config to `true`, and then live2dwidget will only be on those who have `live2d` tag.
 
 </details>
 
@@ -67,6 +79,7 @@ live2d:
   pluginRootPath: live2dw/
   pluginJsPath: lib/
   pluginModelPath: assets/
+  tagMode: false
   model:
     use: live2d-widget-model-wanko
   display:
@@ -97,6 +110,7 @@ live2d:
   # scriptFrom: jsdelivr # jsdelivr CDN
   # scriptFrom: unpkg # unpkg CDN
   # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # Your custom url
+  tagMode: false # Specifies whether only to replace live2d tag instead of inject to all pages
   model:
     use: live2d-widget-model-wanko # npm-module package name
     # use: wanko # folder name in (hexo base dir)/live2d_models/

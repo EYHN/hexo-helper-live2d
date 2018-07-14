@@ -42,10 +42,22 @@ npm install --save hexo-helper-live2d
 
 <details><summary>仍在使用老版本?</summary><br>
 
+- 如果您想使用最近的注入模式(将会在每个页面上显示):
+
 请从 `layout/layout.ejs` 或 `layout/_layout.swig` 中删掉 `</body>` 前的
 `{{ live2d() }}` 或 `<%- live2d() %>`.
 
+- 如果您想使用旧的标签模式(仅替换 `live2d` 标签):
+
+请保留`{{ live2d() }}` 或 `<%- live2d() %>`, 并将 `tagMode` 设置为 `true`.
+
 我们推荐您使用 `npm install --save hexo-helper-live2d@3.x` 来强制安装最新版本.
+
+</details>
+
+<details><summary>标签模式</summary><br>
+
+请在您想插入的页面的 `</body>` 前插入 `{{ live2d() }}`(swig) 或 `<%- live2d() %>`(ejs). 将 `tagMode` 设置为 `true`, 然后插件将只会在拥有live2d标签的页面出现.
 
 </details>
 
@@ -66,6 +78,7 @@ live2d:
   pluginRootPath: live2dw/
   pluginJsPath: lib/
   pluginModelPath: assets/
+  tagMode: false
   model:
     use: live2d-widget-model-wanko
   display:
@@ -95,6 +108,7 @@ live2d:
   # scriptFrom: jsdelivr # jsdelivr CDN
   # scriptFrom: unpkg # unpkg CDN
   # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # 你的自定义 url
+  tagMode: false # 标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
   model:
     use: live2d-widget-model-wanko # npm-module package name
     # use: wanko # 博客根目录/live2d_models/ 下的目录名
