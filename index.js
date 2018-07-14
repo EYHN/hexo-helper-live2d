@@ -201,7 +201,7 @@ if (config.enable) {
       const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
       const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
       let newHtmlContent = htmlContent;
-      if (/([\n\r\s\t]*<\/body>)/i.test(htmlContent)) {
+      if ((/([\n\r\s\t]*<\/body>)/i).test(htmlContent)) {
 
         const lastIndex = htmlContent.lastIndexOf('</body>');
         newHtmlContent = `${htmlContent.substring(0, lastIndex)}${contentToInject}${htmlContent.substring(lastIndex, htmlContent.length)}`; // eslint-disable-line no-magic-numbers
