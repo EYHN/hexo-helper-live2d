@@ -1,8 +1,9 @@
 <a name="3.0.3-beta.1"></a>
 ## <small>3.0.3-beta.1 (2018-07-14)</small>
 
-* feat: add tagMode. ([e2ac803](https://github.com/EYHN/hexo-helper-live2d/commit/e2ac803)), closes [#122](https://github.com/EYHN/hexo-helper-live2d/issues/122)
+* chore: new beta version: 3.0.3-beta.1 ([508c144](https://github.com/EYHN/hexo-helper-live2d/commit/508c144))
 * chore: update dependcies ([dd3d5da](https://github.com/EYHN/hexo-helper-live2d/commit/dd3d5da))
+* feat: add tagMode. ([e2ac803](https://github.com/EYHN/hexo-helper-live2d/commit/e2ac803)), closes [#122](https://github.com/EYHN/hexo-helper-live2d/issues/122)
 * docs: update CHANGELOG ([b9f107a](https://github.com/EYHN/hexo-helper-live2d/commit/b9f107a))
 * docs: update issue template ([eaa22a4](https://github.com/EYHN/hexo-helper-live2d/commit/eaa22a4))
 
