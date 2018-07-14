@@ -1,6 +1,7 @@
 <a name="3.1.0"></a>
 ## 3.1.0 (2018-07-14)
 
+* chore: bump version 3.1.0 ([468bf0b](https://github.com/EYHN/hexo-helper-live2d/commit/468bf0b))
 * feat: add log ([3ce80f0](https://github.com/EYHN/hexo-helper-live2d/commit/3ce80f0)), closes [#118](https://github.com/EYHN/hexo-helper-live2d/issues/118)
 * doc: update CHANGELOG ([bc1b905](https://github.com/EYHN/hexo-helper-live2d/commit/bc1b905))
 
