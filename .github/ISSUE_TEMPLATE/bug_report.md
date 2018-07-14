@@ -19,7 +19,7 @@ live2d:
 ```
 
 URL:
-**Turn `log` config to `true`**
+**Turn `log` config to `true` to show verbose debug output.**
 Console output:
 
 1. Go to '...'

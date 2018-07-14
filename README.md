@@ -80,7 +80,7 @@ live2d:
   pluginJsPath: lib/
   pluginModelPath: assets/
   tagMode: false
-  debug: false
+  log: false
   model:
     use: live2d-widget-model-wanko
   display:
@@ -112,7 +112,7 @@ live2d:
   # scriptFrom: unpkg # unpkg CDN
   # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # Your custom url
   tagMode: false # Whether only to replace live2d tag instead of inject to all pages
-  debug: false # Whether to show logs in console
+  log: false # Whether to show logs in console
   model:
     use: live2d-widget-model-wanko # npm-module package name
     # use: wanko # folder name in (hexo base dir)/live2d_models/
