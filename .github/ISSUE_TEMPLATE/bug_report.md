@@ -19,6 +19,7 @@ live2d:
 ```
 
 URL:
+**Turn `log` config to `true`**
 Console output:
 
 1. Go to '...'

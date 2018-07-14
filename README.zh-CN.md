@@ -79,6 +79,7 @@ live2d:
   pluginJsPath: lib/
   pluginModelPath: assets/
   tagMode: false
+  debug: false
   model:
     use: live2d-widget-model-wanko
   display:
@@ -109,6 +110,7 @@ live2d:
   # scriptFrom: unpkg # unpkg CDN
   # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # 你的自定义 url
   tagMode: false # 标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
+  debug: false # 调试, 是否在控制台输出日志
   model:
     use: live2d-widget-model-wanko # npm-module package name
     # use: wanko # 博客根目录/live2d_models/ 下的目录名

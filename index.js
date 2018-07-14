@@ -28,6 +28,7 @@ const blogRoot = hexo.config.root || '/';
 
 const defaultConfig = {
   'enable': true,
+  'log': false,
   'pluginJsPath': 'lib/',
   'pluginModelPath': 'assets/',
   'pluginRootPath': 'live2dw/',
@@ -44,9 +45,13 @@ let config = _.defaultsDeep({
  * @param  {String} scriptFrom The type of source
  * @return {String}            URL of entry point
  */
-function getScriptURL (scriptFrom) {
+function getScriptURL (scriptFrom) { // eslint-disable-line max-lines-per-function
 
-  print.log(`hexo-helper-live2d@${thisPkgInfo.version}, using live2d-widget@${widgetVer}.`);
+  if (config.log) {
+
+    print.log(`hexo-helper-live2d@${thisPkgInfo.version}, using live2d-widget@${widgetVer}.`);
+
+  }
 
   switch (scriptFrom) {
 
@@ -56,7 +61,11 @@ function getScriptURL (scriptFrom) {
      * Is local(1)
      * Use local
      */
-    print.log(`use local live2d-widget@${localWidgetVer}`);
+    if (config.log) {
+
+      print.log(`use local live2d-widget@${localWidgetVer}`);
+
+    }
     const scriptGenerators = buildGeneratorsFromManifest(manifest, path.dirname(mainfestPath), `${config.pluginRootPath}${config.pluginJsPath}`);
     const useHash = getFileMD5(path.resolve(path.dirname(mainfestPath), coreScriptName));
     generators.push(...scriptGenerators);
@@ -108,7 +117,11 @@ if (config.enable) {
       } = loadModelFrom(tryPath, `${config.pluginRootPath}${config.pluginModelPath}`);
       modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
       generators.push(...modelGenerators);
-      print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+      if (config.log) {
+
+        print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+
+      }
 
     } else {
 
@@ -125,7 +138,11 @@ if (config.enable) {
         } = loadModelFrom(tryPath, `${config.pluginRootPath}${config.pluginModelPath}`);
         modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
         generators.push(...modelGenerators);
-        print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+        if (config.log) { // eslint-disable-line max-depth
+
+          print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+
+        }
 
       } else if (getNodeModulePath(config.model.use) === null) {
 
@@ -134,7 +151,11 @@ if (config.enable) {
          * Use custom
          */
         modelJsonUrl = config.model.use;
-        print.log(`Loaded Model from custom(4), at '${modelJsonUrl}'`);
+        if (config.log) { // eslint-disable-line max-depth
+
+          print.log(`Loaded Model from custom(4), at '${modelJsonUrl}'`);
+
+        }
 
       } else {
 
@@ -152,7 +173,11 @@ if (config.enable) {
         } = loadModelFrom(assetsDir, `${config.pluginRootPath}${config.pluginModelPath}`);
         modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
         generators.push(...modelGenerators);
-        print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
+        if (config.log) { // eslint-disable-line max-depth
+
+          print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
+
+        }
 
       }
 
@@ -174,6 +199,11 @@ if (config.enable) {
 
     hexo.extend.helper.register('live2d', () => {
 
+      if (config.log) {
+
+        print.log('live2d tag detected, use tagMode.');
+
+      }
       const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
       const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
       return contentToInject;
@@ -184,7 +214,7 @@ if (config.enable) {
 
     hexo.extend.helper.register('live2d', () => {
 
-      print.warn('live2d tag was detected, but won\'t be use. Make sure \'tagMode\' config is expected. See #36, #122.');
+      print.warn('live2d tag detected, but won\'t be use. Make sure \'tagMode\' config is expected. See #36, #122.');
 
     });
 
