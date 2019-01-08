@@ -271,6 +271,10 @@ live2d:
 
 - [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
 
+## 贡献者
+
+![contributors][contributors]
+
 ## 关于我
 
 [![author][author]][author-url]
@@ -342,3 +346,5 @@ live2d:
 
 [current-device]: https://img.shields.io/npm/v/current-device.svg?label=current-device
 [current-device-url]: https://github.com/matthewhudson/current-device
+
+[contributors]: https://opencollective.com/hexo-helper-live2d/contributors.svg?width=890&button=true
