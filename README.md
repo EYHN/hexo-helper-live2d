@@ -282,6 +282,10 @@ This may help you a lot. All kinds of contributions are welcome.
 
 - [Cubism SDK WebGL 2.1](http://sites.cybernoids.jp/cubism-sdk2_e/webgl2-1)
 
+## Contributors
+
+![contributors][contributors]
+
 ## About me
 
 [![author][author]][author-url]
@@ -353,3 +357,5 @@ Open sourced under the GPL v2.0 license.
 
 [current-device]: https://img.shields.io/npm/v/current-device.svg?label=current-device
 [current-device-url]: https://github.com/matthewhudson/current-device
+
+[contributors]: https://opencollective.com/hexo-helper-live2d/contributors.svg?width=890&button=true
