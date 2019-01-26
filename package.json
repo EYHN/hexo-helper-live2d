@@ -15,7 +15,9 @@
     "hexo-log": "^0.2.0",
     "live2d-widget": "^3.0.5",
     "lodash": "^4.17.10",
-    "path": "^0.12.7"
+    "opencollective-postinstall": "^2.0.1",
+    "path": "^0.12.7",
+    "opencollective": "^1.0.3"
   },
   "scripts": {
     "test": "echo \"Sayly, there's nothing here. ToT\" && exit 1",
@@ -28,7 +30,8 @@
     "v:pminor": "npm version preminor",
     "v:patch": "npm version patch",
     "v:ppatch": "npm version prepatch",
-    "changelog": "git pull&&conventional-changelog --outfile CHANGELOG.md --release-count 0&&git add CHANGELOG.md&&git status"
+    "changelog": "git pull&&conventional-changelog --outfile CHANGELOG.md --release-count 0&&git add CHANGELOG.md&&git status",
+    "postinstall": "opencollective-postinstall"
   },
   "author": "EYHN <cneyhn@gmail.com>",
   "contributors": [
@@ -52,5 +55,9 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/hexo-helper-live2d"
   }
 }
