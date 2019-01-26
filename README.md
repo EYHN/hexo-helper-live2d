@@ -15,6 +15,9 @@
 [![PRs][PRs]][PRs-url]
 [![license][license]][license-url]
 
+[![Backers on Open Collective](https://opencollective.com/hexo-helper-live2d/backers/badge.svg)](#backers)
+ [![Sponsors on Open Collective](https://opencollective.com/hexo-helper-live2d/sponsors/badge.svg)](#sponsors) 
+
 Read this in other languages: [English](README.md), [简体中文](README.zh-CN.md).
 
 <br>
@@ -359,3 +362,33 @@ Open sourced under the GPL v2.0 license.
 [current-device-url]: https://github.com/matthewhudson/current-device
 
 [contributors]: https://opencollective.com/hexo-helper-live2d/contributors.svg?width=890&button=true
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/EYHN/hexo-helper-live2d/graphs/contributors"><img src="https://opencollective.com/hexo-helper-live2d/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/hexo-helper-live2d#backer)]
+
+<a href="https://opencollective.com/hexo-helper-live2d#backers" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/hexo-helper-live2d#sponsor)]
+
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/0/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/1/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/2/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/3/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/4/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/5/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/6/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/7/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/8/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/hexo-helper-live2d/sponsor/9/website" target="_blank"><img src="https://opencollective.com/hexo-helper-live2d/sponsor/9/avatar.svg"></a>
+
+
