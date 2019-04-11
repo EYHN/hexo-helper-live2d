@@ -88,6 +88,8 @@ live2d:
     height: 300
   mobile:
     show: true
+  react:
+    opacity: 0.7
 ```
 
 ## 详细的设置
