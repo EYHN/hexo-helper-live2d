@@ -102,90 +102,93 @@ if (config.enable) {
 
   _.unset(config, 'enable');
   if (_.hasIn(config, 'model.use')) {
-
-    let modelJsonUrl = null;
-    let tryPath = path.resolve(hexo.base_dir, './live2d_models/', config.model.use);
-    if (fs.existsSync(tryPath)) { // eslint-disable-line no-sync
-
-      /*
-       * Is in live2d_models(2)
-       * LoadModelFrom
-       */
-      const {
-        modelGenerators,
-        'modelJsonUrl': pkgModelJsonUrl,
-      } = loadModelFrom(tryPath, `${config.pluginRootPath}${config.pluginModelPath}`);
-      modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
-      generators.push(...modelGenerators);
-      if (config.log) {
-
-        print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
-
-      }
-
-    } else {
-
-      tryPath = path.resolve(hexo.base_dir, config.model.use);
+    
+    let modelJsonUrl = [];
+    const useArr = config.model.use.split(' ');
+    useArr.forEach(use => {
+      let tryPath = path.resolve(hexo.base_dir, './live2d_models/', use);
       if (fs.existsSync(tryPath)) { // eslint-disable-line no-sync
 
         /*
-         * Is in hexo base releated path(3)
-         * LoadModelFrom
-         */
+        * Is in live2d_models(2)
+        * LoadModelFrom
+        */
         const {
           modelGenerators,
           'modelJsonUrl': pkgModelJsonUrl,
         } = loadModelFrom(tryPath, `${config.pluginRootPath}${config.pluginModelPath}`);
-        modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
+        modelJsonUrl.push(`${blogRoot}${pkgModelJsonUrl}`);
         generators.push(...modelGenerators);
-        if (config.log) { // eslint-disable-line max-depth
+        if (config.log) {
 
-          print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
-
-        }
-
-      } else if (getNodeModulePath(config.model.use) === null) {
-
-        /*
-         * Is custom(4)
-         * Use custom
-         */
-        modelJsonUrl = config.model.use;
-        if (config.log) { // eslint-disable-line max-depth
-
-          print.log(`Loaded Model from custom(4), at '${modelJsonUrl}'`);
+          print.log(`Loaded model from live2d_models folder(2), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
 
         }
 
       } else {
 
-        /*
-         * Is npm-module(1)
-         * Convert path to assets folder
-         * LoadModelFrom
-         */
-        const packageJsonPath = path.resolve(getNodeModulePath(config.model.use), 'package.json');
-        const packageJsonObj = require(packageJsonPath); // eslint-disable-line global-require
-        const assetsDir = path.resolve(getNodeModulePath(config.model.use), './assets/');
-        const {
-          modelGenerators,
-          'modelJsonUrl': pkgModelJsonUrl,
-        } = loadModelFrom(assetsDir, `${config.pluginRootPath}${config.pluginModelPath}`);
-        modelJsonUrl = `${blogRoot}${pkgModelJsonUrl}`;
-        generators.push(...modelGenerators);
-        if (config.log) { // eslint-disable-line max-depth
+        tryPath = path.resolve(hexo.base_dir, use);
+        if (fs.existsSync(tryPath)) { // eslint-disable-line no-sync
 
-          print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
+          /*
+          * Is in hexo base releated path(3)
+          * LoadModelFrom
+          */
+          const {
+            modelGenerators,
+            'modelJsonUrl': pkgModelJsonUrl,
+          } = loadModelFrom(tryPath, `${config.pluginRootPath}${config.pluginModelPath}`);
+          modelJsonUrl.push(`${blogRoot}${pkgModelJsonUrl}`);
+          generators.push(...modelGenerators);
+          if (config.log) { // eslint-disable-line max-depth
+
+            print.log(`Loaded model from hexo base releated path(3), '${url.parse(modelJsonUrl).pathname}' from '${tryPath}'`);
+
+          }
+
+        } else if (getNodeModulePath(use) === null) {
+
+          /*
+          * Is custom(4)
+          * Use custom
+          */
+          modelJsonUrl.push(use);
+          if (config.log) { // eslint-disable-line max-depth
+
+            print.log(`Loaded Model from custom(4), at '${modelJsonUrl}'`);
+
+          }
+
+        } else {
+
+          /*
+          * Is npm-module(1)
+          * Convert path to assets folder
+          * LoadModelFrom
+          */
+          const packageJsonPath = path.resolve(getNodeModulePath(use), 'package.json');
+          const packageJsonObj = require(packageJsonPath); // eslint-disable-line global-require
+          const assetsDir = path.resolve(getNodeModulePath(use), './assets/');
+          const {
+            modelGenerators,
+            'modelJsonUrl': pkgModelJsonUrl,
+          } = loadModelFrom(assetsDir, `${config.pluginRootPath}${config.pluginModelPath}`);
+          modelJsonUrl.push(`${blogRoot}${pkgModelJsonUrl}`);
+          generators.push(...modelGenerators);
+          if (config.log) { // eslint-disable-line max-depth
+
+            print.log(`Loaded model from npm-module(1), ${packageJsonObj.name}@${packageJsonObj.version} from '${assetsDir}'`);
+
+          }
 
         }
 
       }
+    });
 
-    }
-    if (modelJsonUrl === null) {
-
+    if (modelJsonUrl.length === 0) {
       print.error('Did not found model json');
-
+      
     }
     _.unset(config, 'model.use');
     config = _.set(config, 'model.jsonPath', modelJsonUrl);
@@ -204,7 +207,11 @@ if (config.enable) {
         print.log('live2d tag detected, use tagMode.');
 
       }
-      const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
+      const scriptToInject = `
+        let config = ${JSON.stringify(config)};
+        config.model.jsonPath=config.model.jsonPath[Math.floor(Math.random()*config.model.jsonPath.length)];
+        L2Dwidget.init(config);
+      `;
       const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
       return contentToInject;
 
@@ -228,7 +235,11 @@ if (config.enable) {
 
     hexo.extend.filter.register('after_render:html', (htmlContent) => {
 
-      const scriptToInject = `L2Dwidget.init(${JSON.stringify(config)});`;
+      const scriptToInject = `
+        let config = ${JSON.stringify(config)};
+        config.model.jsonPath=config.model.jsonPath[Math.floor(Math.random()*config.model.jsonPath.length)];
+        L2Dwidget.init(config);
+      `;
       const contentToInject = `<script src="${scriptUrlToInject}"></script><script>${scriptToInject}</script>`;
       let newHtmlContent = htmlContent;
       if ((/([\n\r\s\t]*<\/body>)/i).test(htmlContent)) {
