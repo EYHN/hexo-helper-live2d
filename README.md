@@ -1,3 +1,5 @@
+### The project is not actively maintained. Please try similar projects [stevenjoezhang/live2d-widget](https://github.com/stevenjoezhang/live2d-widget)
+
 # hexo-helper-live2d
 
 [![npm package][npm-package]][npm-package-url]
